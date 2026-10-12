@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Owner Dashboard — Pawfect Academy | Buddy's Training Hub</title>
+  <meta name="description" content="Track your dog's training progress, session schedule, trainer notes and achievements from your Pawfect Academy owner dashboard." />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    /* DASHBOARD LAYOUT */
+    .dashboard-layout {
+      display: grid; grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .dash-sidebar {
+      background: var(--midnight-navy); position: fixed; top: 0; left: 0;
+      height: 100vh; width: 260px; z-index: var(--z-fixed);
+      display: flex; flex-direction: column; overflow-y: auto;
+      transition: transform var(--transition-base);
+    }
+    .dash-sidebar-header {
+      padding: var(--space-5) var(--space-5) var(--space-3);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .dash-sidebar-nav { padding: var(--space-4) var(--space-3); flex: 1; }
+    .dash-nav-section { margin-bottom: var(--space-5); }
+    .dash-nav-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.35); padding: 0 var(--space-3); margin-bottom: var(--space-2);
+    }
+    .dash-nav-item {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: 10px var(--space-3); border-radius: var(--border-radius-sm);
+      color: rgba(255,255,255,0.65); font-size: var(--fs-sm); font-weight: 500;
+      transition: all var(--transition-fast); cursor: pointer; position: relative;
+      text-decoration: none;
+    }
+    .dash-nav-item:hover { background: rgba(255,255,255,0.08); color: white; }
+    .dash-nav-item.active { background: rgba(217,119,69,0.15); color: white; }
+    .dash-nav-item.active::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 3px; background: var(--burnt-orange); border-radius: 0 2px 2px 0; }
+    .dash-nav-icon { font-size: 18px; flex-shrink: 0; }
+    .dash-nav-badge {
+      margin-left: auto; background: var(--burnt-orange); color: white;
+      padding: 2px 8px; border-radius: var(--border-radius-full); font-size: 11px; font-weight: 700;
+    }
+    .dash-user-section {
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; gap: var(--space-3);
+    }
+    .dash-user-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--burnt-orange); }
+    .dash-user-name { color: white; font-weight: 600; font-size: var(--fs-sm); }
+    .dash-user-role { color: rgba(255,255,255,0.5); font-size: var(--fs-xs); }
+
+    /* Main content */
+    .dash-main {
+      margin-left: 260px; background: var(--bg-secondary); min-height: 100vh;
+    }
+    .dash-topbar {
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+      padding: var(--space-4) var(--space-6);
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+      position: sticky; top: 0; z-index: var(--z-raised);
+    }
+    .dash-topbar-title { font-family: var(--font-display); font-size: var(--fs-xl); font-weight: 700; }
+    .dash-topbar-actions { display: flex; align-items: center; gap: var(--space-3); }
+    .dash-content { padding: var(--space-6); }
+
+    /* Dog profile card */
+    .dog-profile-card {
+      background: linear-gradient(135deg, var(--midnight-navy) 0%, #2D4060 100%);
+      border-radius: var(--border-radius-xl); padding: var(--space-6);
+      display: flex; align-items: center; gap: var(--space-5);
+      box-shadow: var(--shadow-xl); position: relative; overflow: hidden; flex-wrap: wrap;
+    }
+    .dog-profile-card::before {
+      content: ''; position: absolute; width: 220px; height: 220px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Ccircle cx='7' cy='8.5' r='2'/%3E%3Ccircle cx='17' cy='8.5' r='2'/%3E%3Ccircle cx='10' cy='5' r='2'/%3E%3Ccircle cx='14' cy='5' r='2'/%3E%3Cpath d='M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; opacity: 0.05; right: 30px; top: 50%;
+      transform: translateY(-50%); font-size: 120px; opacity: 0.06;
+    }
+    .dog-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 4px solid var(--burnt-orange); box-shadow: 0 0 20px rgba(217,119,69,0.4); flex-shrink: 0; }
+    .dog-info { flex: 1; }
+    .dog-name { font-family: var(--font-display); font-size: var(--fs-3xl); color: white; font-weight: 900; }
+    .dog-breed { color: var(--burnt-orange); font-size: var(--fs-sm); font-weight: 600; margin-block: 4px; }
+    .dog-meta { display: flex; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-3); }
+    .dog-meta-item { color: rgba(255,255,255,0.65); font-size: var(--fs-xs); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .dog-stats { display: flex; gap: var(--space-5); flex-wrap: wrap; }
+    .dog-stat { text-align: center; }
+    .dog-stat-val { font-family: var(--font-display); font-size: var(--fs-2xl); font-weight: 900; color: var(--burnt-orange); }
+    .dog-stat-lbl { font-size: var(--fs-xs); color: rgba(255,255,255,0.5); }
+
+    /* Stat cards row */
+    .stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+      box-shadow: var(--shadow-sm); transition: all var(--transition-base);
+    }
+    .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .stat-card-icon { font-size: 28px; margin-bottom: var(--space-3); }
+    .stat-card-value { font-family: var(--font-display); font-size: var(--fs-3xl); font-weight: 900; color: var(--burnt-orange); }
+    .stat-card-label { font-size: var(--fs-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-top: 4px; }
+    .stat-card-trend { font-size: var(--fs-xs); color: var(--sage-green); font-weight: 700; margin-top: var(--space-2); }
+
+    /* Progress section */
+    .progress-widget {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg); padding: var(--space-6);
+      box-shadow: var(--shadow-card);
+    }
+    .widget-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-5); }
+    .widget-title { font-family: var(--font-display); font-size: var(--fs-xl); }
+    .skill-row { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
+    .skill-label { display: flex; justify-content: space-between; font-size: var(--fs-sm); font-weight: 600; }
+    .skill-percent { color: var(--burnt-orange); }
+
+    /* Session list */
+    .session-item {
+      display: flex; align-items: center; gap: var(--space-4);
+      padding: var(--space-4); border-radius: var(--border-radius-md);
+      background: var(--bg-secondary); margin-bottom: var(--space-3);
+      border: 1px solid var(--border-color); transition: all var(--transition-fast);
+    }
+    .session-item:hover { border-color: var(--burnt-orange); }
+    .session-date-badge {
+      background: var(--midnight-navy); color: white; padding: var(--space-3);
+      border-radius: var(--border-radius-sm); text-align: center; min-width: 64px; flex-shrink: 0;
+    }
+    .session-day { font-family: var(--font-display); font-size: var(--fs-2xl); font-weight: 900; color: var(--burnt-orange); line-height: 1; }
+    .session-month { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); }
+    .session-info { flex: 1; }
+    .session-title { font-weight: 700; font-size: var(--fs-sm); margin-bottom: 2px; }
+    .session-meta { display: flex; gap: var(--space-3); color: var(--text-muted); font-size: var(--fs-xs); flex-wrap: wrap; }
+
+    /* Achievement badges */
+    .badges-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+    .achievement {
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md); padding: var(--space-4); text-align: center;
+      transition: all var(--transition-base);
+    }
+    .achievement:hover { border-color: var(--burnt-orange); transform: translateY(-2px); }
+    .achievement.locked { opacity: 0.5; filter: grayscale(1); }
+    .achievement-icon { font-size: 36px; margin-bottom: var(--space-2); display: block; }
+    .achievement-name { font-size: var(--fs-xs); font-weight: 700; }
+    .achievement-desc { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Trainer message */
+    .trainer-message {
+      background: linear-gradient(135deg, rgba(137,151,123,0.1), rgba(137,151,123,0.05));
+      border: 1.5px solid rgba(137,151,123,0.3);
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+      display: flex; gap: var(--space-4);
+    }
+    .message-avatar { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+
+    /* Dashboard grid layout */
+    .dash-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+    .dash-grid-3 { display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--space-5); }
+
+    /* Sidebar views (tab switching) */
+    .dash-view { display: none; }
+    .dash-view.active { display: block; animation: dashFade .35s ease; }
+    @keyframes dashFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .dash-view-head { margin-bottom: var(--space-5); }
+    .dash-view-head h2 { font-family: var(--font-display); font-size: var(--fs-2xl); }
+    .dash-view-head p { color: var(--text-muted); font-size: var(--fs-sm); margin-top: 4px; }
+    .dash-nav-item svg { width: 18px; height: 18px; }
+    /* Icon tiles */
+    .stat-card-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: rgba(217, 119, 69, 0.1); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: var(--space-3); flex-shrink: 0;
+    }
+    .stat-card-icon svg { width: 26px; height: 26px; }
+    .achievement-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: rgba(217, 119, 69, 0.1); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-2);
+    }
+    .achievement-icon svg { width: 24px; height: 24px; }
+    /* Notes / messages / library cards */
+    .dash-list-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+      margin-bottom: var(--space-4); box-shadow: var(--shadow-sm);
+    }
+    .dash-list-card:hover { border-color: var(--burnt-orange); }
+
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .stat-cards { grid-template-columns: repeat(2, 1fr); }
+      .badges-grid { grid-template-columns: repeat(2, 1fr); }
+      .dash-grid-2, .dash-grid-3 { grid-template-columns: 1fr; }
+      .dash-sidebar { transform: translateX(-100%); }
+      .dash-sidebar.mobile-open { transform: translateX(0); }
+      .dash-main { margin-left: 0; }
+    }
+
+    @media (max-width: 760px) {
+      .dash-topbar { flex-wrap: wrap; gap: 12px; padding: var(--space-4) var(--space-5); }
+      .dog-profile-card { padding: 24px 20px; }
+      .dog-meta { justify-content: center; }
+      .stat-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .stat-cards { grid-template-columns: 1fr; }
+      .dog-profile-card { flex-direction: column; text-align: center; padding: 22px 16px; border-radius: var(--border-radius-lg); }
+      .dog-stats { justify-content: center; width: 100%; gap: var(--space-4); }
+      .session-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .session-item .btn { width: 100%; justify-content: center; }
+      .dash-main { padding: 18px 12px; }
+    }
+
+    @media (max-width: 360px) {
+      .dash-main { padding: 14px 10px; }
+      .dog-avatar { width: 72px; height: 72px; }
+      .dog-name { font-size: var(--fs-2xl); }
+      .badges-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .achievement { padding: 12px 8px; }
+      .trainer-message { flex-direction: column; align-items: center; text-align: center; }
+    }
+
+    @media (max-width: 320px) {
+      .dash-main { padding: 10px 6px; }
+      .dash-topbar { padding: 12px 10px; }
+      .dog-avatar { width: 60px; height: 60px; }
+      .dog-name { font-size: var(--fs-xl); }
+      .dog-stats { gap: 10px; }
+      .dog-stat-val { font-size: var(--fs-lg); }
+      .badges-grid { grid-template-columns: 1fr; }
+      .achievement-icon { width: 38px; height: 38px; }
+      .achievement-name { font-size: 0.75rem; }
+      .session-date-badge { min-width: 50px; font-size: 0.70rem; }
+    }
+  </style>
+</head>
+<body style="padding:0;">
+
+<!-- SIDEBAR -->
+<aside class="dash-sidebar" id="dashSidebar" role="navigation" aria-label="Dashboard navigation">
+  <div class="dash-sidebar-header">
+    <a href="./index.html" class="navbar-logo" style="margin-bottom:0;">
+      <div class="navbar-logo-icon"><svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></div>
+      <div class="navbar-logo-text" style="color:white;">Pawfect <span>Academy</span></div>
+    </a>
+  </div>
+
+  <nav class="dash-sidebar-nav">
+    <div class="dash-nav-section">
+      <div class="dash-nav-label">Overview</div>
+      <a href="#" class="dash-nav-item active" data-view="dashboard" data-title="Good morning, Jane" data-sub="Saturday, October 10, 2026 · Next session in 3 days"><span class="dash-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span> Dashboard</a>
+      <a href="#" class="dash-nav-item" data-view="progress" data-title="Progress Tracker" data-sub="Buddy · Basic Obedience — Week 5 of 8"><span class="dash-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span> Progress Tracker</a>
+      <a href="#" class="dash-nav-item" data-view="achievements" data-title="Achievements" data-sub="4 of 12 badges earned — keep going!"><span class="dash-nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></span> Achievements <span class="dash-nav-badge">3</span></a>
+    </div>
+
+    <div class="dash-nav-section">
+      <div class="dash-nav-label">Training</div>
+      <a href="./programs.html" class="dash-nav-item"><span class="dash-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span> My Program</a>
+      <a href="#" class="dash-nav-item" data-view="schedule" data-title="Session Schedule" data-sub="3 upcoming sessions — Basic Obedience"><span class="dash-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Session Schedule</a>
+      <a href="#" class="dash-nav-item" data-view="notes" data-title="Session Notes" data-sub="2 unread notes from Sarah Mitchell"><span class="dash-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span> Session Notes <span class="dash-nav-badge">2</span></a>
+      <a href="#" class="dash-nav-item" data-view="library" data-title="Resource Library" data-sub="Videos, guides and homework for Buddy"><span class="dash-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></span> Resource Library</a>
+    </div>
+
+    <div class="dash-nav-section">
+      <div class="dash-nav-label">Account</div>
+      <a href="#" class="dash-nav-item" data-view="messages" data-title="Messages" data-sub="1 unread message from Sarah Mitchell"><span class="dash-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Messages <span class="dash-nav-badge">1</span></a>
+      <a href="#" class="dash-nav-item" data-view="settings" data-title="Settings" data-sub="Profile, notifications and preferences"><span class="dash-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Settings</a>
+      <a href="./login.html" class="dash-nav-item"><span class="dash-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Sign Out</a>
+    </div>
+
+  </nav>
+
+  <div class="dash-user-section">
+    <img class="dash-user-avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=70&auto=format" onerror="this.onerror=null;this.src='https://i.pravatar.cc/80?img=47';" alt="Jane Smith account avatar" loading="lazy" />
+    <div>
+      <div class="dash-user-name">Jane Smith</div>
+      <div class="dash-user-role">Pet Owner · Basic Obedience</div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="dash-main">
+  <!-- Top Bar -->
+  <div class="dash-topbar">
+    <div>
+      <div class="dash-topbar-title" id="dashTitle">Good morning, Jane</div>
+      <div id="dashSub" style="font-size:var(--fs-xs);color:var(--text-muted);">Saturday, October 10, 2026 · Next session in 3 days</div>
+    </div>
+    <div class="dash-topbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode"><svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg><span>RTL</span></button>
+      <a href="./contact.html" class="btn btn-primary btn-sm">+ Book Session</a>
+      <button style="position:relative;background:none;border:1.5px solid var(--border-color);border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:18px;" onclick="window.Pawfect?.Toast?.show('1 new message from Sarah Mitchell','info')"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span style="position:absolute;top:-2px;right:-2px;width:14px;height:14px;background:var(--burnt-orange);border-radius:50%;border:2px solid var(--bg-primary);"></span></button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD CONTENT -->
+  <div class="dash-content">
+
+    <div class="dash-view active" data-view="dashboard">
+    <!-- Dog Profile -->
+    <div class="dog-profile-card reveal" style="margin-bottom:var(--space-6);">
+      <img class="dog-avatar" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=200&q=85" alt="Buddy the Golden Retriever" loading="lazy" />
+      <div class="dog-info">
+        <div class="dog-name">Buddy</div>
+        <div class="dog-breed">Golden Retriever · Male · 2 years old</div>
+        <div class="dog-meta">
+          <span class="dog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Basic Obedience — Week 5/8</span>
+          <span class="dog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg> Trainer: Sarah Mitchell</span>
+          <span class="dog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Tuesdays 6–7pm</span>
+        </div>
+      </div>
+      <div class="dog-stats">
+        <div class="dog-stat">
+          <div class="dog-stat-val">5</div>
+          <div class="dog-stat-lbl">Sessions Done</div>
+        </div>
+        <div class="dog-stat">
+          <div class="dog-stat-val">3</div>
+          <div class="dog-stat-lbl">Remaining</div>
+        </div>
+        <div class="dog-stat">
+          <div class="dog-stat-val">87%</div>
+          <div class="dog-stat-lbl">Avg. Score</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="stat-cards" style="margin-bottom:var(--space-6);">
+      <div class="stat-card reveal" data-delay="0">
+        <div class="stat-card-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="stat-card-value" data-counter="5">5</div>
+        <div class="stat-card-label">Sessions Complete</div>
+        <div class="stat-card-trend">↑ On track</div>
+      </div>
+      <div class="stat-card reveal" data-delay="100">
+        <div class="stat-card-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <div class="stat-card-value" data-counter="87" data-suffix="%">87%</div>
+        <div class="stat-card-label">Avg Performance</div>
+        <div class="stat-card-trend">↑ +12% this week</div>
+      </div>
+      <div class="stat-card reveal" data-delay="200">
+        <div class="stat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
+        <div class="stat-card-value" data-counter="4">4</div>
+        <div class="stat-card-label">Achievements Earned</div>
+        <div class="stat-card-trend">1 new this week</div>
+      </div>
+      <div class="stat-card reveal" data-delay="300">
+        <div class="stat-card-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="stat-card-value">Nov 14</div>
+        <div class="stat-card-label">Graduation Date</div>
+        <div class="stat-card-trend">35 days away</div>
+      </div>
+    </div>
+
+    <!-- Middle Row: Progress + Upcoming Sessions -->
+    <div class="dash-grid-3" style="margin-bottom:var(--space-6);">
+      <div class="progress-widget reveal">
+        <div class="widget-header">
+          <h3 class="widget-title">Skill Progress</h3>
+          <span class="badge badge-primary">Week 5</span>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Sit Command</span><span class="skill-percent">95%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="95"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Down Command</span><span class="skill-percent">88%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="88"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Stay (30 sec)</span><span class="skill-percent">72%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="72"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Recall ("Come")</span><span class="skill-percent">80%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="80"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Leave It</span><span class="skill-percent">91%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="91"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Loose Leash Walk</span><span class="skill-percent">65%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="65"></div></div>
+        </div>
+        <a href="#" class="btn btn-outline btn-sm" style="margin-top:var(--space-4);width:100%;justify-content:center;">Full Progress Report →</a>
+      </div>
+
+      <div>
+        <!-- Upcoming Sessions -->
+        <div class="progress-widget reveal" data-delay="100" style="margin-bottom:var(--space-5);">
+          <div class="widget-header">
+            <h3 class="widget-title">Upcoming Sessions</h3>
+            <a href="#" style="font-size:var(--fs-xs);color:var(--burnt-orange);font-weight:700;">View All</a>
+          </div>
+          <div class="session-item">
+            <div class="session-date-badge">
+              <div class="session-day">14</div>
+              <div class="session-month">Oct</div>
+            </div>
+            <div class="session-info">
+              <div class="session-title">Week 6 — Leash Mastery Focus</div>
+              <div class="session-meta"><span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 6:00–7:00 PM</span><span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Main Hall</span></div>
+            </div>
+            <a href="./contact.html" class="btn btn-outline btn-sm">Reschedule</a>
+          </div>
+          <div class="session-item">
+            <div class="session-date-badge">
+              <div class="session-day">21</div>
+              <div class="session-month">Oct</div>
+            </div>
+            <div class="session-info">
+              <div class="session-title">Week 7 — Real-World Application</div>
+              <div class="session-meta"><span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 6:00–7:00 PM</span><span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Outdoor Area</span></div>
+            </div>
+            <a href="./contact.html" class="btn btn-outline btn-sm">Reschedule</a>
+          </div>
+          <div class="session-item">
+            <div class="session-date-badge" style="background:rgba(137,151,123,0.2);">
+              <div class="session-day" style="color:var(--sage-green);">28</div>
+              <div class="session-month" style="color:var(--sage-green);">Oct</div>
+            </div>
+            <div class="session-info">
+              <div class="session-title">Week 8 — Graduation Ceremony <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+              <div class="session-meta"><span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5:30–7:30 PM</span><span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Training Hall</span></div>
+            </div>
+            <span class="badge badge-secondary" style="flex-shrink:0;">Final</span>
+          </div>
+        </div>
+
+        <!-- Trainer Message -->
+        <div class="progress-widget reveal" data-delay="150">
+          <div class="widget-header">
+            <h3 class="widget-title">Latest from Sarah</h3>
+            <span class="badge badge-primary">New</span>
+          </div>
+          <div class="trainer-message">
+            <img class="message-avatar" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=80&q=70" alt="Sarah Mitchell trainer" loading="lazy" />
+            <div>
+              <div style="font-weight:700;font-size:var(--fs-sm);margin-bottom:4px;">Sarah Mitchell <span style="color:var(--text-muted);font-weight:400;font-size:var(--fs-xs);">· 2 days ago</span></div>
+              <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">Buddy had a fantastic session this week! His sit and leave-it are rock solid. Focus this week on the loose-leash protocol from the resource library — video 4 specifically. See you Tuesday!</p>
+              <a href="#" class="btn btn-outline btn-sm" style="margin-top:var(--space-3);">Reply →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div class="progress-widget reveal" style="margin-bottom:var(--space-6);">
+      <div class="widget-header">
+        <h3 class="widget-title"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg> Achievements</h3>
+        <span style="font-size:var(--fs-xs);color:var(--text-muted);font-weight:600;">4 of 12 earned</span>
+      </div>
+      <div class="badges-grid">
+        <div class="achievement">
+          <span class="achievement-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <div class="achievement-name">First Session!</div>
+          <div class="achievement-desc">Completed your first training session</div>
+        </div>
+        <div class="achievement">
+          <span class="achievement-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+          <div class="achievement-name">5-Session Streak</div>
+          <div class="achievement-desc">5 sessions without missing a class</div>
+        </div>
+        <div class="achievement">
+          <span class="achievement-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+          <div class="achievement-name">Sit Master</div>
+          <div class="achievement-desc">Buddy hit 95% sit reliability</div>
+        </div>
+        <div class="achievement">
+          <span class="achievement-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></span>
+          <div class="achievement-name">Leave It Champion</div>
+          <div class="achievement-desc">90%+ leave it performance</div>
+        </div>
+        <div class="achievement locked">
+          <span class="achievement-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="3"/><path d="M10 7h7a4 4 0 0 1 4 4v9"/><path d="M4 17l4-4 4 4"/><path d="M17 17l4 4"/></svg></span>
+          <div class="achievement-name">Loose Leash Legend</div>
+          <div class="achievement-desc">Achieve 85%+ loose leash score</div>
+        </div>
+        <div class="achievement locked">
+          <span class="achievement-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1"/></svg></span>
+          <div class="achievement-name">Recall Rockstar</div>
+          <div class="achievement-desc">Recall reliability above 90%</div>
+        </div>
+        <div class="achievement locked">
+          <span class="achievement-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+          <div class="achievement-name">Graduate!</div>
+          <div class="achievement-desc">Complete all 8 program sessions</div>
+        </div>
+        <div class="achievement locked">
+          <span class="achievement-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <div class="achievement-name">Top of the Class</div>
+          <div class="achievement-desc">Finish with 95%+ average score</div>
+        </div>
+      </div>
+    </div>
+    </div><!-- /dash-view dashboard -->
+
+    <!-- PROGRESS VIEW -->
+    <div class="dash-view" data-view="progress">
+      <div class="dash-view-head"><h2>Progress Tracker</h2><p>Buddy · Basic Obedience — Week 5 of 8 · updated after every session</p></div>
+      <div class="progress-widget" style="margin-bottom:var(--space-5);">
+        <div class="widget-header"><h3 class="widget-title">Skill Progress</h3><span class="badge badge-primary">Week 5</span></div>
+        <div class="skill-row"><div class="skill-label"><span>Sit Command</span><span class="skill-percent">95%</span></div><div class="progress-bar"><div class="progress-fill" data-width="95"></div></div></div>
+        <div class="skill-row"><div class="skill-label"><span>Down Command</span><span class="skill-percent">88%</span></div><div class="progress-bar"><div class="progress-fill" data-width="88"></div></div></div>
+        <div class="skill-row"><div class="skill-label"><span>Stay (30 sec)</span><span class="skill-percent">72%</span></div><div class="progress-bar"><div class="progress-fill" data-width="72"></div></div></div>
+        <div class="skill-row"><div class="skill-label"><span>Recall ("Come")</span><span class="skill-percent">80%</span></div><div class="progress-bar"><div class="progress-fill" data-width="80"></div></div></div>
+        <div class="skill-row"><div class="skill-label"><span>Leave It</span><span class="skill-percent">91%</span></div><div class="progress-bar"><div class="progress-fill" data-width="91"></div></div></div>
+        <div class="skill-row"><div class="skill-label"><span>Loose Leash Walk</span><span class="skill-percent">65%</span></div><div class="progress-bar"><div class="progress-fill" data-width="65"></div></div></div>
+      </div>
+      <div class="dash-list-card">
+        <div class="widget-header"><h3 class="widget-title">This Week's Focus</h3><span class="badge badge-secondary">Homework</span></div>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">Loose-leash protocol, video 4 in the resource library — 10 minutes daily. Sarah flagged recall proofing for Week 6, so keep those high-value treats ready.</p>
+      </div>
+    </div>
+
+    <!-- ACHIEVEMENTS VIEW -->
+    <div class="dash-view" data-view="achievements">
+      <div class="dash-view-head"><h2>Achievements</h2><p>4 of 12 badges earned — new badges unlock automatically after sessions</p></div>
+      <div class="progress-widget">
+        <div class="badges-grid">
+          <div class="achievement"><span class="achievement-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><div class="achievement-name">First Session!</div><div class="achievement-desc">Completed your first training session</div></div>
+          <div class="achievement"><span class="achievement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><div class="achievement-name">5-Session Streak</div><div class="achievement-desc">5 sessions without missing a class</div></div>
+          <div class="achievement"><span class="achievement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><div class="achievement-name">Sit Master</div><div class="achievement-desc">Buddy hit 95% sit reliability</div></div>
+          <div class="achievement"><span class="achievement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></span><div class="achievement-name">Leave It Champion</div><div class="achievement-desc">90%+ leave it performance</div></div>
+          <div class="achievement locked"><span class="achievement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="3"/><path d="M10 7h7a4 4 0 0 1 4 4v9"/><path d="M4 17l4-4 4 4"/><path d="M17 17l4 4"/></svg></span><div class="achievement-name">Loose Leash Legend</div><div class="achievement-desc">Achieve 85%+ loose leash score</div></div>
+          <div class="achievement locked"><span class="achievement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1"/></svg></span><div class="achievement-name">Recall Rockstar</div><div class="achievement-desc">Recall reliability above 90%</div></div>
+          <div class="achievement locked"><span class="achievement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span><div class="achievement-name">Graduate!</div><div class="achievement-desc">Complete all 8 program sessions</div></div>
+          <div class="achievement locked"><span class="achievement-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><div class="achievement-name">Top of the Class</div><div class="achievement-desc">Finish with 95%+ average score</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE VIEW -->
+    <div class="dash-view" data-view="schedule">
+      <div class="dash-view-head"><h2>Session Schedule</h2><p>Basic Obedience · Tuesdays 6–7pm · Main Hall</p></div>
+      <div class="progress-widget" style="margin-bottom:var(--space-5);">
+        <div class="session-item"><div class="session-date-badge"><div class="session-day">14</div><div class="session-month">Oct</div></div><div class="session-info"><div class="session-title">Week 6 — Leash Mastery Focus</div><div class="session-meta"><span>6:00–7:00 PM</span><span>Main Hall</span></div></div><a href="./contact.html" class="btn btn-outline btn-sm">Reschedule</a></div>
+        <div class="session-item"><div class="session-date-badge"><div class="session-day">21</div><div class="session-month">Oct</div></div><div class="session-info"><div class="session-title">Week 7 — Real-World Application</div><div class="session-meta"><span>6:00–7:00 PM</span><span>Outdoor Area</span></div></div><a href="./contact.html" class="btn btn-outline btn-sm">Reschedule</a></div>
+        <div class="session-item"><div class="session-date-badge" style="background:rgba(137,151,123,0.2);"><div class="session-day" style="color:var(--sage-green);">28</div><div class="session-month" style="color:var(--sage-green);">Oct</div></div><div class="session-info"><div class="session-title">Week 8 — Graduation Ceremony</div><div class="session-meta"><span>5:30–7:30 PM</span><span>Training Hall</span></div></div><span class="badge badge-secondary" style="flex-shrink:0;">Final</span></div>
+      </div>
+      <div class="dash-list-card"><div class="widget-header"><h3 class="widget-title">Need a different time?</h3></div><p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">One free make-up session per program. Message Sarah or contact the academy to move a session.</p><a href="./contact.html" class="btn btn-outline btn-sm" style="margin-top:var(--space-3);">Contact Academy</a></div>
+    </div>
+
+    <!-- NOTES VIEW -->
+    <div class="dash-view" data-view="notes">
+      <div class="dash-view-head"><h2>Session Notes</h2><p>2 unread notes from Sarah Mitchell</p></div>
+      <div class="dash-list-card">
+        <div class="widget-header"><h3 class="widget-title">Week 5 — Leash Foundations</h3><span class="badge badge-primary">New</span></div>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">Buddy's stop-and-reset is clicking! Practice 10 minutes daily on quiet streets before adding distractions. High-value treats only for passing drills this week.</p>
+      </div>
+      <div class="dash-list-card">
+        <div class="widget-header"><h3 class="widget-title">Week 4 — Recall & Leave It</h3><span class="badge badge-primary">New</span></div>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">Excellent emergency recall in class. Homework: 20 backyard recalls daily, big party every time. Leave-it is at 91% — proof around dropped food next.</p>
+      </div>
+      <div class="dash-list-card">
+        <div class="widget-header"><h3 class="widget-title">Week 3 — Sit, Down & Stay</h3><span class="badge badge-secondary">Read</span></div>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">Solid 30-second stays achieved. Keep sessions short and end on wins — Buddy learns fastest in 5-minute bursts.</p>
+      </div>
+    </div>
+
+    <!-- LIBRARY VIEW -->
+    <div class="dash-view" data-view="library">
+      <div class="dash-view-head"><h2>Resource Library</h2><p>Videos, guides and homework picked for Buddy's program</p></div>
+      <div class="dash-grid-2">
+        <div class="dash-list-card"><h3 class="widget-title">Loose-Leash Protocol — Video 4</h3><p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">Sarah's 8-minute stop-and-reset walkthrough. Watch before Tuesday.</p><a href="#" class="read-more" style="margin-top:var(--space-3);display:inline-flex;" onclick="window.Pawfect?.Toast?.show('Video 4 would play here','info');return false;">Watch now →</a></div>
+        <div class="dash-list-card"><h3 class="widget-title">Recall Proofing Guide (PDF)</h3><p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">The 3-D ladder: distance, duration, distraction — one rung at a time.</p><a href="#" class="read-more" style="margin-top:var(--space-3);display:inline-flex;" onclick="window.Pawfect?.Toast?.show('Download would start here','info');return false;">Download →</a></div>
+        <div class="dash-list-card"><h3 class="widget-title">Treat Value Chart</h3><p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">Rank Buddy's rewards so the hardest behaviors pay the best.</p><a href="#" class="read-more" style="margin-top:var(--space-3);display:inline-flex;" onclick="window.Pawfect?.Toast?.show('Chart would open here','info');return false;">Open chart →</a></div>
+        <div class="dash-list-card"><h3 class="widget-title">Week 6 Homework Sheet</h3><p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">Daily checklist: 10-min walks, passing drills, settle practice.</p><a href="#" class="read-more" style="margin-top:var(--space-3);display:inline-flex;" onclick="window.Pawfect?.Toast?.show('Homework sheet would open here','info');return false;">Open sheet →</a></div>
+      </div>
+    </div>
+
+    <!-- MESSAGES VIEW -->
+    <div class="dash-view" data-view="messages">
+      <div class="dash-view-head"><h2>Messages</h2><p>Direct line to your training team</p></div>
+      <div class="dash-list-card">
+        <div class="widget-header"><h3 class="widget-title">Sarah Mitchell</h3><span class="badge badge-primary">New</span></div>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">"Buddy had a fantastic session! Focus this week on the loose-leash protocol — video 4. See you Tuesday!" <span style="color:var(--text-muted);font-size:var(--fs-xs);">· 2 days ago</span></p>
+        <a href="#" class="btn btn-outline btn-sm" style="margin-top:var(--space-3);" onclick="window.Pawfect?.Toast?.show('Message composer would open here','info');return false;">Reply →</a>
+      </div>
+      <div class="dash-list-card">
+        <div class="widget-header"><h3 class="widget-title">Academy Front Desk</h3><span class="badge badge-secondary">Read</span></div>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">"Reminder: Week 7 moves to the Outdoor Area. Bring a long line and water." <span style="color:var(--text-muted);font-size:var(--fs-xs);">· 5 days ago</span></p>
+      </div>
+    </div>
+
+    <!-- SETTINGS VIEW -->
+    <div class="dash-view" data-view="settings">
+      <div class="dash-view-head"><h2>Settings</h2><p>Profile, notifications and preferences</p></div>
+      <div class="progress-widget" style="margin-bottom:var(--space-5);">
+        <div class="widget-header"><h3 class="widget-title">Profile</h3></div>
+        <div class="grid-2">
+          <div class="form-group"><label class="form-label" for="setName">Your Name</label><input type="text" id="setName" class="form-control" value="Jane Smith" /></div>
+          <div class="form-group"><label class="form-label" for="setEmail">Email</label><input type="email" id="setEmail" class="form-control" value="jane@example.com" /></div>
+        </div>
+        <div class="form-group"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:var(--fs-sm);"><input type="checkbox" checked /> Email me session reminders</label></div>
+        <div class="form-group"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:var(--fs-sm);"><input type="checkbox" checked /> Notify me when trainer notes arrive</label></div>
+        <button class="btn btn-primary" onclick="window.Pawfect?.Toast?.show('Settings saved!','success')">Save Changes</button>
+      </div>
+    </div>
+
+  </div><!-- /dash-content -->
+</main>
+
+<script src="./assets/js/global.js"></script>
+<script>
+  // Sidebar mobile toggle
+  const sidebar = document.getElementById('dashSidebar');
+  document.querySelector('.dash-topbar-actions')?.insertAdjacentHTML('afterbegin',
+    '<button onclick="document.getElementById(\'dashSidebar\').classList.toggle(\'mobile-open\')" style="display:none;background:none;border:1.5px solid var(--border-color);border-radius:var(--border-radius-sm);width:40px;height:40px;cursor:pointer;font-size:18px;" class="sidebar-mobile-btn" aria-label="Toggle menu"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>'
+  );
+  function checkViewport() {
+    const btn = document.querySelector('.sidebar-mobile-btn');
+    if (btn) btn.style.display = window.innerWidth <= 900 ? 'flex' : 'none';
+  }
+  window.addEventListener('resize', checkViewport);
+  checkViewport();
+
+  // Sidebar views — each menu opens its matching content
+  document.querySelectorAll('.dash-nav-item[data-view]').forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelectorAll('.dash-nav-item').forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+      document.querySelectorAll('.dash-view').forEach(v => v.classList.remove('active'));
+      const view = document.querySelector('.dash-view[data-view="' + this.dataset.view + '"]');
+      if (view) view.classList.add('active');
+      const title = document.getElementById('dashTitle');
+      const sub = document.getElementById('dashSub');
+      if (title && this.dataset.title) title.textContent = this.dataset.title;
+      if (sub && this.dataset.sub) sub.textContent = this.dataset.sub;
+      document.querySelector('.dash-main')?.scrollTo({ top: 0 });
+      window.scrollTo({ top: 0 });
+      document.getElementById('dashSidebar')?.classList.remove('mobile-open');
+    });
+  });
+</script>
+</body>
+</html>

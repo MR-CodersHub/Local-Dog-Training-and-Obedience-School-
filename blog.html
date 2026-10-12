@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dog Training Blog — Pawfect Academy | Tips, Insights & Success Stories</title>
+  <meta name="description" content="Expert dog training tips, behavior insights, success stories and canine lifestyle articles from the certified trainers at Pawfect Academy." />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    /* BLOG PAGE */
+    .blog-layout { display: grid; grid-template-columns: 1fr 320px; gap: var(--space-8); align-items: start; }
+    .blog-sidebar { position: sticky; top: calc(var(--navbar-height) + 20px); }
+    .sidebar-widget {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg); padding: var(--space-5);
+      margin-bottom: var(--space-5); box-shadow: var(--shadow-sm);
+    }
+    .widget-title {
+      font-family: var(--font-display); font-size: var(--fs-lg);
+      margin-bottom: var(--space-4); padding-bottom: var(--space-3);
+      border-bottom: 2px solid var(--burnt-orange); display: inline-block;
+    }
+    .category-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .category-item {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: 8px 14px 8px 8px; border-radius: var(--border-radius-sm);
+      font-size: var(--fs-sm); font-weight: 600; cursor: pointer;
+      transition: all var(--transition-fast); color: var(--text-secondary);
+    }
+    .cat-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: rgba(217, 119, 69, 0.1); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .cat-icon svg { width: 17px; height: 17px; }
+    .cat-label { flex: 1; }
+    .category-item:hover { background: rgba(217,119,69,0.08); color: var(--burnt-orange); }
+    .category-count {
+      background: var(--border-color); padding: 2px 8px;
+      border-radius: var(--border-radius-full); font-size: var(--fs-xs); font-weight: 700;
+    }
+    .recent-post { display: flex; gap: var(--space-3); padding-block: var(--space-3); border-bottom: 1px solid var(--border-color); }
+    .recent-post:last-child { border-bottom: none; }
+    .recent-post-img { width: 72px; height: 72px; border-radius: var(--border-radius-sm); object-fit: cover; flex-shrink: 0; }
+    .recent-post-title { font-size: var(--fs-sm); font-weight: 600; line-height: 1.4; }
+    .recent-post-title a:hover { color: var(--burnt-orange); }
+    .recent-post-date { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 4px; }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+    /* Featured Post */
+    .featured-post {
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 0;
+      background: var(--midnight-navy); border-radius: var(--border-radius-xl);
+      overflow: hidden; margin-bottom: var(--space-7);
+      box-shadow: var(--shadow-xl);
+    }
+    .featured-post-img { width: 100%; height: 100%; object-fit: cover; min-height: 400px; }
+    .featured-post-body {
+      padding: clamp(30px, 5vw, 60px);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    /* Featured badges — fit content, not full width */
+    .featured-post-body .badge {
+      align-self: flex-start; width: auto; max-width: 100%; white-space: nowrap;
+    }
+    .featured-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(217,119,69,0.15); border: 1px solid rgba(217,119,69,0.3);
+      padding: 6px 14px; border-radius: var(--border-radius-full);
+      font-size: var(--fs-xs); font-weight: 700; color: var(--burnt-orange);
+      width: fit-content; margin-bottom: var(--space-4); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .featured-post-title { font-family: var(--font-display); font-size: var(--fs-2xl); color: white; margin-block: var(--space-3) var(--space-4); line-height: 1.25; }
+    .featured-post-excerpt { color: rgba(255,255,255,0.65); font-size: var(--fs-sm); line-height: 1.8; }
+
+    /* Posts Grid — straight-aligned cards (links pinned to bottom) */
+    .posts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5); align-items: stretch; }
+    .posts-grid .blog-card { display: flex; flex-direction: column; }
+    .posts-grid .blog-card-body { display: flex; flex-direction: column; flex: 1; }
+    /* Titles locked to exactly 2 lines so every row starts at the same height */
+    .posts-grid .blog-card-title {
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: calc(1.3em * 2);
+    }
+    .posts-grid .blog-card-excerpt { flex: 1; }
+    .posts-grid .blog-card-body .read-more { margin-top: auto; align-self: flex-start; }
+    .search-no-results {
+      display: none; text-align: center; padding: var(--space-6);
+      color: var(--text-muted); font-size: var(--fs-sm);
+      background: var(--bg-card); border: 1px dashed var(--border-color);
+      border-radius: var(--border-radius-md); margin-top: var(--space-5);
+    }
+
+    /* Newsletter Widget */
+    .newsletter-widget { background: var(--midnight-navy); border-radius: var(--border-radius-lg); padding: var(--space-5); }
+    .newsletter-widget h4 { color: white; margin-bottom: var(--space-3); display: flex; align-items: center; gap: 10px; }
+    .nl-icon {
+      width: 38px; height: 38px; border-radius: 12px;
+      background: var(--burnt-orange); color: #fff;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      box-shadow: var(--shadow-orange);
+    }
+    .nl-icon svg { width: 20px; height: 20px; }
+    .newsletter-widget p { color: rgba(255,255,255,0.65); font-size: var(--fs-xs); line-height: 1.6; margin-bottom: var(--space-4); }
+
+    /* Pagination */
+    .pagination { display: flex; align-items: center; gap: var(--space-2); justify-content: center; margin-top: var(--space-7); }
+    .page-btn {
+      width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--border-color);
+      display: flex; align-items: center; justify-content: center;
+      font-size: var(--fs-sm); font-weight: 700; cursor: pointer;
+      transition: all var(--transition-fast); color: var(--text-secondary); background: var(--bg-card);
+    }
+    .page-btn:hover, .page-btn.active { border-color: var(--burnt-orange); color: var(--burnt-orange); background: rgba(217,119,69,0.08); }
+    .page-btn.active { background: var(--burnt-orange); color: white; border-color: var(--burnt-orange); }
+
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .blog-layout { grid-template-columns: 1fr; }
+      .blog-sidebar { position: static; }
+      .featured-post { grid-template-columns: 1fr; }
+      .featured-post-img { height: 300px; }
+    }
+
+    @media (max-width: 760px) {
+      .featured-post-body { padding: 32px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .posts-grid { grid-template-columns: 1fr; }
+      .featured-post-img { height: 220px; }
+      .featured-post-body { padding: 22px 16px; }
+      .pagination { gap: 6px; }
+      .page-btn { width: 40px; height: 40px; font-size: var(--fs-xs); }
+    }
+
+    @media (max-width: 360px) {
+      .blog-card-body { padding: 18px 14px; }
+      .newsletter-widget { padding: 18px 14px; }
+      .page-btn { width: 36px; height: 36px; }
+    }
+
+    @media (max-width: 320px) {
+      .blog-card-body { padding: 14px 10px; }
+      .featured-post-img { height: 180px; }
+      .featured-post-title { font-size: var(--fs-lg); }
+      .page-btn { width: 32px; height: 32px; font-size: 0.75rem; }
+      .newsletter-widget { padding: 14px 10px; }
+      .newsletter-widget h4 { font-size: var(--fs-md); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-transparent" data-transparent="true" id="mainNavbar" role="navigation" aria-label="Main Navigation">
+  <div class="navbar-inner">
+    <a href="./index.html" class="navbar-logo" aria-label="Pawfect Academy Home">
+      <div class="navbar-logo-icon" aria-hidden="true">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+      </div>
+      <div>
+        <div class="navbar-logo-text">Pawfect <span>Academy</span></div>
+        <div class="navbar-logo-sub">Dog Training School</div>
+      </div>
+    </a>
+
+    <nav class="navbar-nav" role="menubar">
+      <a href="./index.html" class="nav-link" role="menuitem">Home</a>
+      <a href="./home2.html" class="nav-link" role="menuitem">Home 2</a>
+      <a href="./about.html" class="nav-link" role="menuitem">About</a>
+      <a href="./programs.html" class="nav-link" role="menuitem">Programs</a>
+      <a href="./trainers.html" class="nav-link" role="menuitem">Trainers</a>
+      <a href="./pricing.html" class="nav-link" role="menuitem">Pricing</a>
+      <a href="./blog.html" class="nav-link" role="menuitem">Blog</a>
+      <a href="./contact.html" class="nav-link" role="menuitem">Contact</a>
+    </nav>
+
+    <div class="navbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction">RTL</button>
+
+      <div class="profile-dropdown" id="profileDropdown">
+        <button class="profile-btn" id="profileToggle" aria-label="User Account Menu" aria-haspopup="true" aria-expanded="false">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div class="profile-menu" role="menu" aria-label="Account Options">
+          <div class="profile-menu-header">
+            <span class="profile-menu-title">Account Portal</span>
+          </div>
+          <a href="./login.html" class="profile-menu-item" role="menuitem">
+  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+  <span>Login/Signup</span>
+</a>
+          <a href="./dashboard.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Pet Owner Dashboard</span>
+          </a>
+          <a href="./admin.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5z"/><circle cx="12" cy="15" r="1.5"/></svg>
+            <span>Admin Dashboard</span>
+          </a>
+        </div>
+      </div>
+
+      <a href="./signup.html" class="btn btn-primary btn-sm nav-cta-btn">Get Started</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile Navigation">
+  <div class="mobile-nav-links">
+    <a href="./index.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+    <a href="./home2.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home 2</a>
+    <a href="./about.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h1M9 13h1M9 17h1M14 9h1M14 13h1M14 17h1"/></svg> About</a>
+    <a href="./programs.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Programs</a>
+    <a href="./trainers.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Trainers</a>
+    <a href="./pricing.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Pricing</a>
+    <a href="./blog.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg> Blog</a>
+    <a href="./contact.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Contact</a>
+        <div class="mobile-nav-cta">
+      <a href="./signup.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="container page-header-content">
+    <div class="eyebrow">Training Blog</div>
+    <h1>Expert Tips &<br/><em style="color:var(--burnt-orange);">Real Stories</em></h1>
+    <p>Training insights, behavior science breakdowns, breed guides and success stories — from the certified trainers who live this every day.</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <span class="breadcrumb-item"><a href="./index.html">Home</a></span>
+      <span class="breadcrumb-separator">›</span>
+      <span class="breadcrumb-item current">Blog</span>
+    </nav>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<section class="section">
+  <div class="container">
+
+    <!-- FEATURED POST -->
+    <div class="featured-post reveal-scale">
+      <img class="featured-post-img" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=700&q=85&auto=format" alt="Dog trainer demonstrating positive reinforcement with golden retriever - featured article" loading="lazy" />
+      <div class="featured-post-body">
+        <div class="featured-label"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Featured Article</div>
+        <div class="badge badge-primary" style="margin-bottom:var(--space-3);">Behavior Science</div>
+        <h2 class="featured-post-title">Why Your Dog Ignores You — And the Science of Getting Their Attention Back</h2>
+        <p class="featured-post-excerpt">Distraction is not defiance. Understanding why dogs disengage — and the four core principles that rebuild engagement — will transform your training sessions from frustrating to genuinely joyful.</p>
+        <div style="display:flex;align-items:center;gap:var(--space-4);margin-top:var(--space-5);">
+          <div style="display:flex;align-items:center;gap:var(--space-2);">
+            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=40&q=80" alt="Sarah Mitchell" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" loading="lazy" />
+            <span style="color:rgba(255,255,255,0.75);font-size:var(--fs-xs);font-weight:600;">Sarah Mitchell</span>
+          </div>
+          <span style="color:rgba(255,255,255,0.4);font-size:var(--fs-xs);">Oct 5, 2026 · 8 min read</span>
+        </div>
+        <a href="./blog-details.html" class="btn btn-primary" style="margin-top:var(--space-5);width:fit-content;">Read Full Article →</a>
+      </div>
+    </div>
+
+    <!-- LAYOUT -->
+    <div class="blog-layout">
+      <!-- POSTS -->
+      <div>
+        <!-- Category Filter -->
+        <div class="filter-group d-flex gap-3 flex-wrap reveal" data-delay="0" data-target="#postsGrid" style="margin-bottom:var(--space-6);">
+          <button class="chip active" data-filter="all">All Posts</button>
+          <button class="chip" data-filter="training">Training Tips</button>
+          <button class="chip" data-filter="behavior">Behavior</button>
+          <button class="chip" data-filter="puppy">Puppy Life</button>
+          <button class="chip" data-filter="stories">Success Stories</button>
+          <button class="chip" data-filter="nutrition">Health & Care</button>
+        </div>
+
+        <div class="posts-grid" id="postsGrid">
+          <article class="blog-card reveal" data-delay="0" data-category="training">
+            <div style="overflow:hidden;">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=500&q=80&auto=format" alt="Training recall with dog in park" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">
+                <span class="badge badge-primary" style="font-size:10px;">Training Tips</span>
+                <span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Oct 1, 2026</span>
+                <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5 min</span>
+              </div>
+              <h2 class="blog-card-title"><a href="./blog-details.html?post=recall-fix">The 5-Minute Recall Fix That Works for Every Breed</a></h2>
+              <p class="blog-card-excerpt">A simple, repeatable protocol that dramatically improves your dog's recall reliability in just two weeks of consistent practice.</p>
+              <a href="./blog-details.html?post=recall-fix" class="read-more">Read Article →</a>
+            </div>
+          </article>
+
+          <article class="blog-card reveal" data-delay="100" data-category="behavior">
+            <div style="overflow:hidden;">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500&q=80&auto=format" alt="Dog showing reactive behavior on leash at park" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">
+                <span class="badge badge-secondary" style="font-size:10px;">Behavior</span>
+                <span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Sep 22, 2026</span>
+                <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 7 min</span>
+              </div>
+              <h2 class="blog-card-title"><a href="./blog-details.html?post=leash-reactivity">Leash Reactivity: Understanding the Root Cause</a></h2>
+              <p class="blog-card-excerpt">Leash reactivity is one of the most common issues we see. Here's why it happens, what it's communicating, and a structured plan to address it.</p>
+              <a href="./blog-details.html?post=leash-reactivity" class="read-more">Read Article →</a>
+            </div>
+          </article>
+
+          <article class="blog-card reveal" data-delay="0" data-category="puppy">
+            <div style="overflow:hidden;">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1560743641-3914f2c45636?w=500&q=80&auto=format" alt="Happy puppies in socialization class" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">
+                <span class="badge badge-primary" style="font-size:10px;">Puppy Life</span>
+                <span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Sep 15, 2026</span>
+                <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 6 min</span>
+              </div>
+              <h2 class="blog-card-title"><a href="./blog-details.html?post=socialization-window">The Socialization Window: What It Is and Why It Closes at 16 Weeks</a></h2>
+              <p class="blog-card-excerpt">The single most important developmental period in your puppy's life and exactly how to make the most of every day before it closes.</p>
+              <a href="./blog-details.html?post=socialization-window" class="read-more">Read Article →</a>
+            </div>
+          </article>
+
+          <article class="blog-card reveal" data-delay="100" data-category="stories">
+            <div style="overflow:hidden;">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1551717743-49959800b1f6?w=500&q=80&auto=format" alt="Happy dog and owner after successful training graduation" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">
+                <span class="badge badge-secondary" style="font-size:10px;">Success Story</span>
+                <span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Sep 8, 2026</span>
+                <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 4 min</span>
+              </div>
+              <h2 class="blog-card-title"><a href="./blog-details.html?post=beau-agility-star">How Beau Went from Reactive Rescue to Off-Leash Agility Star</a></h2>
+              <p class="blog-card-excerpt">A 12-week behavior correction journey that transformed a fearful border collie — and the owner who never gave up on him.</p>
+              <a href="./blog-details.html?post=beau-agility-star" class="read-more">Read Article →</a>
+            </div>
+          </article>
+
+          <article class="blog-card reveal" data-delay="0" data-category="nutrition">
+            <div style="overflow:hidden;">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=500&q=80&auto=format" alt="Dog receiving healthy training treats during obedience session" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">
+                <span class="badge badge-primary" style="font-size:10px;">Health & Care</span>
+                <span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Aug 28, 2026</span>
+                <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5 min</span>
+              </div>
+              <h2 class="blog-card-title"><a href="./blog-details.html?post=training-treats">The Best Training Treats — And Why Your Dog's Motivation Matters</a></h2>
+              <p class="blog-card-excerpt">Not all treats are created equal. Here's how to find the right reinforcement currency for your individual dog's drive level and learning style.</p>
+              <a href="./blog-details.html?post=training-treats" class="read-more">Read Article →</a>
+            </div>
+          </article>
+
+          <article class="blog-card reveal" data-delay="100" data-category="training">
+            <div style="overflow:hidden;">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500&q=80&auto=format" alt="Happy dog running recall off-leash in a green park" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">
+                <span class="badge badge-secondary" style="font-size:10px;">Training Tips</span>
+                <span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Aug 18, 2026</span>
+                <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 6 min</span>
+              </div>
+              <h2 class="blog-card-title"><a href="./blog-details.html?post=proofing-commands">Proofing Commands: How to Make Obedience Work Everywhere</a></h2>
+              <p class="blog-card-excerpt">Your dog sits perfectly at home but completely ignores you at the park. Here's the step-by-step proofing protocol that bridges that gap.</p>
+              <a href="./blog-details.html?post=proofing-commands" class="read-more">Read Article →</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="search-no-results" id="searchNoResults">No articles match your search. Try "recall", "puppy" or "reactivity".</div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="page-btn active" aria-label="Page 1">1</button>
+          <button class="page-btn" aria-label="Page 2">2</button>
+          <button class="page-btn" aria-label="Page 3">3</button>
+          <span style="color:var(--text-muted);">...</span>
+          <button class="page-btn" aria-label="Page 8">8</button>
+          <button class="page-btn" aria-label="Next page">→</button>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="blog-sidebar" role="complementary">
+        <!-- Search -->
+        <div class="sidebar-widget reveal">
+          <h3 class="widget-title">Search</h3>
+          <div style="display:flex;gap:8px;">
+            <input type="search" id="blogSearch" class="form-control" placeholder="Search articles..." aria-label="Search blog articles" style="flex:1;" />
+            <button id="blogSearchBtn" class="btn btn-primary btn-sm" aria-label="Search" style="padding:14px 16px;"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="sidebar-widget reveal" data-delay="50">
+          <h3 class="widget-title">Categories</h3>
+          <ul class="category-list">
+            <li class="category-item" data-catfilter="training"><span class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span> <span class="cat-label">Training Tips</span> <span class="category-count">24</span></li>
+            <li class="category-item" data-catfilter="behavior"><span class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><line x1="8.5" y1="2" x2="15.5" y2="2"/><path d="M8.5 14h7"/></svg></span> <span class="cat-label">Behavior Science</span> <span class="category-count">18</span></li>
+            <li class="category-item" data-catfilter="puppy"><span class="cat-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span> <span class="cat-label">Puppy Life</span> <span class="category-count">15</span></li>
+            <li class="category-item" data-catfilter="stories"><span class="cat-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span> <span class="cat-label">Success Stories</span> <span class="category-count">12</span></li>
+            <li class="category-item" data-catfilter="nutrition"><span class="cat-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span> <span class="cat-label">Health & Care</span> <span class="category-count">9</span></li>
+            <li class="category-item" data-catfilter="all"><span class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></span> <span class="cat-label">Resources</span> <span class="category-count">7</span></li>
+          </ul>
+        </div>
+
+        <!-- Recent Posts -->
+        <div class="sidebar-widget reveal" data-delay="100">
+          <h3 class="widget-title">Recent Posts</h3>
+          <div>
+            <div class="recent-post">
+              <img class="recent-post-img" src="https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=150&q=70" alt="Recall training article thumbnail" loading="lazy" />
+              <div>
+                <div class="recent-post-title"><a href="./blog-details.html?post=recall-fix">The 5-Minute Recall Fix</a></div>
+                <div class="recent-post-date">Oct 1, 2026</div>
+              </div>
+            </div>
+            <div class="recent-post">
+              <img class="recent-post-img" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=150&q=70" alt="Leash reactivity article thumbnail" loading="lazy" />
+              <div>
+                <div class="recent-post-title"><a href="./blog-details.html?post=leash-reactivity">Leash Reactivity: The Root Cause</a></div>
+                <div class="recent-post-date">Sep 22, 2026</div>
+              </div>
+            </div>
+            <div class="recent-post">
+              <img class="recent-post-img" src="https://images.unsplash.com/photo-1560743641-3914f2c45636?w=150&q=70" alt="Socialization window article thumbnail" loading="lazy" />
+              <div>
+                <div class="recent-post-title"><a href="./blog-details.html?post=socialization-window">The Socialization Window</a></div>
+                <div class="recent-post-date">Sep 15, 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="sidebar-widget reveal" data-delay="150">
+          <h3 class="widget-title">Tags</h3>
+          <div class="tag-cloud">
+            <span class="chip" style="font-size:11px;">Puppies</span>
+            <span class="chip" style="font-size:11px;">Recall</span>
+            <span class="chip" style="font-size:11px;">Reactivity</span>
+            <span class="chip" style="font-size:11px;">Leash Walking</span>
+            <span class="chip" style="font-size:11px;">Socialization</span>
+            <span class="chip" style="font-size:11px;">Golden Retriever</span>
+            <span class="chip" style="font-size:11px;">German Shepherd</span>
+            <span class="chip" style="font-size:11px;">Border Collie</span>
+            <span class="chip" style="font-size:11px;">Anxiety</span>
+            <span class="chip" style="font-size:11px;">Treats</span>
+          </div>
+        </div>
+
+        <!-- Newsletter widget -->
+        <div class="newsletter-widget reveal" data-delay="200">
+          <h4><span class="nl-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span> Free Training Tips</h4>
+          <p>Join 4,000+ dog owners getting weekly training insights in their inbox.</p>
+          <form data-validate data-success-msg="Welcome to the pack!">
+            <input type="email" class="form-control" placeholder="your@email.com" required style="margin-bottom:var(--space-3);background:rgba(255,255,255,0.1);color:white;border-color:rgba(255,255,255,0.2);" />
+            <button type="submit" class="btn btn-primary w-full" style="width:100%;justify-content:center;">Subscribe Free</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- ===== STANDARD FOOTER ===== -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- COLUMN 1 — COMPANY -->
+      <div class="footer-brand">
+        <a href="./index.html" class="navbar-logo footer-logo" aria-label="Pawfect Academy — Home">
+          <span class="navbar-logo-icon" aria-hidden="true">
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+          </span>
+          <span class="navbar-logo-text" style="color:white;">Pawfect <span>Academy</span></span>
+        </a>
+        <p>Premium canine training and obedience school dedicated to building lasting bonds between dogs and their families through science-based, force-free methods.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#202C3B"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- COLUMN 2 — QUICK LINKS (mirrors main navbar) -->
+      <nav class="footer-col" aria-label="Quick links">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="./index.html" class="footer-link">Home</a></li>
+          <li><a href="./home2.html" class="footer-link">Home 2</a></li>
+          <li><a href="./about.html" class="footer-link">About</a></li>
+          <li><a href="./programs.html" class="footer-link">Programs</a></li>
+          <li><a href="./trainers.html" class="footer-link">Trainers</a></li>
+          <li><a href="./pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="./blog.html" class="footer-link">Blog</a></li>
+          <li><a href="./contact.html" class="footer-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- COLUMN 3 — CONTACT DETAILS -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>123 Training Lane, Suite 200<br />Portland, OR 97201</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+15551234567">(555) 123-4567</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Mon &ndash; Sat: 7:00 AM &ndash; 7:00 PM<br />Sun: Closed</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 4 — NEWSLETTER -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Newsletter</h4>
+        <p class="footer-newsletter-text">Subscribe to receive the latest training tips, news, offers and insights from our certified trainers.</p>
+        <form class="footer-newsletter-form" data-validate data-success-msg="Welcome to the pack! Check your inbox.">
+          <div class="footer-newsletter-field">
+            <label class="sr-only" for="footerNewsletterEmail">Email address</label>
+            <input type="email" id="footerNewsletterEmail" name="email" class="footer-newsletter-input" placeholder="Your email address" required aria-label="Email address" autocomplete="email" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+        <p class="footer-newsletter-note">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <!-- BOTTOM LEGAL BAR -->
+    <div class="footer-bottom">
+      <p>&copy; <span class="js-footer-year">2026</span> Pawfect Academy. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./terms-conditions.html">Terms &amp; Conditions</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./sitemap.html">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<script src="./assets/js/global.js"></script>
+<script>
+  // Blog live search (works together with the category chips)
+  (function() {
+    const input = document.getElementById('blogSearch');
+    const btn = document.getElementById('blogSearchBtn');
+    const grid = document.getElementById('postsGrid');
+    const noResults = document.getElementById('searchNoResults');
+    if (!input || !grid) return;
+    const cards = Array.from(grid.querySelectorAll('.blog-card'));
+    function activeFilter() {
+      const active = document.querySelector('.filter-group .chip.active');
+      return active ? active.dataset.filter : 'all';
+    }
+    function applySearch() {
+      const q = input.value.trim().toLowerCase();
+      const filter = activeFilter();
+      let visible = 0;
+      cards.forEach(card => {
+        const matchesFilter = filter === 'all' || card.dataset.category === filter;
+        const text = (card.querySelector('.blog-card-title')?.textContent || '') + ' ' +
+                     (card.querySelector('.blog-card-excerpt')?.textContent || '');
+        const matchesQuery = !q || text.toLowerCase().includes(q);
+        const show = matchesFilter && matchesQuery;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      if (noResults) noResults.style.display = visible ? 'none' : 'block';
+    }
+    input.addEventListener('input', applySearch);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') e.preventDefault(); });
+    btn?.addEventListener('click', applySearch);
+    // Re-apply search whenever a category chip is clicked
+    document.querySelectorAll('.filter-group .chip').forEach(chip => {
+      chip.addEventListener('click', () => setTimeout(applySearch, 60));
+    });
+    // Sidebar categories trigger the matching chip filter
+    document.querySelectorAll('.category-item[data-catfilter]').forEach(item => {
+      item.addEventListener('click', () => {
+        const target = document.querySelector('.filter-group .chip[data-filter="' + item.dataset.catfilter + '"]');
+        if (target) target.click();
+      });
+    });
+  })();
+</script>
+</body>
+</html>

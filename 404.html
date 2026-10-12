@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Page Not Found | Pawfect Academy</title>
+  <meta name="description" content="Oops! This page has gone walkies. Let us help you find your way back to Pawfect Academy." />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+    .error-page {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, var(--warm-cream) 0%, rgba(220,203,180,0.4) 100%);
+    }
+    [data-theme="dark"] .error-page {
+      background: linear-gradient(135deg, #141B25 0%, #1A2332 100%);
+    }
+    .error-content { text-align: center; position: relative; z-index: 1; padding: var(--space-8) var(--space-5); }
+    .error-404 {
+      font-family: var(--font-display); font-size: clamp(120px, 20vw, 200px);
+      font-weight: 900; color: transparent;
+      -webkit-text-stroke: 3px var(--burnt-orange);
+      line-height: 1; margin-bottom: var(--space-5);
+      position: relative; display: block; width: fit-content; margin-inline: auto;
+      animation: float404 4s ease-in-out infinite;
+    }
+    @keyframes float404 {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    .dog-emoji {
+      position: absolute; top: 50%; right: -60px; transform: translateY(-50%);
+      font-size: 80px;
+      animation: dogWalk 2s ease-in-out infinite alternate;
+    }
+    @keyframes dogWalk {
+      from { transform: translateY(-50%) rotate(-10deg); }
+      to { transform: translateY(-50%) rotate(10deg); }
+    }
+    .error-title { font-size: var(--fs-3xl); margin-block: var(--space-4); }
+    .error-subtitle { color: var(--text-secondary); max-width: 480px; margin: 0 auto var(--space-7); line-height: 1.8; }
+    .error-links {
+      display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;
+      margin-top: var(--space-6);
+    }
+    .quick-links {
+      display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap;
+      margin-top: var(--space-5); padding-top: var(--space-5);
+      border-top: 1px solid var(--border-color);
+    }
+    .quick-link {
+      padding: 10px 18px; border: 1px solid var(--border-color); border-radius: var(--border-radius-full);
+      font-size: var(--fs-xs); font-weight: 600; color: var(--text-secondary);
+      transition: all var(--transition-fast); background: var(--bg-card);
+    }
+    .quick-link:hover { border-color: var(--burnt-orange); color: var(--burnt-orange); }
+
+    /* Decorative paws */
+    .deco-paw {
+      position: absolute; font-size: clamp(60px, 10vw, 120px);
+      opacity: 0.07; pointer-events: none; animation: float 8s ease-in-out infinite;
+    }
+    .deco-paw:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+    .deco-paw:nth-child(2) { top: 60%; right: 8%; animation-delay: 2s; }
+    .deco-paw:nth-child(3) { bottom: 15%; left: 15%; animation-delay: 4s; }
+    .deco-paw:nth-child(4) { top: 30%; right: 20%; animation-delay: 1s; }
+    @keyframes float { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-20px) rotate(15deg)} }
+
+    /* Search in 404 */
+    .error-search {
+      display: flex; gap: 8px; max-width: 380px; margin: 0 auto var(--space-6);
+      background: var(--bg-card); border: 1.5px solid var(--border-color);
+      border-radius: var(--border-radius-full); padding: 6px 6px 6px 20px;
+    }
+    .error-search input { flex: 1; background: transparent; border: none; font-size: var(--fs-sm); color: var(--text-primary); }
+    .error-search input::placeholder { color: var(--text-muted); }
+
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .error-content { padding: 48px 24px; }
+    }
+
+    @media (max-width: 760px) {
+      .error-404 { font-size: clamp(90px, 16vw, 130px); }
+      .dog-emoji { font-size: 52px; right: -36px; }
+    }
+
+    @media (max-width: 480px) {
+      .error-content { padding: 36px 16px; }
+      .error-404 { font-size: clamp(76px, 18vw, 96px); -webkit-text-stroke: 2px var(--burnt-orange); }
+      .dog-emoji { font-size: 36px; right: -24px; }
+      .error-links { flex-direction: column; width: 100%; gap: 10px; }
+      .error-links .btn { width: 100%; justify-content: center; }
+      .error-search { width: 100%; max-width: 100%; }
+    }
+
+    @media (max-width: 360px) {
+      .error-404 { font-size: 72px; }
+      .dog-emoji { display: none; }
+      .error-title { font-size: var(--fs-2xl); }
+      .quick-link { padding: 8px 14px; }
+    }
+
+    @media (max-width: 320px) {
+      .error-content { padding: 24px 10px; }
+      .error-404 { font-size: 60px; }
+      .error-title { font-size: 1.35rem; }
+      .error-subtitle { font-size: 0.85rem; }
+      .quick-link { padding: 6px 10px; font-size: 0.70rem; }
+      .error-search { padding: 4px 4px 4px 14px; }
+      .error-search .btn { padding: 6px 12px; font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="error-page">
+  <!-- Decorative paws -->
+  <span class="deco-paw" aria-hidden="true"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+  <span class="deco-paw" aria-hidden="true"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+  <span class="deco-paw" aria-hidden="true"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+  <span class="deco-paw" aria-hidden="true"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+
+  <div class="error-content">
+    <!-- Navbar minimal -->
+    <a href="./index.html" style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);margin-bottom:var(--space-8);text-decoration:none;">
+      <div class="navbar-logo-icon"><svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></div>
+      <div class="navbar-logo-text">Pawfect <span>Academy</span></div>
+    </a>
+
+    <div class="error-404" aria-label="404">
+      404
+      <span class="dog-emoji" aria-hidden="true"><svg class="icon icon-2xl" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+    </div>
+
+    <h1 class="error-title">This Page Has Gone Walkies!</h1>
+    <p class="error-subtitle">Looks like this page ran off to chase a squirrel. It happens to the best of us. Let's get you back on track.</p>
+
+    <!-- Search -->
+    <div class="error-search">
+      <input type="search" placeholder="Search for programs, trainers, blog articles..." aria-label="Search the site" id="errorSearch" />
+      <button class="btn btn-primary btn-sm" onclick="window.Pawfect?.Toast?.show('Search would navigate to results.','info')">Search</button>
+    </div>
+
+    <div class="error-links">
+      <a href="./index.html" class="btn btn-primary btn-lg"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Go Home</a>
+      <a href="./programs.html" class="btn btn-outline btn-lg"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Browse Programs</a>
+      <button class="btn btn-outline btn-lg" onclick="history.back()">← Go Back</button>
+    </div>
+
+    <div class="quick-links">
+      <a href="./about.html" class="quick-link">About Us</a>
+      <a href="./trainers.html" class="quick-link">Meet Trainers</a>
+      <a href="./pricing.html" class="quick-link">Pricing</a>
+      <a href="./blog.html" class="quick-link">Training Blog</a>
+      <a href="./contact.html" class="quick-link">Contact Us</a>
+      <a href="./dashboard.html" class="quick-link">My Dashboard</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="./assets/js/global.js"></script>
+</body>
+</html>

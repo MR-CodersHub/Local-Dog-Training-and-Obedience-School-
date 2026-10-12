@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Trainers — Pawfect Academy | Meet the Expert Team</title>
+  <meta name="description" content="Meet Pawfect Academy's team of certified professional dog trainers — CPDT-KA, Fear Free and AKC certified experts specializing in puppy training, obedience and behavior." />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    /* TRAINERS PAGE (hero uses global page-header, same height as About) */
+
+    /* Trainer Profile Card */
+    .trainer-profile-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: all var(--transition-base);
+    }
+    .trainer-profile-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); }
+    .trainer-profile-img {
+      width: 100%; height: 260px; object-fit: cover; object-position: top;
+      transition: transform 0.5s ease;
+    }
+    .trainer-profile-card:hover .trainer-profile-img { transform: scale(1.03); }
+    .trainer-profile-body { padding: var(--space-5); }
+    .trainer-name { font-family: var(--font-display); font-size: var(--fs-xl); margin-bottom: 3px; }
+    .trainer-role { color: var(--burnt-orange); font-weight: 600; font-size: var(--fs-sm); margin-bottom: var(--space-2); }
+    .trainer-bio { color: var(--text-secondary); font-size: var(--fs-xs); line-height: 1.7; margin-bottom: var(--space-3); }
+    .trainer-skills { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
+    .trainer-stats { display: flex; gap: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--border-color); }
+    .trainer-stat-val { font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 900; color: var(--burnt-orange); }
+    .trainer-stat-lbl { font-size: var(--fs-xs); color: var(--text-muted); }
+
+    /* Featured Trainer */
+    .featured-trainer {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 0;
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-xl); overflow: hidden;
+      box-shadow: var(--shadow-xl); margin-bottom: var(--space-7);
+    }
+    .featured-trainer-img { width: 100%; height: 100%; object-fit: cover; min-height: 400px; object-position: top; }
+    .featured-trainer-body { padding: clamp(28px, 4vw, 52px); display: flex; flex-direction: column; justify-content: center; }
+    .featured-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(217,119,69,0.1); border: 1px solid rgba(217,119,69,0.25);
+      padding: 8px 16px; border-radius: var(--border-radius-full);
+      font-size: var(--fs-xs); font-weight: 700; color: var(--burnt-orange);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: var(--space-5);
+      width: fit-content;
+    }
+    .featured-certs { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-5); }
+    .cert-pill {
+      padding: 8px 14px; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-full); font-size: var(--fs-xs); font-weight: 700;
+      color: var(--text-secondary);
+    }
+    .availability-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: var(--space-4);
+    }
+    .avail-day {
+      text-align: center; padding: 8px 4px;
+      background: var(--bg-primary); border-radius: var(--border-radius-sm);
+      font-size: var(--fs-xs); font-weight: 600;
+    }
+    .avail-day.available { background: rgba(137,151,123,0.15); color: var(--sage-green); }
+    .avail-day.partial { background: rgba(217,119,69,0.12); color: var(--burnt-orange); }
+    .avail-day.unavailable { background: transparent; color: var(--text-muted); text-decoration: line-through; }
+    .avail-day span { display: block; font-size: 9px; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* Standards icons */
+    .std-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: rgba(217, 119, 69, 0.1); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-3); flex-shrink: 0;
+    }
+    .std-icon svg { width: 26px; height: 26px; }
+
+    /* Hiring CTA */
+    .hiring-section {
+      background: linear-gradient(135deg, var(--sage-green) 0%, #6B7A5E 100%);
+      border-radius: var(--border-radius-xl);
+      padding: clamp(40px, 6vw, 70px);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hiring-section::before { content: ''; position: absolute; width: 220px; height: 220px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Ccircle cx='7' cy='8.5' r='2'/%3E%3Ccircle cx='17' cy='8.5' r='2'/%3E%3Ccircle cx='10' cy='5' r='2'/%3E%3Ccircle cx='14' cy='5' r='2'/%3E%3Cpath d='M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; opacity: 0.05; right: 5%; top: 50%; transform: translateY(-50%); font-size: 160px; opacity: 0.1; }
+    .hiring-section h2, .hiring-section p { color: white; }
+
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .featured-trainer { grid-template-columns: 1fr; }
+      .featured-trainer-img { height: 380px; }
+    }
+
+    @media (max-width: 760px) {
+      .trainers-grid { grid-template-columns: 1fr; }
+      .featured-trainer-body { padding: 32px 24px; }
+      .hiring-section { padding: 36px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .featured-trainer-img { height: 260px; min-height: 0; }
+      .featured-trainer-body { padding: 24px 16px; }
+      .availability-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+      .hiring-section { padding: 28px 16px; border-radius: var(--border-radius-lg); }
+      .trainer-profile-body { padding: 18px 14px; }
+    }
+
+    @media (max-width: 360px) {
+      .trainer-profile-body { padding: 16px 12px; }
+      .trainer-profile-img { height: 220px; }
+      .trainer-name { font-size: var(--fs-lg); }
+      .trainer-stats { gap: 10px; }
+      .hiring-section { padding: 24px 14px; }
+    }
+
+    @media (max-width: 320px) {
+      .trainer-profile-body { padding: 14px 10px; }
+      .trainer-profile-img { height: 190px; }
+      .trainer-stats { gap: 6px; }
+      .trainer-stat-val { font-size: var(--fs-md); }
+      .availability-grid { grid-template-columns: repeat(2, 1fr); }
+      .avail-day { padding: 6px 4px; font-size: 0.70rem; }
+      .hiring-section { padding: 20px 10px; }
+      .hiring-section h2 { font-size: var(--fs-xl); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-transparent" data-transparent="true" id="mainNavbar" role="navigation" aria-label="Main Navigation">
+  <div class="navbar-inner">
+    <a href="./index.html" class="navbar-logo" aria-label="Pawfect Academy Home">
+      <div class="navbar-logo-icon" aria-hidden="true">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+      </div>
+      <div>
+        <div class="navbar-logo-text">Pawfect <span>Academy</span></div>
+        <div class="navbar-logo-sub">Dog Training School</div>
+      </div>
+    </a>
+
+    <nav class="navbar-nav" role="menubar">
+      <a href="./index.html" class="nav-link" role="menuitem">Home</a>
+      <a href="./home2.html" class="nav-link" role="menuitem">Home 2</a>
+      <a href="./about.html" class="nav-link" role="menuitem">About</a>
+      <a href="./programs.html" class="nav-link" role="menuitem">Programs</a>
+      <a href="./trainers.html" class="nav-link" role="menuitem">Trainers</a>
+      <a href="./pricing.html" class="nav-link" role="menuitem">Pricing</a>
+      <a href="./blog.html" class="nav-link" role="menuitem">Blog</a>
+      <a href="./contact.html" class="nav-link" role="menuitem">Contact</a>
+    </nav>
+
+    <div class="navbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction">RTL</button>
+
+      <div class="profile-dropdown" id="profileDropdown">
+        <button class="profile-btn" id="profileToggle" aria-label="User Account Menu" aria-haspopup="true" aria-expanded="false">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div class="profile-menu" role="menu" aria-label="Account Options">
+          <div class="profile-menu-header">
+            <span class="profile-menu-title">Account Portal</span>
+          </div>
+          <a href="./login.html" class="profile-menu-item" role="menuitem">
+  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+  <span>Login/Signup</span>
+</a>
+          <a href="./dashboard.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Pet Owner Dashboard</span>
+          </a>
+          <a href="./admin.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5z"/><circle cx="12" cy="15" r="1.5"/></svg>
+            <span>Admin Dashboard</span>
+          </a>
+        </div>
+      </div>
+
+      <a href="./signup.html" class="btn btn-primary btn-sm nav-cta-btn">Get Started</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile Navigation">
+  <div class="mobile-nav-links">
+    <a href="./index.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+    <a href="./home2.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home 2</a>
+    <a href="./about.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h1M9 13h1M9 17h1M14 9h1M14 13h1M14 17h1"/></svg> About</a>
+    <a href="./programs.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Programs</a>
+    <a href="./trainers.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Trainers</a>
+    <a href="./pricing.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Pricing</a>
+    <a href="./blog.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg> Blog</a>
+    <a href="./contact.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Contact</a>
+        <div class="mobile-nav-cta">
+      <a href="./signup.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="page-header" role="banner">
+  <div class="container page-header-content">
+    <div class="eyebrow">Our Team</div>
+    <h1>Expert Trainers,<br/><em style="color:var(--burnt-orange);font-style:italic;">Genuine Hearts</em></h1>
+    <p>Every Pawfect Academy trainer is certified, continuously educated and genuinely passionate about helping dogs and their families thrive together.</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <span class="breadcrumb-item"><a href="./index.html">Home</a></span>
+      <span class="breadcrumb-separator">›</span>
+      <span class="breadcrumb-item current">Trainers</span>
+    </nav>
+  </div>
+</header>
+
+<!-- FEATURED TRAINER -->
+<section class="section" id="featured">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="eyebrow reveal">Meet the Head Trainer</div>
+      <h2 class="reveal" data-delay="100">The Face Behind<br/><em style="color:var(--burnt-orange);">Pawfect Academy</em></h2>
+    </div>
+    <div class="featured-trainer reveal-scale">
+      <img class="featured-trainer-img" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&q=85&auto=format" alt="Sarah Mitchell - Head Trainer and founder of Pawfect Academy" loading="lazy" />
+      <div class="featured-trainer-body">
+        <div class="featured-badge"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Head Trainer & Founder</div>
+        <h2>Sarah Mitchell</h2>
+        <p style="color:var(--burnt-orange);font-weight:600;margin-bottom:var(--space-4);">CPDT-KA · Certified Applied Animal Behaviorist</p>
+        <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:var(--space-4);">Sarah founded Pawfect Academy in 2010 after rescuing her border collie Finley and discovering a complete lack of force-free training options in the city. Twelve years and 1,200 personal clients later, she leads a team of 12 certified trainers who share her exact philosophy: trust builds everything.</p>
+        <p style="color:var(--text-secondary);line-height:1.8;font-size:var(--fs-sm);">Sarah specializes in puppy foundation, behavior modification for anxious and reactive dogs, and trainer mentorship. She lectures at the International Association of Animal Behavior Consultants annual conference and co-authored the "Pacific Northwest Force-Free Guide."</p>
+
+        <div class="featured-certs">
+          <span class="cert-pill">CPDT-KA</span>
+          <span class="cert-pill">Fear Free Certified</span>
+          <span class="cert-pill">AKC CGC Evaluator</span>
+          <span class="cert-pill">IAABC Member</span>
+        </div>
+
+        <div style="margin-top:var(--space-5);">
+          <div style="font-size:var(--fs-xs);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--space-3);">Weekly Availability</div>
+          <div class="availability-grid">
+            <div class="avail-day available"><span>Mon</span> <svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="avail-day available"><span>Tue</span> <svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="avail-day partial"><span>Wed</span>PM</div>
+            <div class="avail-day available"><span>Thu</span> <svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="avail-day unavailable"><span>Fri</span>–</div>
+            <div class="avail-day available"><span>Sat</span> <svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="avail-day unavailable"><span>Sun</span>–</div>
+          </div>
+        </div>
+
+        <div class="d-flex gap-4 flex-wrap" style="margin-top:var(--space-5);">
+          <a href="./contact.html" class="btn btn-primary">Request Sarah</a>
+          <a href="./programs.html" class="btn btn-outline">View Programs</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALL TRAINERS -->
+<section class="section gradient-bg" id="team">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="eyebrow reveal">The Full Team</div>
+      <h2 class="reveal" data-delay="100">12 Experts,<br/>One <em style="color:var(--burnt-orange);">Shared Mission</em></h2>
+    </div>
+    <div class="grid-3 trainers-grid" style="margin-top:var(--space-7);">
+
+      <div class="trainer-profile-card reveal" data-delay="0">
+        <div style="overflow:hidden;">
+          <img class="trainer-profile-img" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&q=80&auto=format" alt="Marcus Chen - Advanced Obedience Specialist at Pawfect Academy" loading="lazy" />
+        </div>
+        <div class="trainer-profile-body">
+          <h3 class="trainer-name">Marcus Chen</h3>
+          <p class="trainer-role">Advanced Obedience Specialist</p>
+          <div class="trainer-skills">
+            <span class="badge badge-primary">Off-Leash</span>
+            <span class="badge badge-secondary">Competition</span>
+            <span class="badge badge-primary">Precision</span>
+          </div>
+          <p class="trainer-bio">Former AKC competition champion with 10 years of teaching advanced and off-leash obedience. Marcus makes precision training accessible and genuinely fun.</p>
+          <div class="trainer-stats">
+            <div><div class="trainer-stat-val">400+</div><div class="trainer-stat-lbl">Graduates</div></div>
+            <div><div class="trainer-stat-val">10yrs</div><div class="trainer-stat-lbl">Experience</div></div>
+            <div><div class="trainer-stat-val">4.9 <svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="trainer-stat-lbl">Rating</div></div>
+          </div>
+          <a href="./contact.html" class="btn btn-outline w-full" style="width:100%;justify-content:center;margin-top:var(--space-4);">Request Marcus</a>
+        </div>
+      </div>
+
+      <div class="trainer-profile-card reveal" data-delay="100">
+        <div style="overflow:hidden;">
+          <img class="trainer-profile-img" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=500&q=80&auto=format" alt="Emma Rodriguez - Puppy and Socialization Trainer at Pawfect Academy" loading="lazy" />
+        </div>
+        <div class="trainer-profile-body">
+          <h3 class="trainer-name">Emma Rodriguez</h3>
+          <p class="trainer-role">Puppy & Socialization Coach</p>
+          <div class="trainer-skills">
+            <span class="badge badge-primary">Puppies</span>
+            <span class="badge badge-secondary">Socialization</span>
+            <span class="badge badge-primary">Fear Free</span>
+          </div>
+          <p class="trainer-bio">Emma's calm, upbeat approach helps even the most anxious puppies blossom. She specializes in the critical developmental window and building lifelong confidence.</p>
+          <div class="trainer-stats">
+            <div><div class="trainer-stat-val">350+</div><div class="trainer-stat-lbl">Puppies Trained</div></div>
+            <div><div class="trainer-stat-val">7yrs</div><div class="trainer-stat-lbl">Experience</div></div>
+            <div><div class="trainer-stat-val">5.0 <svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="trainer-stat-lbl">Rating</div></div>
+          </div>
+          <a href="./contact.html" class="btn btn-outline w-full" style="width:100%;justify-content:center;margin-top:var(--space-4);">Request Emma</a>
+        </div>
+      </div>
+
+      <div class="trainer-profile-card reveal" data-delay="200">
+        <div style="overflow:hidden;">
+          <img class="trainer-profile-img" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&q=80&auto=format" alt="James O'Brien - Behavior Correction Specialist at Pawfect Academy" loading="lazy" />
+        </div>
+        <div class="trainer-profile-body">
+          <h3 class="trainer-name">James O'Brien</h3>
+          <p class="trainer-role">Behavior Correction Specialist</p>
+          <div class="trainer-skills">
+            <span class="badge badge-primary">Reactivity</span>
+            <span class="badge badge-secondary">Anxiety</span>
+            <span class="badge badge-primary">Aggression</span>
+          </div>
+          <p class="trainer-bio">James has an extraordinary ability to connect with difficult-case dogs. His behavior modification expertise has transformed hundreds of reactive and anxious dogs.</p>
+          <div class="trainer-stats">
+            <div><div class="trainer-stat-val">280+</div><div class="trainer-stat-lbl">Graduates</div></div>
+            <div><div class="trainer-stat-val">9yrs</div><div class="trainer-stat-lbl">Experience</div></div>
+            <div><div class="trainer-stat-val">4.9 <svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="trainer-stat-lbl">Rating</div></div>
+          </div>
+          <a href="./contact.html" class="btn btn-outline w-full" style="width:100%;justify-content:center;margin-top:var(--space-4);">Request James</a>
+        </div>
+      </div>
+
+      <div class="trainer-profile-card reveal" data-delay="0">
+        <div style="overflow:hidden;">
+          <img class="trainer-profile-img" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&q=80&auto=format" alt="Priya Sharma - Leash Mastery and Basic Obedience Trainer" loading="lazy" />
+        </div>
+        <div class="trainer-profile-body">
+          <h3 class="trainer-name">Priya Sharma</h3>
+          <p class="trainer-role">Leash Mastery & Obedience Trainer</p>
+          <div class="trainer-skills">
+            <span class="badge badge-primary">Leash Training</span>
+            <span class="badge badge-secondary">Basic Obedience</span>
+          </div>
+          <p class="trainer-bio">With a background in veterinary science, Priya brings a uniquely informed perspective to training. She's the go-to trainer for leash reactivity and pull prevention.</p>
+          <div class="trainer-stats">
+            <div><div class="trainer-stat-val">220+</div><div class="trainer-stat-lbl">Graduates</div></div>
+            <div><div class="trainer-stat-val">5yrs</div><div class="trainer-stat-lbl">Experience</div></div>
+            <div><div class="trainer-stat-val">4.8 <svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="trainer-stat-lbl">Rating</div></div>
+          </div>
+          <a href="./contact.html" class="btn btn-outline w-full" style="width:100%;justify-content:center;margin-top:var(--space-4);">Request Priya</a>
+        </div>
+      </div>
+
+      <div class="trainer-profile-card reveal" data-delay="100">
+        <div style="overflow:hidden;">
+          <img class="trainer-profile-img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&q=80&auto=format" alt="Tyler Brooks - Group Class and Socialization Trainer" loading="lazy" />
+        </div>
+        <div class="trainer-profile-body">
+          <h3 class="trainer-name">Tyler Brooks</h3>
+          <p class="trainer-role">Group Class Facilitator</p>
+          <div class="trainer-skills">
+            <span class="badge badge-primary">Group Classes</span>
+            <span class="badge badge-secondary">Socialization</span>
+          </div>
+          <p class="trainer-bio">Tyler's enthusiastic teaching style makes every group session engaging and productive. He excels at managing multi-dog class dynamics and keeping energy positive.</p>
+          <div class="trainer-stats">
+            <div><div class="trainer-stat-val">300+</div><div class="trainer-stat-lbl">Graduates</div></div>
+            <div><div class="trainer-stat-val">6yrs</div><div class="trainer-stat-lbl">Experience</div></div>
+            <div><div class="trainer-stat-val">4.9 <svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="trainer-stat-lbl">Rating</div></div>
+          </div>
+          <a href="./contact.html" class="btn btn-outline w-full" style="width:100%;justify-content:center;margin-top:var(--space-4);">Request Tyler</a>
+        </div>
+      </div>
+
+      <div class="trainer-profile-card reveal" data-delay="200">
+        <div style="overflow:hidden;">
+          <img class="trainer-profile-img" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=500&q=80&auto=format" alt="Anita Walsh - Senior Dog and Geriatric Canine Specialist" loading="lazy" />
+        </div>
+        <div class="trainer-profile-body">
+          <h3 class="trainer-name">Anita Walsh</h3>
+          <p class="trainer-role">Senior Dog & Rehabilitation Specialist</p>
+          <div class="trainer-skills">
+            <span class="badge badge-primary">Senior Dogs</span>
+            <span class="badge badge-secondary">Rehab</span>
+          </div>
+          <p class="trainer-bio">Anita pioneered Pawfect Academy's senior dog rehabilitation program. She adapts training for physical limitations and cognitive changes in older dogs beautifully.</p>
+          <div class="trainer-stats">
+            <div><div class="trainer-stat-val">180+</div><div class="trainer-stat-lbl">Graduates</div></div>
+            <div><div class="trainer-stat-val">8yrs</div><div class="trainer-stat-lbl">Experience</div></div>
+            <div><div class="trainer-stat-val">5.0 <svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="trainer-stat-lbl">Rating</div></div>
+          </div>
+          <a href="./contact.html" class="btn btn-outline w-full" style="width:100%;justify-content:center;margin-top:var(--space-4);">Request Anita</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TRAINER VALUES -->
+<section class="section" style="background:var(--bg-secondary);" id="standards">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="eyebrow reveal">Our Standards</div>
+      <h2 class="reveal" data-delay="100">What Every Pawfect<br/><em style="color:var(--burnt-orange);">Trainer Commits To</em></h2>
+    </div>
+    <div class="grid-4" style="margin-top:var(--space-7);">
+      <div class="card reveal" data-delay="0" style="padding:var(--space-5);text-align:center;">
+        <div class="std-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <h4 style="font-size:var(--fs-md);margin-bottom:var(--space-2);">Certified Professional</h4>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);">CPDT-KA minimum. All trainers pursue ongoing education annually.</p>
+      </div>
+      <div class="card reveal" data-delay="100" style="padding:var(--space-5);text-align:center;">
+        <div class="std-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+        <h4 style="font-size:var(--fs-md);margin-bottom:var(--space-2);">Force-Free Always</h4>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);">No aversive equipment or punishment-based methods — ever, period.</p>
+      </div>
+      <div class="card reveal" data-delay="200" style="padding:var(--space-5);text-align:center;">
+        <div class="std-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
+        <h4 style="font-size:var(--fs-md);margin-bottom:var(--space-2);">Progress Documented</h4>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);">Every session gets detailed notes uploaded to the owner's dashboard.</p>
+      </div>
+      <div class="card reveal" data-delay="300" style="padding:var(--space-5);text-align:center;">
+        <div class="std-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <h4 style="font-size:var(--fs-md);margin-bottom:var(--space-2);">Always Reachable</h4>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);">Quick questions between sessions? Your trainer is available via the portal messaging system.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HIRING CTA -->
+<section class="section gradient-bg" id="join-team">
+  <div class="container">
+    <div class="hiring-section reveal">
+      <div class="eyebrow" style="color:rgba(255,255,255,0.7);">We're Growing</div>
+      <h2 style="margin-block:var(--space-3) var(--space-4);">Are You a Certified<br/>Dog Trainer?</h2>
+      <p style="max-width:500px;margin-inline:auto;opacity:0.85;margin-bottom:var(--space-6);">We're always looking for exceptional trainers who share our values. CPDT-KA or equivalent certification required. Force-free methodology is non-negotiable — and we wouldn't have it any other way.</p>
+      <a href="./contact.html" class="btn" style="background:white;color:var(--sage-green);padding:18px 44px;border-radius:var(--border-radius-full);font-weight:800;font-size:var(--fs-sm);letter-spacing:0.03em;text-transform:uppercase;">Apply to Join the Team →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- ===== STANDARD FOOTER ===== -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- COLUMN 1 — COMPANY -->
+      <div class="footer-brand">
+        <a href="./index.html" class="navbar-logo footer-logo" aria-label="Pawfect Academy — Home">
+          <span class="navbar-logo-icon" aria-hidden="true">
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+          </span>
+          <span class="navbar-logo-text" style="color:white;">Pawfect <span>Academy</span></span>
+        </a>
+        <p>Premium canine training and obedience school dedicated to building lasting bonds between dogs and their families through science-based, force-free methods.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#202C3B"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- COLUMN 2 — QUICK LINKS (mirrors main navbar) -->
+      <nav class="footer-col" aria-label="Quick links">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="./index.html" class="footer-link">Home</a></li>
+          <li><a href="./home2.html" class="footer-link">Home 2</a></li>
+          <li><a href="./about.html" class="footer-link">About</a></li>
+          <li><a href="./programs.html" class="footer-link">Programs</a></li>
+          <li><a href="./trainers.html" class="footer-link">Trainers</a></li>
+          <li><a href="./pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="./blog.html" class="footer-link">Blog</a></li>
+          <li><a href="./contact.html" class="footer-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- COLUMN 3 — CONTACT DETAILS -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>123 Training Lane, Suite 200<br />Portland, OR 97201</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+15551234567">(555) 123-4567</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Mon &ndash; Sat: 7:00 AM &ndash; 7:00 PM<br />Sun: Closed</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 4 — NEWSLETTER -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Newsletter</h4>
+        <p class="footer-newsletter-text">Subscribe to receive the latest training tips, news, offers and insights from our certified trainers.</p>
+        <form class="footer-newsletter-form" data-validate data-success-msg="Welcome to the pack! Check your inbox.">
+          <div class="footer-newsletter-field">
+            <label class="sr-only" for="footerNewsletterEmail">Email address</label>
+            <input type="email" id="footerNewsletterEmail" name="email" class="footer-newsletter-input" placeholder="Your email address" required aria-label="Email address" autocomplete="email" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+        <p class="footer-newsletter-note">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <!-- BOTTOM LEGAL BAR -->
+    <div class="footer-bottom">
+      <p>&copy; <span class="js-footer-year">2026</span> Pawfect Academy. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./terms-conditions.html">Terms &amp; Conditions</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./sitemap.html">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<script src="./assets/js/global.js"></script>
+</body>
+</html>

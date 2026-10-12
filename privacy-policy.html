@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Pawfect Academy | How We Protect Your Data</title>
+  <meta name="description" content="Read Pawfect Academy's Privacy Policy. Learn what personal, pet and usage data we collect, how we use it, cookies, your rights, and how to contact us." />
+  <link rel="canonical" href="./privacy-policy.html" />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    .legal-layout { display: grid; grid-template-columns: 280px 1fr; gap: var(--space-6); align-items: start; }
+    .legal-toc {
+      position: sticky; top: calc(var(--navbar-height) + 20px);
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+      box-shadow: var(--shadow-sm);
+    }
+    .legal-toc h4 { font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: var(--space-3); }
+    .legal-toc ol { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .legal-toc a {
+      display: block; padding: 8px 12px; border-radius: 8px;
+      font-size: var(--fs-sm); color: var(--text-secondary); font-weight: 600;
+      transition: all var(--transition-fast); line-height: 1.4;
+    }
+    .legal-toc a:hover, .legal-toc a.active { background: rgba(217,119,69,0.1); color: var(--burnt-orange); }
+    .legal-meta {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      margin-bottom: var(--space-5);
+    }
+    .legal-doc {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg); padding: clamp(24px, 3.5vw, 44px);
+      box-shadow: var(--shadow-sm);
+    }
+    .legal-doc section { padding-block: var(--space-5); border-bottom: 1px solid var(--border-color); scroll-margin-top: 100px; }
+    .legal-doc section:first-of-type { padding-top: 0; }
+    .legal-doc section:last-of-type { border-bottom: none; padding-bottom: 0; }
+    .legal-doc h2 { font-size: var(--fs-xl); margin-bottom: var(--space-3); display: flex; gap: 12px; align-items: flex-start; }
+    .legal-num {
+      flex-shrink: 0; width: 32px; height: 32px; border-radius: 10px;
+      background: rgba(217,119,69,0.12); color: var(--burnt-orange);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: var(--fs-sm); font-weight: 800; font-family: var(--font-display);
+    }
+    .legal-doc p, .legal-doc li { color: var(--text-secondary); font-size: var(--fs-sm); line-height: 1.8; }
+    .legal-doc p + p { margin-top: 12px; }
+    .legal-doc ul { padding-left: 20px; margin-top: 12px; display: grid; gap: 8px; }
+    .legal-doc ul li::marker { color: var(--burnt-orange); }
+    .legal-note {
+      background: var(--bg-secondary); border: 1px dashed var(--border-color);
+      border-radius: var(--border-radius-md); padding: var(--space-4);
+      margin-top: var(--space-4); font-size: var(--fs-sm); color: var(--text-secondary); line-height: 1.7;
+    }
+    .legal-note strong { color: var(--text-primary); }
+    .legal-contact-card {
+      margin-top: var(--space-6); background: var(--midnight-navy); color: white;
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+      display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; justify-content: space-between;
+    }
+    .legal-contact-card h3 { color: white; margin-bottom: 6px; }
+    .legal-contact-card p { color: rgba(255,255,255,0.7); font-size: var(--fs-sm); }
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .legal-layout { grid-template-columns: 1fr; }
+      .legal-toc { position: static; }
+      .legal-toc ol { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    }
+
+    @media (max-width: 760px) {
+      .legal-doc { padding: 32px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .legal-toc ol { grid-template-columns: 1fr; }
+      .legal-doc { padding: 24px 16px; border-radius: var(--border-radius-md); }
+      .legal-contact-card { flex-direction: column; align-items: flex-start; padding: 22px 16px; }
+      .legal-contact-card .btn { width: 100%; justify-content: center; }
+      .legal-actions { flex-direction: column; width: 100%; }
+      .legal-actions .btn { width: 100%; }
+    }
+
+    @media (max-width: 360px) {
+      .legal-doc { padding: 18px 12px; }
+      .legal-contact-card { padding: 18px 12px; }
+    }
+
+    @media (max-width: 320px) {
+      .legal-doc { padding: 14px 8px; }
+      .legal-doc h2 { font-size: var(--fs-lg); }
+      .legal-doc p, .legal-doc li { font-size: 0.85rem; }
+      .legal-toc { padding: 16px 12px; }
+    }
+    @media print {
+      .navbar, .mobile-nav, .footer, .back-to-top, .legal-toc, .legal-actions { display: none !important; }
+      .legal-doc { box-shadow: none; border: none; }
+      body { background: white; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-transparent" data-transparent="true" id="mainNavbar" role="navigation" aria-label="Main Navigation">
+  <div class="navbar-inner">
+    <a href="./index.html" class="navbar-logo" aria-label="Pawfect Academy Home">
+      <div class="navbar-logo-icon" aria-hidden="true">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+      </div>
+      <div>
+        <div class="navbar-logo-text">Pawfect <span>Academy</span></div>
+        <div class="navbar-logo-sub">Dog Training School</div>
+      </div>
+    </a>
+    <nav class="navbar-nav" role="menubar">
+      <a href="./index.html" class="nav-link" role="menuitem">Home</a>
+      <a href="./home2.html" class="nav-link" role="menuitem">Home 2</a>
+      <a href="./about.html" class="nav-link" role="menuitem">About</a>
+      <a href="./programs.html" class="nav-link" role="menuitem">Programs</a>
+      <a href="./trainers.html" class="nav-link" role="menuitem">Trainers</a>
+      <a href="./pricing.html" class="nav-link" role="menuitem">Pricing</a>
+      <a href="./blog.html" class="nav-link" role="menuitem">Blog</a>
+      <a href="./contact.html" class="nav-link" role="menuitem">Contact</a>
+    </nav>
+    <div class="navbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction">RTL</button>
+      <div class="profile-dropdown" id="profileDropdown">
+        <button class="profile-btn" id="profileToggle" aria-label="User Account Menu" aria-haspopup="true" aria-expanded="false">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div class="profile-menu" role="menu" aria-label="Account Options">
+          <div class="profile-menu-header"><span class="profile-menu-title">Account Portal</span></div>
+          <a href="./login.html" class="profile-menu-item" role="menuitem"><span>Login/Signup</span></a>
+          <a href="./dashboard.html" class="profile-menu-item" role="menuitem"><span>Pet Owner Dashboard</span></a>
+          <a href="./admin.html" class="profile-menu-item" role="menuitem"><span>Admin Dashboard</span></a>
+        </div>
+      </div>
+      <a href="./signup.html" class="btn btn-primary btn-sm nav-cta-btn">Get Started</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile Navigation">
+  <div class="mobile-nav-links">
+    <a href="./index.html" class="mobile-nav-link">Home</a>
+    <a href="./home2.html" class="mobile-nav-link">Home 2</a>
+    <a href="./about.html" class="mobile-nav-link">About</a>
+    <a href="./programs.html" class="mobile-nav-link">Programs</a>
+    <a href="./trainers.html" class="mobile-nav-link">Trainers</a>
+    <a href="./pricing.html" class="mobile-nav-link">Pricing</a>
+    <a href="./blog.html" class="mobile-nav-link">Blog</a>
+    <a href="./contact.html" class="mobile-nav-link">Contact</a>
+        <div class="mobile-nav-cta">
+      <a href="./signup.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header" role="banner">
+  <div class="container page-header-content">
+    <div class="eyebrow">Legal • Your Privacy Matters</div>
+    <h1>Privacy <em style="color:var(--burnt-orange);font-style:italic;">Policy</em></h1>
+    <p>How Pawfect Academy collects, uses, and protects your personal information — in plain language, with no surprises.</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <span class="breadcrumb-item"><a href="./index.html">Home</a></span>
+      <span class="breadcrumb-separator">›</span>
+      <span class="breadcrumb-item current">Privacy Policy</span>
+    </nav>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<section class="section" aria-label="Privacy Policy content">
+  <div class="container">
+    <div class="legal-meta">
+      <span class="badge badge-primary">Last updated: October 1, 2026</span>
+      <span class="badge badge-secondary">Applies to pawfectacademy.com &amp; in-person services</span>
+      <div class="legal-actions" style="margin-left:auto;display:flex;gap:10px;">
+        <button class="btn btn-outline btn-sm" onclick="window.print()">Print / Save PDF</button>
+        <a href="./contact.html" class="btn btn-primary btn-sm">Ask a Question</a>
+      </div>
+    </div>
+
+    <div class="legal-layout">
+      <aside class="legal-toc" aria-label="Privacy Policy table of contents">
+        <h4>On this page</h4>
+        <ol>
+          <li><a href="#overview">1. Overview</a></li>
+          <li><a href="#data-we-collect">2. Data We Collect</a></li>
+          <li><a href="#how-we-use">3. How We Use Data</a></li>
+          <li><a href="#photos">4. Photos &amp; Video Consent</a></li>
+          <li><a href="#cookies">5. Cookies &amp; Analytics</a></li>
+          <li><a href="#sharing">6. Sharing &amp; Disclosure</a></li>
+          <li><a href="#security">7. Data Security &amp; Retention</a></li>
+          <li><a href="#rights">8. Your Rights &amp; Choices</a></li>
+          <li><a href="#children">9. Children &amp; Pets</a></li>
+          <li><a href="#changes">10. Changes &amp; Contact</a></li>
+        </ol>
+      </aside>
+
+      <article class="legal-doc">
+        <section id="overview">
+          <h2><span class="legal-num">1</span> Overview</h2>
+          <p>Pawfect Academy ("we," "us," "our") operates a local dog training and obedience school in Portland, Oregon, and this website. This Privacy Policy explains what information we collect when you browse our site, contact us, create an account, enroll in a program, subscribe to our newsletter, or visit our facility — and what we do with it.</p>
+          <p>We follow a simple principle: <strong>collect only what we need to train your dog well and run our school safely</strong>. We never sell your personal information, and we never share it for third-party marketing.</p>
+          <div class="legal-note"><strong>Controller:</strong> Pawfect Academy, 123 Training Lane, Suite 200, Portland, OR 97201 • <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a> • <a href="tel:+15551234567">(555) 123-4567</a></div>
+        </section>
+
+        <section id="data-we-collect">
+          <h2><span class="legal-num">2</span> Data We Collect</h2>
+          <p><strong>a) Information you provide directly:</strong></p>
+          <ul>
+            <li><strong>Contact &amp; account details</strong> — name, email, phone number, password (stored hashed), address when you enroll or create a Pet Owner account via <a href="./signup.html">Signup</a> / <a href="./login.html">Login</a>.</li>
+            <li><strong>Dog &amp; training profile</strong> — dog name, breed, age, weight, vaccination records, health or behavioral notes, training goals, and progress reports from your <a href="./dashboard.html">dashboard</a>.</li>
+            <li><strong>Enrollment &amp; payment details</strong> — selected program (see <a href="./programs.html">Programs</a> and <a href="./pricing.html">Pricing</a>), schedule preferences, and billing information processed securely by our payment provider. We do not store full card numbers on our servers.</li>
+            <li><strong>Messages &amp; feedback</strong> — anything you send through our <a href="./contact.html">Contact form</a>, free-consult booking, newsletter signup, blog comments, or reviews.</li>
+          </ul>
+          <p style="margin-top:12px;"><strong>b) Information collected automatically:</strong> device and browser type, pages visited, referring pages, approximate location (city level), and interactions with our site (e.g., video plays, filter clicks). This comes from standard server logs and privacy-respecting analytics.</p>
+        </section>
+
+        <section id="how-we-use">
+          <h2><span class="legal-num">3</span> How We Use Data</h2>
+          <p>We use your information only for legitimate school purposes:</p>
+          <ul>
+            <li>To respond to inquiries, book free consultations, and provide customer support.</li>
+            <li>To create and manage accounts, process enrollments and payments, and deliver training services.</li>
+            <li>To personalize training plans, track milestones, assign trainers, and ensure facility and dog safety.</li>
+            <li>To send transactional emails (confirmations, reminders, progress reports) and — only with your consent — our newsletter with training tips and offers. Unsubscribe anytime via the link in any email.</li>
+            <li>To improve our website, programs, and facility, and to comply with legal obligations (e.g., vaccination record keeping).</li>
+          </ul>
+          <p>Legal bases where applicable (GDPR/UK-style regimes and US state laws): performance of a contract, your consent, our legitimate interests in operating a safe training school, and legal compliance.</p>
+        </section>
+
+        <section id="photos">
+          <h2><span class="legal-num">4</span> Photos &amp; Video Consent</h2>
+          <p>Training sessions, graduations, and events may be photographed or filmed for progress tracking and, with your separate opt-in consent, for marketing (website, social media, <a href="./blog.html">Blog</a>). You can withdraw photo consent at any time by emailing <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a>, and we will stop using new images of you or your dog going forward.</p>
+          <div class="legal-note">Class progress photos shared privately in your dashboard are <strong>never</strong> used publicly without explicit permission.</div>
+        </section>
+
+        <section id="cookies">
+          <h2><span class="legal-num">5</span> Cookies &amp; Analytics</h2>
+          <p>We use a small number of cookies and local storage for essential functions: remembering your theme (light/dark), text direction, login session, dashboard preferences, and form progress. With your consent, we may use anonymized analytics to understand which programs and articles are most helpful.</p>
+          <ul>
+            <li><strong>Strictly necessary:</strong> required for security, load balancing, and remembering settings. Always on.</li>
+            <li><strong>Preferences:</strong> theme, RTL toggle, and recently viewed programs.</li>
+            <li><strong>Analytics (optional):</strong> aggregated, non-identifying page statistics. You can block these in your browser without breaking core features.</li>
+          </ul>
+          <p>We do not use cross-site advertising trackers and do not sell data collected via cookies.</p>
+        </section>
+
+        <section id="sharing">
+          <h2><span class="legal-num">6</span> Sharing &amp; Disclosure</h2>
+          <p>We share information only when necessary to run the school:</p>
+          <ul>
+            <li><strong>Service providers</strong> — secure hosting, email delivery, payment processing, and scheduling tools, bound by confidentiality and data-processing agreements.</li>
+            <li><strong>Trainers &amp; staff</strong> — only the details needed to deliver your dog's training and keep classes safe.</li>
+            <li><strong>Veterinary or emergency contacts</strong> — if your dog needs urgent care during a session and you cannot be reached.</li>
+            <li><strong>Legal requirements</strong> — when required by law, court order, or to protect the safety of people and animals.</li>
+          </ul>
+          <p>We never sell personal information and never share it with data brokers.</p>
+        </section>
+
+        <section id="security">
+          <h2><span class="legal-num">7</span> Data Security &amp; Retention</h2>
+          <p>We protect data with HTTPS encryption in transit, hashed passwords, role-based access controls (separate <a href="./dashboard.html">Pet Owner</a> and <a href="./admin.html">Admin</a> portals), and regular access reviews. No method is 100% secure, so please use a strong unique password and tell us immediately if you suspect unauthorized access.</p>
+          <p>We keep account and enrollment records for as long as your account is active and for up to 3 years afterward for progress history, warranties (lifetime refresher support), and legal record-keeping. Vaccination and incident records are kept as required by Oregon regulations. Newsletter data is deleted promptly after you unsubscribe.</p>
+        </section>
+
+        <section id="rights">
+          <h2><span class="legal-num">8</span> Your Rights &amp; Choices</h2>
+          <p>Depending on where you live (including California, Oregon, and other US states with privacy laws), you may have the right to access, correct, delete, or export your personal data, opt out of marketing, and appeal a decision. To exercise any right, email <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a> with the subject "Privacy Request." We respond within 30 days (sooner where the law requires).</p>
+          <ul>
+            <li>Update your profile, dog details, and communication preferences anytime in your dashboard.</li>
+            <li>Unsubscribe from marketing in one click — transactional safety emails (e.g., class changes) will still be sent while enrolled.</li>
+            <li>Request deletion of your account and associated personal data, subject to records we must retain by law.</li>
+          </ul>
+        </section>
+
+        <section id="children">
+          <h2><span class="legal-num">9</span> Children &amp; Pets</h2>
+          <p>Our programs are purchased by adults (18+). Children may attend classes with a parent or guardian, but we do not knowingly collect personal data directly from children under 13 online. If you believe a child has provided us data, contact us and we will delete it. Pet health data you share is used solely for training and safety.</p>
+        </section>
+
+        <section id="changes">
+          <h2><span class="legal-num">10</span> Changes &amp; Contact</h2>
+          <p>We may update this policy as our services or the law change. Material changes will be announced on this page with a new "Last updated" date and, where appropriate, by email or dashboard notice. Continued use of our services after changes take effect means you accept the updated policy.</p>
+          <p>Questions about privacy? Contact our team at <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a>, <a href="tel:+15551234567">(555) 123-4567</a>, or 123 Training Lane, Suite 200, Portland, OR 97201. You can also reach us via the <a href="./contact.html">Contact page</a>.</p>
+          <p>Related: <a href="./terms-conditions.html">Terms &amp; Conditions</a> • <a href="./sitemap.html">Sitemap</a></p>
+          <div class="legal-contact-card">
+            <div>
+              <h3>Want a copy of your data?</h3>
+              <p>We will export your account, enrollment, and dog progress history free of charge.</p>
+            </div>
+            <a href="mailto:hello@pawfectacademy.com?subject=Privacy%20Request%20—%20Data%20Export" class="btn btn-primary">Request Export</a>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STANDARD FOOTER ===== -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="./index.html" class="navbar-logo footer-logo" aria-label="Pawfect Academy — Home">
+          <span class="navbar-logo-icon" aria-hidden="true">
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+          </span>
+          <span class="navbar-logo-text" style="color:white;">Pawfect <span>Academy</span></span>
+        </a>
+        <p>Premium canine training and obedience school dedicated to building lasting bonds between dogs and their families through science-based, force-free methods.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#202C3B"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="./index.html" class="footer-link">Home</a></li>
+          <li><a href="./home2.html" class="footer-link">Home 2</a></li>
+          <li><a href="./about.html" class="footer-link">About</a></li>
+          <li><a href="./programs.html" class="footer-link">Programs</a></li>
+          <li><a href="./trainers.html" class="footer-link">Trainers</a></li>
+          <li><a href="./pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="./blog.html" class="footer-link">Blog</a></li>
+          <li><a href="./contact.html" class="footer-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-contact">
+          <li><span>123 Training Lane, Suite 200<br />Portland, OR 97201</span></li>
+          <li><a href="tel:+15551234567">(555) 123-4567</a></li>
+          <li><a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a></li>
+          <li><span>Mon &ndash; Sat: 7:00 AM &ndash; 7:00 PM<br />Sun: Closed</span></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Newsletter</h4>
+        <p class="footer-newsletter-text">Subscribe to receive the latest training tips, news, offers and insights from our certified trainers.</p>
+        <form class="footer-newsletter-form" data-validate data-success-msg="Welcome to the pack! Check your inbox.">
+          <div class="footer-newsletter-field">
+            <label class="sr-only" for="footerNewsletterEmail">Email address</label>
+            <input type="email" id="footerNewsletterEmail" name="email" class="footer-newsletter-input" placeholder="Your email address" required aria-label="Email address" autocomplete="email" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+        <p class="footer-newsletter-note">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span class="js-footer-year">2026</span> Pawfect Academy. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="./privacy-policy.html" aria-current="page">Privacy Policy</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./terms-conditions.html">Terms &amp; Conditions</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./sitemap.html">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<script src="./assets/js/global.js"></script>
+<script>
+  // Active TOC highlighting
+  const tocLinks = document.querySelectorAll('.legal-toc a');
+  const sections = [...document.querySelectorAll('.legal-doc section[id]')];
+  const onScroll = () => {
+    const y = window.scrollY + 140;
+    let current = sections[0]?.id;
+    for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+    tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  };
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+</script>
+</body>
+</html>

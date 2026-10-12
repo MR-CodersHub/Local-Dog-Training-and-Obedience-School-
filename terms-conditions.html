@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms &amp; Conditions — Pawfect Academy | Enrollment, Safety &amp; Policies</title>
+  <meta name="description" content="Pawfect Academy Terms & Conditions: enrollments, payments, cancellations, vaccination and safety rules, liability, photo release, and acceptable use." />
+  <link rel="canonical" href="./terms-conditions.html" />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    .legal-layout { display: grid; grid-template-columns: 280px 1fr; gap: var(--space-6); align-items: start; }
+    .legal-toc {
+      position: sticky; top: calc(var(--navbar-height) + 20px);
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+      box-shadow: var(--shadow-sm);
+    }
+    .legal-toc h4 { font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: var(--space-3); }
+    .legal-toc ol { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .legal-toc a {
+      display: block; padding: 8px 12px; border-radius: 8px;
+      font-size: var(--fs-sm); color: var(--text-secondary); font-weight: 600;
+      transition: all var(--transition-fast); line-height: 1.4;
+    }
+    .legal-toc a:hover, .legal-toc a.active { background: rgba(217,119,69,0.1); color: var(--burnt-orange); }
+    .legal-meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: var(--space-5); }
+    .legal-doc {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg); padding: clamp(24px, 3.5vw, 44px);
+      box-shadow: var(--shadow-sm);
+    }
+    .legal-doc section { padding-block: var(--space-5); border-bottom: 1px solid var(--border-color); scroll-margin-top: 100px; }
+    .legal-doc section:first-of-type { padding-top: 0; }
+    .legal-doc section:last-of-type { border-bottom: none; padding-bottom: 0; }
+    .legal-doc h2 { font-size: var(--fs-xl); margin-bottom: var(--space-3); display: flex; gap: 12px; align-items: flex-start; }
+    .legal-num {
+      flex-shrink: 0; width: 32px; height: 32px; border-radius: 10px;
+      background: rgba(217,119,69,0.12); color: var(--burnt-orange);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: var(--fs-sm); font-weight: 800; font-family: var(--font-display);
+    }
+    .legal-doc p, .legal-doc li { color: var(--text-secondary); font-size: var(--fs-sm); line-height: 1.8; }
+    .legal-doc p + p { margin-top: 12px; }
+    .legal-doc ul { padding-left: 20px; margin-top: 12px; display: grid; gap: 8px; }
+    .legal-doc ul li::marker { color: var(--burnt-orange); }
+    .legal-note {
+      background: var(--bg-secondary); border: 1px dashed var(--border-color);
+      border-radius: var(--border-radius-md); padding: var(--space-4);
+      margin-top: var(--space-4); font-size: var(--fs-sm); color: var(--text-secondary); line-height: 1.7;
+    }
+    .legal-note strong { color: var(--text-primary); }
+    .policy-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: var(--fs-sm); }
+    .policy-table th, .policy-table td { text-align: left; padding: 10px 12px; border: 1px solid var(--border-color); }
+    .policy-table th { background: var(--bg-secondary); font-weight: 800; color: var(--text-primary); }
+    .policy-table td { color: var(--text-secondary); }
+    .legal-contact-card {
+      margin-top: var(--space-6); background: var(--midnight-navy); color: white;
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+      display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; justify-content: space-between;
+    }
+    .legal-contact-card h3 { color: white; margin-bottom: 6px; }
+    .legal-contact-card p { color: rgba(255,255,255,0.7); font-size: var(--fs-sm); }
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .legal-layout { grid-template-columns: 1fr; }
+      .legal-toc { position: static; }
+      .legal-toc ol { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    }
+
+    @media (max-width: 760px) {
+      .legal-doc { padding: 32px 24px; }
+      .policy-table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .policy-table { min-width: 480px; }
+    }
+
+    @media (max-width: 480px) {
+      .legal-toc ol { grid-template-columns: 1fr; }
+      .legal-doc { padding: 24px 16px; border-radius: var(--border-radius-md); }
+      .policy-table { font-size: var(--fs-xs); }
+      .legal-contact-card { flex-direction: column; align-items: flex-start; padding: 22px 16px; }
+      .legal-contact-card .btn { width: 100%; justify-content: center; }
+      .legal-actions { flex-direction: column; width: 100%; }
+      .legal-actions .btn { width: 100%; }
+    }
+
+    @media (max-width: 360px) {
+      .legal-doc { padding: 18px 12px; }
+      .legal-contact-card { padding: 18px 12px; }
+    }
+
+    @media (max-width: 320px) {
+      .legal-doc { padding: 14px 8px; }
+      .legal-doc h2 { font-size: var(--fs-lg); }
+      .legal-doc p, .legal-doc li { font-size: 0.85rem; }
+      .legal-toc { padding: 16px 12px; }
+      .policy-table th, .policy-table td { padding: 8px 10px; }
+    }
+    @media print {
+      .navbar, .mobile-nav, .footer, .back-to-top, .legal-toc, .legal-actions { display: none !important; }
+      .legal-doc { box-shadow: none; border: none; }
+      body { background: white; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-transparent" data-transparent="true" id="mainNavbar" role="navigation" aria-label="Main Navigation">
+  <div class="navbar-inner">
+    <a href="./index.html" class="navbar-logo" aria-label="Pawfect Academy Home">
+      <div class="navbar-logo-icon" aria-hidden="true">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+      </div>
+      <div>
+        <div class="navbar-logo-text">Pawfect <span>Academy</span></div>
+        <div class="navbar-logo-sub">Dog Training School</div>
+      </div>
+    </a>
+    <nav class="navbar-nav" role="menubar">
+      <a href="./index.html" class="nav-link" role="menuitem">Home</a>
+      <a href="./home2.html" class="nav-link" role="menuitem">Home 2</a>
+      <a href="./about.html" class="nav-link" role="menuitem">About</a>
+      <a href="./programs.html" class="nav-link" role="menuitem">Programs</a>
+      <a href="./trainers.html" class="nav-link" role="menuitem">Trainers</a>
+      <a href="./pricing.html" class="nav-link" role="menuitem">Pricing</a>
+      <a href="./blog.html" class="nav-link" role="menuitem">Blog</a>
+      <a href="./contact.html" class="nav-link" role="menuitem">Contact</a>
+    </nav>
+    <div class="navbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction">RTL</button>
+      <div class="profile-dropdown" id="profileDropdown">
+        <button class="profile-btn" id="profileToggle" aria-label="User Account Menu" aria-haspopup="true" aria-expanded="false">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div class="profile-menu" role="menu" aria-label="Account Options">
+          <div class="profile-menu-header"><span class="profile-menu-title">Account Portal</span></div>
+          <a href="./login.html" class="profile-menu-item" role="menuitem"><span>Login/Signup</span></a>
+          <a href="./dashboard.html" class="profile-menu-item" role="menuitem"><span>Pet Owner Dashboard</span></a>
+          <a href="./admin.html" class="profile-menu-item" role="menuitem"><span>Admin Dashboard</span></a>
+        </div>
+      </div>
+      <a href="./signup.html" class="btn btn-primary btn-sm nav-cta-btn">Get Started</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile Navigation">
+  <div class="mobile-nav-links">
+    <a href="./index.html" class="mobile-nav-link">Home</a>
+    <a href="./home2.html" class="mobile-nav-link">Home 2</a>
+    <a href="./about.html" class="mobile-nav-link">About</a>
+    <a href="./programs.html" class="mobile-nav-link">Programs</a>
+    <a href="./trainers.html" class="mobile-nav-link">Trainers</a>
+    <a href="./pricing.html" class="mobile-nav-link">Pricing</a>
+    <a href="./blog.html" class="mobile-nav-link">Blog</a>
+    <a href="./contact.html" class="mobile-nav-link">Contact</a>
+        <div class="mobile-nav-cta">
+      <a href="./signup.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header" role="banner">
+  <div class="container page-header-content">
+    <div class="eyebrow">Legal • Fair &amp; Transparent</div>
+    <h1>Terms &amp; <em style="color:var(--burnt-orange);font-style:italic;">Conditions</em></h1>
+    <p>The ground rules for enrollments, payments, safety, and respectful training — so every dog and owner has a great experience.</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <span class="breadcrumb-item"><a href="./index.html">Home</a></span>
+      <span class="breadcrumb-separator">›</span>
+      <span class="breadcrumb-item current">Terms &amp; Conditions</span>
+    </nav>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<section class="section" aria-label="Terms and Conditions content">
+  <div class="container">
+    <div class="legal-meta">
+      <span class="badge badge-primary">Last updated: October 1, 2026</span>
+      <span class="badge badge-secondary">Covers classes, private sessions &amp; website use</span>
+      <div class="legal-actions" style="margin-left:auto;display:flex;gap:10px;">
+        <button class="btn btn-outline btn-sm" onclick="window.print()">Print / Save PDF</button>
+        <a href="./contact.html" class="btn btn-primary btn-sm">Contact Us</a>
+      </div>
+    </div>
+
+    <div class="legal-layout">
+      <aside class="legal-toc" aria-label="Terms table of contents">
+        <h4>On this page</h4>
+        <ol>
+          <li><a href="#agreement">1. Our Agreement</a></li>
+          <li><a href="#services">2. Services &amp; Eligibility</a></li>
+          <li><a href="#enrollment">3. Enrollment &amp; Payment</a></li>
+          <li><a href="#cancellation">4. Cancellations &amp; Refunds</a></li>
+          <li><a href="#health">5. Health, Vaccines &amp; Safety</a></li>
+          <li><a href="#conduct">6. Conduct &amp; Force-Free Rules</a></li>
+          <li><a href="#liability">7. Liability &amp; Assumption of Risk</a></li>
+          <li><a href="#media">8. Media Release</a></li>
+          <li><a href="#accounts">9. Accounts &amp; Acceptable Use</a></li>
+          <li><a href="#general">10. General Legal Terms</a></li>
+        </ol>
+      </aside>
+
+      <article class="legal-doc">
+        <section id="agreement">
+          <h2><span class="legal-num">1</span> Our Agreement</h2>
+          <p>These Terms &amp; Conditions ("Terms") form a binding agreement between you ("client," "owner") and Pawfect Academy, 123 Training Lane, Suite 200, Portland, OR 97201 ("Academy," "we") whenever you use this website, create an account, or enroll a dog in any program — including Puppy Foundation, Basic Obedience, Advanced Off-Leash, Behavior &amp; Reactivity, and specialty workshops listed on our <a href="./programs.html">Programs</a> and <a href="./pricing.html">Pricing</a> pages.</p>
+          <p>By enrolling, booking a free consultation via our <a href="./contact.html">Contact page</a>, or clicking "I agree" on <a href="./signup.html">Signup</a>, you confirm you are at least 18 years old, you are the dog's owner or authorized caretaker, and you accept these Terms and our <a href="./privacy-policy.html">Privacy Policy</a>.</p>
+        </section>
+
+        <section id="services">
+          <h2><span class="legal-num">2</span> Services &amp; Eligibility</h2>
+          <ul>
+            <li><strong>Force-free training only:</strong> all instruction uses science-based, reward-based methods. Prong, choke, shock/e-collars, and physical corrections are prohibited in our facility and classes (see Section 6).</li>
+            <li><strong>Who may enroll:</strong> puppies must be at least 8 weeks old; group classes require age-appropriate vaccinations (Section 5). Dogs with a bite history must disclose it at enrollment and start with a private assessment.</li>
+            <li><strong>Trainer assignment:</strong> meet our faculty on the <a href="./trainers.html">Trainers page</a>. We assign the best-fit certified trainer and may reassign for scheduling or behavioral needs.</li>
+            <li><strong>Results:</strong> we guarantee professional, good-faith instruction aligned with our curriculum — not a specific behavioral outcome, which also depends on practice at home, health, and temperament.</li>
+          </ul>
+        </section>
+
+        <section id="enrollment">
+          <h2><span class="legal-num">3</span> Enrollment &amp; Payment</h2>
+          <ul>
+            <li><strong>Booking:</strong> enrollment is confirmed once payment is received and you get a confirmation email with schedule, location, and preparation checklist.</li>
+            <li><strong>Pricing:</strong> current fees are on the <a href="./pricing.html">Pricing page</a>. Multi-week programs must be paid in full before the first session unless a payment plan is agreed in writing.</li>
+            <li><strong>Late arrival &amp; missed classes:</strong> sessions start on time. Arriving more than 15 minutes late may count as a missed session for safety reasons. One make-up session per program is offered when you notify us at least 24 hours in advance.</li>
+            <li><strong>Lifetime support:</strong> graduates receive free refresher Q&amp;As and pack walks as described at enrollment, subject to availability and good standing.</li>
+          </ul>
+          <div class="legal-note"><strong>Private behavior programs</strong> require an intake questionnaire and vet records before the first 1-on-1 session so your behaviorist can prepare a safe plan.</div>
+        </section>
+
+        <section id="cancellation">
+          <h2><span class="legal-num">4</span> Cancellations &amp; Refunds</h2>
+          <table class="policy-table" aria-label="Cancellation and refund policy">
+            <thead><tr><th>When you cancel</th><th>What happens</th></tr></thead>
+            <tbody>
+              <tr><td>7+ days before start</td><td>Full refund, or free transfer to a later cohort.</td></tr>
+              <tr><td>48 hours – 7 days before start</td><td>50% refund, or full credit toward another program within 6 months.</td></tr>
+              <tr><td>Less than 48 hours / after start</td><td>Non-refundable; credit considered case-by-case for medical or family emergencies with documentation.</td></tr>
+              <tr><td>Class cancelled by us</td><td>Full refund or priority rebooking, your choice — plus a free private catch-up if a mid-course session is cancelled.</td></tr>
+            </tbody>
+          </table>
+          <p>To cancel or reschedule, email <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a> or call <a href="tel:+15551234567">(555) 123-4567</a>. Free consultations can be rescheduled up to 4 hours before with no fee.</p>
+        </section>
+
+        <section id="health">
+          <h2><span class="legal-num">5</span> Health, Vaccines &amp; Safety</h2>
+          <ul>
+            <li><strong>Vaccinations:</strong> dogs must be current on rabies (if age-eligible), DHPP, and Bordetella per your vet's schedule. Proof is required before the first group session.</li>
+            <li><strong>Illness &amp; parasites:</strong> dogs showing coughing, vomiting, diarrhea, or fleas/ticks must stay home; contact us for a make-up plan and vet clearance before returning.</li>
+            <li><strong>Leashes &amp; equipment:</strong> use a standard 4–6 ft leash and flat collar or harness. Retractable leashes are not permitted in class.</li>
+            <li><strong>Facility rules:</strong> follow trainer instructions, keep dogs leashed unless directed, supervise children at all times, and clean up after your dog. Aggressive behavior toward people or dogs may require removal for everyone's safety (with a private-training alternative offered).</li>
+          </ul>
+        </section>
+
+        <section id="conduct">
+          <h2><span class="legal-num">6</span> Conduct &amp; Force-Free Rules</h2>
+          <p>To protect every dog's welfare, the following are strictly prohibited at Pawfect Academy and may result in immediate dismissal without refund:</p>
+          <ul>
+            <li>Use of aversive tools (prong, choke, shock collars) or physical punishment, hitting, or intimidation.</li>
+            <li>Harassment of trainers, staff, or fellow clients — in person, by phone, or online.</li>
+            <li>Bringing an undisclosed aggressive dog into group class without prior assessment.</li>
+            <li>Recording other clients or their dogs without consent.</li>
+          </ul>
+          <p>We coach the whole family so cues stay consistent at home. If homework isn't working, tell your trainer — we will adjust the plan rather than increase pressure on the dog.</p>
+        </section>
+
+        <section id="liability">
+          <h2><span class="legal-num">7</span> Liability &amp; Assumption of Risk</h2>
+          <p>Working with animals involves inherent risk, including nips, scratches, trips, or allergic reactions, even with professional supervision. By participating, you voluntarily assume these risks for yourself, your guests, and your dog.</p>
+          <ul>
+            <li>You remain responsible for your dog's behavior and for any injury or damage your dog causes to people, animals, or property.</li>
+            <li>To the maximum extent permitted by Oregon law, the Academy's liability is limited to the fees paid for the program giving rise to the claim. We are not liable for indirect or consequential damages.</li>
+            <li>Nothing in these Terms limits liability that cannot legally be limited, nor affects your statutory consumer rights.</li>
+            <li>If your dog injures another participant, you agree to share vaccination and insurance details promptly and cooperate in good faith.</li>
+          </ul>
+          <div class="legal-note"><strong>Emergency care:</strong> if your dog needs urgent veterinary care and you cannot be reached, you authorize us to seek reasonable emergency treatment at your expense.</div>
+        </section>
+
+        <section id="media">
+          <h2><span class="legal-num">8</span> Media Release</h2>
+          <p>We photograph and film classes for training records and safety review. Public use (website, socials, <a href="./blog.html">Blog</a>) requires your separate opt-in consent collected at enrollment or via email. You may withdraw marketing consent anytime at <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a>; we will stop future public use but cannot retract already-published materials where impractical.</p>
+        </section>
+
+        <section id="accounts">
+          <h2><span class="legal-num">9</span> Accounts &amp; Acceptable Use</h2>
+          <ul>
+            <li>Keep your <a href="./login.html">Login</a> credentials confidential. You are responsible for activity under your <a href="./dashboard.html">Pet Owner Dashboard</a> or <a href="./admin.html">Admin</a> account.</li>
+            <li>Do not misuse the site: no scraping, reverse-engineering, uploading malware, submitting false records, or infringing our curriculum, logos, photos, or videos (all protected by copyright).</li>
+            <li>We may suspend accounts for non-payment, safety violations, or abuse, with notice and a chance to resolve where reasonable.</li>
+            <li>Our <a href="./blog.html">Blog</a> and training handouts are educational, not veterinary or legal advice. Consult your vet for medical issues.</li>
+          </ul>
+        </section>
+
+        <section id="general">
+          <h2><span class="legal-num">10</span> General Legal Terms</h2>
+          <ul>
+            <li><strong>Changes:</strong> we may update programs, schedules, trainers, and these Terms. Material changes are posted here with a new date; continued enrollment after changes means acceptance.</li>
+            <li><strong>Governing law:</strong> Oregon law applies; disputes will first be addressed through good-faith discussion and mediation in Portland, OR before litigation.</li>
+            <li><strong>Severability:</strong> if any clause is found unenforceable, the rest remain in effect.</li>
+            <li><strong>Contact:</strong> Pawfect Academy, 123 Training Lane, Suite 200, Portland, OR 97201 • <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a> • <a href="tel:+15551234567">(555) 123-4567</a> • <a href="./contact.html">Contact page</a>.</li>
+            <li><strong>Related:</strong> <a href="./privacy-policy.html">Privacy Policy</a> • <a href="./sitemap.html">Sitemap</a></li>
+          </ul>
+          <div class="legal-contact-card">
+            <div>
+              <h3>Questions about these terms?</h3>
+              <p>Talk to us before you enroll — we will walk through refunds, safety, and fit.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="./contact.html" class="btn btn-primary">Book Free Consult</a>
+              <a href="./pricing.html" class="btn btn-outline-light">View Pricing</a>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STANDARD FOOTER ===== -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="./index.html" class="navbar-logo footer-logo" aria-label="Pawfect Academy — Home">
+          <span class="navbar-logo-icon" aria-hidden="true">
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+          </span>
+          <span class="navbar-logo-text" style="color:white;">Pawfect <span>Academy</span></span>
+        </a>
+        <p>Premium canine training and obedience school dedicated to building lasting bonds between dogs and their families through science-based, force-free methods.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#202C3B"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="./index.html" class="footer-link">Home</a></li>
+          <li><a href="./home2.html" class="footer-link">Home 2</a></li>
+          <li><a href="./about.html" class="footer-link">About</a></li>
+          <li><a href="./programs.html" class="footer-link">Programs</a></li>
+          <li><a href="./trainers.html" class="footer-link">Trainers</a></li>
+          <li><a href="./pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="./blog.html" class="footer-link">Blog</a></li>
+          <li><a href="./contact.html" class="footer-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-contact">
+          <li><span>123 Training Lane, Suite 200<br />Portland, OR 97201</span></li>
+          <li><a href="tel:+15551234567">(555) 123-4567</a></li>
+          <li><a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a></li>
+          <li><span>Mon &ndash; Sat: 7:00 AM &ndash; 7:00 PM<br />Sun: Closed</span></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Newsletter</h4>
+        <p class="footer-newsletter-text">Subscribe to receive the latest training tips, news, offers and insights from our certified trainers.</p>
+        <form class="footer-newsletter-form" data-validate data-success-msg="Welcome to the pack! Check your inbox.">
+          <div class="footer-newsletter-field">
+            <label class="sr-only" for="footerNewsletterEmail">Email address</label>
+            <input type="email" id="footerNewsletterEmail" name="email" class="footer-newsletter-input" placeholder="Your email address" required aria-label="Email address" autocomplete="email" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+        <p class="footer-newsletter-note">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span class="js-footer-year">2026</span> Pawfect Academy. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./terms-conditions.html" aria-current="page">Terms &amp; Conditions</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./sitemap.html">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<script src="./assets/js/global.js"></script>
+<script>
+  const tocLinks = document.querySelectorAll('.legal-toc a');
+  const sections = [...document.querySelectorAll('.legal-doc section[id]')];
+  const onScroll = () => {
+    const y = window.scrollY + 140;
+    let current = sections[0]?.id;
+    for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+    tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  };
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+</script>
+</body>
+</html>

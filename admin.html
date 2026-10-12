@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Pawfect Academy</title>
+  <meta name="description" content="Pawfect Academy internal administration panel — manage enrollments, trainers, revenue and client communications." />
+  <meta name="robots" content="noindex" />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    /* ADMIN DASHBOARD */
+    body { padding: 0; background: var(--bg-secondary); }
+    .admin-layout { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+
+    /* Sidebar */
+    .admin-sidebar {
+      background: #111827; position: fixed; top: 0; left: 0;
+      height: 100vh; width: 280px; z-index: var(--z-fixed);
+      display: flex; flex-direction: column; overflow-y: auto;
+    }
+    .admin-sidebar-header {
+      padding: var(--space-5) var(--space-5) var(--space-4);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .admin-badge { background: var(--burnt-orange); color: white; padding: 3px 10px; border-radius: var(--border-radius-full); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-left: var(--space-2); }
+    .admin-nav { padding: var(--space-4) var(--space-3); flex: 1; }
+    .admin-nav-section { margin-bottom: var(--space-5); }
+    .admin-nav-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.25); padding: 0 var(--space-3); margin-bottom: var(--space-2); }
+    .admin-nav-item {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: 10px var(--space-3); border-radius: var(--border-radius-sm);
+      color: rgba(255,255,255,0.55); font-size: var(--fs-sm); font-weight: 500;
+      transition: all var(--transition-fast); cursor: pointer; position: relative; text-decoration: none;
+    }
+    .admin-nav-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.9); }
+    .admin-nav-item.active { background: rgba(217,119,69,0.15); color: white; }
+    .admin-nav-item.active::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 3px; background: var(--burnt-orange); border-radius: 0 2px 2px 0; }
+    .admin-nav-icon { font-size: 17px; flex-shrink: 0; }
+    .admin-nav-badge { margin-left: auto; background: #EF4444; color: white; padding: 2px 7px; border-radius: var(--border-radius-full); font-size: 11px; font-weight: 700; }
+    .admin-user-section { padding: var(--space-4) var(--space-5); border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: var(--space-3); }
+    .admin-user-avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 2px solid var(--burnt-orange); }
+
+    /* Main */
+    .admin-main { margin-left: 280px; min-height: 100vh; }
+    .admin-topbar {
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+      padding: var(--space-4) var(--space-6);
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+      position: sticky; top: 0; z-index: var(--z-raised);
+    }
+    .admin-content { padding: var(--space-6); }
+
+    /* KPI cards */
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    .kpi-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg); padding: var(--space-5);
+      box-shadow: var(--shadow-sm); transition: all var(--transition-base);
+      position: relative; overflow: hidden;
+    }
+    .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .kpi-card.orange::before { background: var(--burnt-orange); }
+    .kpi-card.green::before { background: var(--sage-green); }
+    .kpi-card.navy::before { background: var(--midnight-navy); }
+    .kpi-card.sand::before { background: var(--sand-beige); }
+    .kpi-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .kpi-icon { font-size: 28px; margin-bottom: var(--space-3); }
+    .kpi-value { font-family: var(--font-display); font-size: var(--fs-4xl); font-weight: 900; color: var(--text-primary); line-height: 1; }
+    .kpi-label { font-size: var(--fs-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-top: var(--space-2); }
+    .kpi-trend { font-size: var(--fs-xs); font-weight: 700; margin-top: var(--space-2); }
+    .kpi-trend.up { color: var(--sage-green); }
+    .kpi-trend.down { color: #EF4444; }
+
+    /* Data table */
+    .admin-table { width: 100%; border-collapse: collapse; }
+    .admin-table thead { background: var(--bg-secondary); }
+    .admin-table th { padding: var(--space-3) var(--space-4); text-align: left; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border-bottom: 2px solid var(--border-color); }
+    .admin-table td { padding: var(--space-3) var(--space-4); font-size: var(--fs-sm); border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+    .admin-table tbody tr { transition: background var(--transition-fast); }
+    .admin-table tbody tr:hover { background: rgba(217,119,69,0.04); }
+    .admin-table tbody tr:last-child td { border-bottom: none; }
+    .student-info { display: flex; align-items: center; gap: var(--space-3); }
+    .student-avatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .student-name { font-weight: 600; }
+    .student-email { font-size: var(--fs-xs); color: var(--text-muted); }
+
+    /* Charts placeholder */
+    .chart-placeholder {
+      background: var(--bg-secondary); border-radius: var(--border-radius-md);
+      padding: var(--space-6); border: 1px dashed var(--border-color);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: var(--space-3); min-height: 200px;
+    }
+
+    /* Mini chart bars */
+    .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding-top: var(--space-4); }
+    .bar { flex: 1; border-radius: 4px 4px 0 0; background: var(--burnt-orange); opacity: 0.85; transition: all var(--transition-base); position: relative; }
+    .bar:hover { opacity: 1; }
+    .bar-tooltip { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--midnight-navy); color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity var(--transition-fast); margin-bottom: 6px; }
+    .bar:hover .bar-tooltip { opacity: 1; }
+    .bar-label { text-align: center; font-size: 10px; color: var(--text-muted); margin-top: 6px; }
+    .bar-labels { display: flex; gap: 6px; margin-top: 4px; }
+    .bar-label-item { flex: 1; text-align: center; font-size: 10px; color: var(--text-muted); }
+
+    /* Quick actions */
+    .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+    .action-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md); padding: var(--space-4);
+      text-align: center; cursor: pointer; transition: all var(--transition-base);
+    }
+    .action-card:hover { border-color: var(--burnt-orange); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .action-icon { font-size: 32px; margin-bottom: var(--space-2); }
+    .action-label { font-size: var(--fs-xs); font-weight: 700; color: var(--text-secondary); }
+
+    /* Activity feed */
+    .activity-item { display: flex; gap: var(--space-3); align-items: flex-start; padding-block: var(--space-3); border-bottom: 1px solid var(--border-color); }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .activity-dot.green { background: var(--sage-green); }
+    .activity-dot.orange { background: var(--burnt-orange); }
+    .activity-dot.blue { background: #3B82F6; }
+    .activity-text { font-size: var(--fs-sm); color: var(--text-secondary); line-height: 1.5; }
+    .activity-time { font-size: var(--fs-xs); color: var(--text-muted); }
+
+    /* Grid layouts */
+    .admin-grid-2 { display: grid; grid-template-columns: 1.8fr 1fr; gap: var(--space-5); }
+    .admin-grid-3 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+
+    /* Sidebar views (tab switching) */
+    .admin-view { display: none; }
+    .admin-view.active { display: block; animation: adminFade .35s ease; }
+    @keyframes adminFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .admin-view-head { margin-bottom: var(--space-5); }
+    .admin-view-head h2 { font-family: var(--font-display); font-size: var(--fs-2xl); }
+    .admin-view-head p { color: var(--text-muted); font-size: var(--fs-sm); margin-top: 4px; }
+    .admin-nav-item svg { width: 17px; height: 17px; }
+    /* Icon tiles */
+    .kpi-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: rgba(217, 119, 69, 0.1); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: var(--space-3); flex-shrink: 0;
+    }
+    .kpi-icon svg { width: 26px; height: 26px; }
+    .action-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: rgba(217, 119, 69, 0.1); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-2);
+    }
+    .action-icon svg { width: 24px; height: 24px; }
+
+    /* Panel */
+    .admin-panel {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg); overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .panel-header {
+      padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .panel-title { font-family: var(--font-display); font-size: var(--fs-lg); }
+    .panel-body { padding: var(--space-4) var(--space-5); }
+
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .admin-sidebar { transform: translateX(-100%); }
+      .admin-sidebar.mobile-open { transform: translateX(0); }
+      .admin-main { margin-left: 0; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .quick-actions { grid-template-columns: repeat(2, 1fr); }
+      .admin-grid-2, .admin-grid-3 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .admin-topbar { flex-wrap: wrap; gap: 12px; padding: var(--space-4) var(--space-5); }
+      .admin-topbar input[type="search"] { min-width: 0 !important; width: 100%; }
+      .admin-content { padding: 20px 16px; }
+      .admin-panel .panel-body { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .admin-table { min-width: 520px; }
+    }
+
+    @media (max-width: 480px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .admin-topbar { padding: 14px 12px; }
+      .admin-content { padding: 16px 10px; }
+      .panel-header { padding: 14px 12px; flex-wrap: wrap; gap: 8px; }
+      .panel-body { padding: 14px 10px; }
+      .quick-actions { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .action-card { padding: 14px 8px; }
+    }
+
+    @media (max-width: 360px) {
+      .admin-topbar { padding: 12px 8px; }
+      .kpi-card { padding: 16px 12px; }
+      .kpi-value { font-size: var(--fs-3xl); }
+      .kpi-icon { width: 44px; height: 44px; }
+      .action-icon { width: 40px; height: 40px; }
+      .action-label { font-size: 0.70rem; }
+    }
+
+    @media (max-width: 320px) {
+      .admin-topbar { padding: 10px 6px; }
+      .admin-content { padding: 10px 4px; }
+      .kpi-card { padding: 14px 10px; }
+      .kpi-value { font-size: var(--fs-2xl); }
+      .quick-actions { grid-template-columns: 1fr; }
+      .admin-table { min-width: 460px; font-size: var(--fs-xs); }
+      .admin-table th, .admin-table td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ADMIN SIDEBAR -->
+<aside class="admin-sidebar" id="adminSidebar" role="navigation" aria-label="Admin navigation">
+  <div class="admin-sidebar-header">
+    <a href="./index.html" class="navbar-logo" style="margin-bottom:0;">
+      <div class="navbar-logo-icon"><svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></div>
+      <div class="navbar-logo-text" style="color:white;">Pawfect <span style="color:var(--burnt-orange);">Admin</span></div>
+    </a>
+  </div>
+
+  <nav class="admin-nav">
+    <div class="admin-nav-section">
+      <div class="admin-nav-label">Overview</div>
+      <a href="#" class="admin-nav-item active" data-view="dashboard" data-title="Admin Dashboard" data-sub="Saturday, October 10, 2026 · All systems operational"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span> Dashboard</a>
+      <a href="#" class="admin-nav-item" data-view="analytics" data-title="Analytics" data-sub="Enrollment trends and site performance"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span> Analytics</a>
+      <a href="#" class="admin-nav-item" data-view="revenue" data-title="Revenue" data-sub="October 2026 · $18,420 (+22%)"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Revenue</a>
+    </div>
+    <div class="admin-nav-section">
+      <div class="admin-nav-label">Students</div>
+      <a href="#" class="admin-nav-item" data-view="enrollments" data-title="All Enrollments" data-sub="48 active enrollments across 6 programs"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> All Enrollments <span class="admin-nav-badge">3</span></a>
+      <a href="#" class="admin-nav-item" data-view="applications" data-title="Applications" data-sub="2 pending applications awaiting review"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span> Applications</a>
+      <a href="#" class="admin-nav-item" data-view="graduates" data-title="Graduates" data-sub="12 graduations this month — congratulations!"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span> Graduates</a>
+    </div>
+    <div class="admin-nav-section">
+      <div class="admin-nav-label">Operations</div>
+      <a href="#" class="admin-nav-item" data-view="programs" data-title="Programs" data-sub="6 active programs · 48 enrolled dogs"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span> Programs</a>
+      <a href="#" class="admin-nav-item" data-view="trainers" data-title="Trainers" data-sub="12 certified trainers on the team"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span> Trainers</a>
+      <a href="#" class="admin-nav-item" data-view="schedule" data-title="Schedule" data-sub="This week's sessions across all programs"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Schedule</a>
+      <a href="#" class="admin-nav-item" data-view="messages" data-title="Messages" data-sub="7 unread owner messages"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Messages <span class="admin-nav-badge">7</span></a>
+    </div>
+    <div class="admin-nav-section">
+      <div class="admin-nav-label">Content</div>
+      <a href="#" class="admin-nav-item" data-view="posts" data-title="Blog Posts" data-sub="6 published articles this season"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></span> Blog Posts</a>
+      <a href="#" class="admin-nav-item" data-view="testimonials" data-title="Testimonials" data-sub="4.9 average across 850+ reviews"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span> Testimonials</a>
+    </div>
+    <div class="admin-nav-section">
+      <div class="admin-nav-label">System</div>
+      <a href="#" class="admin-nav-item" data-view="settings" data-title="Settings" data-sub="Academy profile, team and preferences"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Settings</a>
+      <a href="./login.html" class="admin-nav-item"><span class="admin-nav-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Sign Out</a>
+    </div>
+
+  </nav>
+
+  <div class="admin-user-section">
+    <img class="admin-user-avatar" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=80&q=70" alt="Sarah Mitchell admin" loading="lazy" />
+    <div>
+      <div style="color:white;font-weight:600;font-size:var(--fs-sm);">Sarah Mitchell</div>
+      <div style="color:rgba(255,255,255,0.4);font-size:var(--fs-xs);">Administrator</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ADMIN MAIN -->
+<main class="admin-main">
+  <!-- Top Bar -->
+  <div class="admin-topbar">
+    <div>
+      <div id="adminTitle" style="font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;">Admin Dashboard</div>
+      <div id="adminSub" style="font-size:var(--fs-xs);color:var(--text-muted);">Saturday, October 10, 2026 · All systems operational</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:var(--space-3);">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode"><svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg><span>RTL</span></button>
+      <div style="position:relative;">
+        <input type="search" class="form-control" placeholder="Search students, trainers..." style="padding-left:36px;min-width:220px;" aria-label="Search admin panel" />
+        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      </div>
+      <button style="position:relative;background:none;border:1.5px solid var(--border-color);border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:18px;" onclick="window.Pawfect?.Toast?.show('7 unread messages','info')"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span style="position:absolute;top:-2px;right:-2px;width:14px;height:14px;background:#EF4444;border-radius:50%;border:2px solid var(--bg-primary);font-size:9px;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;">7</span></button>
+    </div>
+  </div>
+
+  <div class="admin-content">
+
+    <div class="admin-view active" data-view="dashboard">
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card orange reveal" data-delay="0">
+        <div class="kpi-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="kpi-value" data-counter="48">48</div>
+        <div class="kpi-label">Active Enrollments</div>
+        <div class="kpi-trend up">↑ +6 this month</div>
+      </div>
+      <div class="kpi-card green reveal" data-delay="100">
+        <div class="kpi-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="kpi-value">$<span data-counter="18420">18,420</span></div>
+        <div class="kpi-label">Monthly Revenue</div>
+        <div class="kpi-trend up">↑ +22% vs last month</div>
+      </div>
+      <div class="kpi-card navy reveal" data-delay="200">
+        <div class="kpi-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <div class="kpi-value" data-counter="12">12</div>
+        <div class="kpi-label">Graduates This Month</div>
+        <div class="kpi-trend up">↑ +3 vs last month</div>
+      </div>
+      <div class="kpi-card sand reveal" data-delay="300">
+        <div class="kpi-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="kpi-value">4.9</div>
+        <div class="kpi-label">Avg. Trainer Rating</div>
+        <div class="kpi-trend up">↑ +0.1 this quarter</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="admin-panel reveal" style="margin-bottom:var(--space-5);">
+      <div class="panel-header">
+        <h3 class="panel-title">Quick Actions</h3>
+      </div>
+      <div class="panel-body">
+        <div class="quick-actions">
+          <div class="action-card" onclick="window.Pawfect?.Toast?.show('New enrollment form opened','info')">
+            <div class="action-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            <div class="action-label">New Enrollment</div>
+          </div>
+          <div class="action-card" onclick="window.Pawfect?.Toast?.show('Schedule editor opened','info')">
+            <div class="action-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="action-label">Edit Schedule</div>
+          </div>
+          <div class="action-card" onclick="window.Pawfect?.Toast?.show('Blog editor opened','info')">
+            <div class="action-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+            <div class="action-label">New Blog Post</div>
+          </div>
+          <div class="action-card" onclick="window.Pawfect?.Toast?.show('Reports dashboard opened','info')">
+            <div class="action-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
+            <div class="action-label">View Reports</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revenue Chart + Activity -->
+    <div class="admin-grid-2" style="margin-bottom:var(--space-5);">
+      <!-- Revenue Chart -->
+      <div class="admin-panel reveal">
+        <div class="panel-header">
+          <h3 class="panel-title">Monthly Revenue</h3>
+          <div style="display:flex;gap:var(--space-2);">
+            <button class="chip active" style="font-size:11px;padding:6px 12px;">2026</button>
+            <button class="chip" style="font-size:11px;padding:6px 12px;">2025</button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div style="font-family:var(--font-display);font-size:var(--fs-3xl);font-weight:900;margin-bottom:var(--space-2);">$18,420 <span style="font-size:var(--fs-md);color:var(--sage-green);font-family:var(--font-body);">↑ 22%</span></div>
+          <div style="color:var(--text-muted);font-size:var(--fs-xs);margin-bottom:var(--space-5);">October 2026 vs September 2026</div>
+          <div class="bar-chart">
+            <div class="bar" style="height:55%" title="Jan"><div class="bar-tooltip">Jan: $10.2k</div></div>
+            <div class="bar" style="height:63%" title="Feb"><div class="bar-tooltip">Feb: $11.8k</div></div>
+            <div class="bar" style="height:71%" title="Mar"><div class="bar-tooltip">Mar: $13.1k</div></div>
+            <div class="bar" style="height:68%" title="Apr"><div class="bar-tooltip">Apr: $12.6k</div></div>
+            <div class="bar" style="height:75%" title="May"><div class="bar-tooltip">May: $13.9k</div></div>
+            <div class="bar" style="height:80%" title="Jun"><div class="bar-tooltip">Jun: $14.8k</div></div>
+            <div class="bar" style="height:78%" title="Jul"><div class="bar-tooltip">Jul: $14.4k</div></div>
+            <div class="bar" style="height:82%" title="Aug"><div class="bar-tooltip">Aug: $15.1k</div></div>
+            <div class="bar" style="height:85%" title="Sep"><div class="bar-tooltip">Sep: $15.7k</div></div>
+            <div class="bar" style="height:100%;background:var(--sage-green);" title="Oct"><div class="bar-tooltip">Oct: $18.4k <svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div></div>
+          </div>
+          <div class="bar-labels">
+            <div class="bar-label-item">J</div><div class="bar-label-item">F</div>
+            <div class="bar-label-item">M</div><div class="bar-label-item">A</div>
+            <div class="bar-label-item">M</div><div class="bar-label-item">J</div>
+            <div class="bar-label-item">J</div><div class="bar-label-item">A</div>
+            <div class="bar-label-item">S</div><div class="bar-label-item" style="color:var(--sage-green);font-weight:700;">O</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity Feed -->
+      <div class="admin-panel reveal" data-delay="100">
+        <div class="panel-header">
+          <h3 class="panel-title">Recent Activity</h3>
+          <a href="#" style="font-size:var(--fs-xs);color:var(--burnt-orange);font-weight:700;">View All</a>
+        </div>
+        <div class="panel-body">
+          <div class="activity-item">
+            <div class="activity-dot green"></div>
+            <div><div class="activity-text"><strong>Jane Smith</strong> enrolled in Basic Obedience (Nov 11 cohort)</div><div class="activity-time">2 min ago</div></div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot orange"></div>
+            <div><div class="activity-text"><strong>Marcus Chen</strong> uploaded session notes for Puppy Foundation — Week 3</div><div class="activity-time">18 min ago</div></div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot blue"></div>
+            <div><div class="activity-text"><strong>David K.</strong> left a 5-star review on Google</div><div class="activity-time">1 hr ago</div></div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot green"></div>
+            <div><div class="activity-text"><strong>Buddy (Jane Smith)</strong> completed Week 5 session — 87% performance score</div><div class="activity-time">2 hrs ago</div></div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot orange"></div>
+            <div><div class="activity-text">New contact form submission — <strong>Tom Patterson</strong> inquiring about Behavior Correction</div><div class="activity-time">3 hrs ago</div></div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot green"></div>
+            <div><div class="activity-text"><strong>Luna (Mike Johnson)</strong> graduated from Advanced Obedience with 96% average</div><div class="activity-time">Yesterday</div></div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot blue"></div>
+            <div><div class="activity-text">Scheduled maintenance complete — website back online</div><div class="activity-time">Yesterday</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enrollments Table -->
+    <div class="admin-panel reveal" style="margin-bottom:var(--space-5);">
+      <div class="panel-header">
+        <h3 class="panel-title">Recent Enrollments</h3>
+        <div style="display:flex;gap:var(--space-3);">
+          <input type="search" class="form-control" style="width:180px;padding:10px;" placeholder="Filter..." aria-label="Filter enrollments" />
+          <button class="btn btn-primary btn-sm" onclick="window.Pawfect?.Toast?.show('Export to CSV would work here','info')">Export CSV</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="admin-table" aria-label="Recent student enrollments">
+          <thead>
+            <tr>
+              <th>Student / Dog</th>
+              <th>Program</th>
+              <th>Trainer</th>
+              <th>Start Date</th>
+              <th>Progress</th>
+              <th>Revenue</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="student-info">
+                  <img class="student-avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&q=60&auto=format" onerror="this.onerror=null;this.src='https://i.pravatar.cc/60?img=47';" alt="Jane Smith" loading="lazy" />
+                  <div>
+                    <div class="student-name">Jane Smith</div>
+                    <div class="student-email">Buddy · Golden Retriever</div>
+                  </div>
+                </div>
+              </td>
+              <td>Basic Obedience</td>
+              <td>Sarah M.</td>
+              <td>Sep 9, 2026</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;height:6px;"><div class="progress-fill" style="width:62.5%"></div></div>
+                  <span style="font-size:var(--fs-xs);font-weight:700;color:var(--burnt-orange);">5/8</span>
+                </div>
+              </td>
+              <td style="font-weight:700;color:var(--sage-green);">$399</td>
+              <td><span class="badge badge-primary" style="font-size:10px;">Active</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Opening Jane\'s profile...','info')" style="padding:6px 10px;"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                  <button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Opening message composer...','info')" style="padding:6px 10px;"></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="student-info">
+                  <img class="student-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&q=60" alt="Michael Johnson" loading="lazy" />
+                  <div>
+                    <div class="student-name">Michael Johnson</div>
+                    <div class="student-email">Luna · German Shepherd</div>
+                  </div>
+                </div>
+              </td>
+              <td>Advanced Obedience</td>
+              <td>Marcus C.</td>
+              <td>Aug 5, 2026</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;height:6px;"><div class="progress-fill" style="width:100%;background:var(--sage-green)"></div></div>
+                  <span style="font-size:var(--fs-xs);font-weight:700;color:var(--sage-green);">8/8</span>
+                </div>
+              </td>
+              <td style="font-weight:700;color:var(--sage-green);">$549</td>
+              <td><span class="badge badge-secondary" style="font-size:10px;">Graduated</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Opening Michael\'s profile...','info')" style="padding:6px 10px;"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                  <button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Sending certificate...','success')" style="padding:6px 10px;"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="student-info">
+                  <img class="student-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&q=60" alt="Priya Mehta" loading="lazy" />
+                  <div>
+                    <div class="student-name">Priya Mehta</div>
+                    <div class="student-email">Mochi · Shiba Inu</div>
+                  </div>
+                </div>
+              </td>
+              <td>Behavior Correction</td>
+              <td>James O.</td>
+              <td>Oct 1, 2026</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;height:6px;"><div class="progress-fill" style="width:16%"></div></div>
+                  <span style="font-size:var(--fs-xs);font-weight:700;color:var(--burnt-orange);">2/12</span>
+                </div>
+              </td>
+              <td style="font-weight:700;color:var(--sage-green);">$799</td>
+              <td><span class="badge badge-primary" style="font-size:10px;">Active</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Opening Priya\'s profile...','info')" style="padding:6px 10px;"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                  <button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Opening message composer...','info')" style="padding:6px 10px;"></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="student-info">
+                  <img class="student-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&q=60" alt="David Kim" loading="lazy" />
+                  <div>
+                    <div class="student-name">David Kim</div>
+                    <div class="student-email">Max · Border Collie</div>
+                  </div>
+                </div>
+              </td>
+              <td>Puppy Foundation</td>
+              <td>Emma R.</td>
+              <td>Oct 8, 2026</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;height:6px;"><div class="progress-fill" style="width:16%"></div></div>
+                  <span style="font-size:var(--fs-xs);font-weight:700;color:var(--burnt-orange);">1/6</span>
+                </div>
+              </td>
+              <td style="font-weight:700;color:var(--sage-green);">$299</td>
+              <td><span class="badge badge-primary" style="font-size:10px;">Active</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Opening David\'s profile...','info')" style="padding:6px 10px;"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                  <button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Opening message composer...','info')" style="padding:6px 10px;"></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:var(--space-4) var(--space-5);border-top:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;font-size:var(--fs-xs);color:var(--text-muted);">
+        <span>Showing 4 of 48 enrollments</span>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline btn-sm" style="padding:6px 14px;">← Prev</button>
+          <button class="btn btn-outline btn-sm" style="padding:6px 14px;">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trainer Performance -->
+    <div class="admin-panel reveal">
+      <div class="panel-header">
+        <h3 class="panel-title">Trainer Performance — October 2026</h3>
+        <button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Full report would open here','info')">Full Report</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="admin-table" aria-label="Trainer performance metrics">
+          <thead>
+            <tr>
+              <th>Trainer</th>
+              <th>Active Students</th>
+              <th>Sessions This Mo.</th>
+              <th>Avg. Score</th>
+              <th>Rating</th>
+              <th>Revenue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="student-info">
+                  <img class="student-avatar" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=60&q=60" alt="Sarah Mitchell" loading="lazy" />
+                  <div><div class="student-name">Sarah Mitchell</div><div class="student-email">Head Trainer · CPDT-KA</div></div>
+                </div>
+              </td>
+              <td>18</td>
+              <td>36</td>
+              <td><span style="color:var(--sage-green);font-weight:700;">91%</span></td>
+              <td><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5.0</td>
+              <td style="font-weight:700;">$7,182</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="student-info">
+                  <img class="student-avatar" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=60&q=60" alt="Marcus Chen" loading="lazy" />
+                  <div><div class="student-name">Marcus Chen</div><div class="student-email">Advanced Specialist · CPDT-KA</div></div>
+                </div>
+              </td>
+              <td>14</td>
+              <td>28</td>
+              <td><span style="color:var(--sage-green);font-weight:700;">89%</span></td>
+              <td><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.9</td>
+              <td style="font-weight:700;">$5,488</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="student-info">
+                  <img class="student-avatar" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=60&q=60" alt="Emma Rodriguez" loading="lazy" />
+                  <div><div class="student-name">Emma Rodriguez</div><div class="student-email">Puppy Coach · Fear Free</div></div>
+                </div>
+              </td>
+              <td>10</td>
+              <td>20</td>
+              <td><span style="color:var(--sage-green);font-weight:700;">94%</span></td>
+              <td><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5.0</td>
+              <td style="font-weight:700;">$3,870</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="student-info">
+                  <img class="student-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&q=60" alt="James O'Brien" loading="lazy" />
+                  <div><div class="student-name">James O'Brien</div><div class="student-email">Behavior Specialist · CAAB</div></div>
+                </div>
+              </td>
+              <td>6</td>
+              <td>18</td>
+              <td><span style="color:var(--sage-green);font-weight:700;">87%</span></td>
+              <td><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.9</td>
+              <td style="font-weight:700;">$4,794</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div><!-- /admin-view dashboard -->
+
+    <!-- ANALYTICS VIEW -->
+    <div class="admin-view" data-view="analytics">
+      <div class="admin-view-head"><h2>Analytics</h2><p>Enrollment trends and site performance · October 2026</p></div>
+      <div class="kpi-grid" style="margin-bottom:var(--space-5);">
+        <div class="kpi-card orange"><div class="kpi-value">48</div><div class="kpi-label">Active Enrollments</div><div class="kpi-trend up">↑ +6 this month</div></div>
+        <div class="kpi-card green"><div class="kpi-value">312</div><div class="kpi-label">Site Visits / Day</div><div class="kpi-trend up">↑ +18% this month</div></div>
+        <div class="kpi-card navy"><div class="kpi-value">64%</div><div class="kpi-label">Consult → Enroll Rate</div><div class="kpi-trend up">↑ +4 pts</div></div>
+        <div class="kpi-card sand"><div class="kpi-value">12</div><div class="kpi-label">Graduates This Month</div><div class="kpi-trend up">↑ +3 vs last month</div></div>
+      </div>
+      <div class="admin-panel">
+        <div class="panel-header"><h3 class="panel-title">Enrollments by Week</h3></div>
+        <div class="panel-body">
+          <div class="bar-chart">
+            <div class="bar" style="height:45%"><div class="bar-tooltip">W1: 7</div></div>
+            <div class="bar" style="height:60%"><div class="bar-tooltip">W2: 9</div></div>
+            <div class="bar" style="height:80%"><div class="bar-tooltip">W3: 12</div></div>
+            <div class="bar" style="height:100%;background:var(--sage-green);"><div class="bar-tooltip">W4: 15</div></div>
+          </div>
+          <div class="bar-labels"><div class="bar-label-item">W1</div><div class="bar-label-item">W2</div><div class="bar-label-item">W3</div><div class="bar-label-item" style="color:var(--sage-green);font-weight:700;">W4</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVENUE VIEW -->
+    <div class="admin-view" data-view="revenue">
+      <div class="admin-view-head"><h2>Revenue</h2><p>October 2026 · $18,420 (+22% vs September)</p></div>
+      <div class="admin-panel">
+        <div class="panel-header"><h3 class="panel-title">Revenue by Program</h3><span class="badge badge-primary">October</span></div>
+        <div style="overflow-x:auto;"><table class="admin-table" aria-label="Revenue by program">
+          <thead><tr><th>Program</th><th>Enrollments</th><th>Revenue</th><th>Trend</th></tr></thead>
+          <tbody>
+            <tr><td>Basic Obedience</td><td>16</td><td style="font-weight:700;color:var(--sage-green);">$6,384</td><td class="kpi-trend up">↑ 18%</td></tr>
+            <tr><td>Advanced Obedience</td><td>9</td><td style="font-weight:700;color:var(--sage-green);">$4,941</td><td class="kpi-trend up">↑ 31%</td></tr>
+            <tr><td>Behavior Correction</td><td>5</td><td style="font-weight:700;color:var(--sage-green);">$3,995</td><td class="kpi-trend up">↑ 12%</td></tr>
+            <tr><td>Puppy Foundation</td><td>8</td><td style="font-weight:700;color:var(--sage-green);">$2,392</td><td class="kpi-trend up">↑ 9%</td></tr>
+            <tr><td>Leash Mastery</td><td>6</td><td style="font-weight:700;color:var(--sage-green);">$1,494</td><td class="kpi-trend up">↑ 15%</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ENROLLMENTS VIEW -->
+    <div class="admin-view" data-view="enrollments">
+      <div class="admin-view-head"><h2>All Enrollments</h2><p>48 active enrollments across 6 programs</p></div>
+      <div class="admin-panel">
+        <div class="panel-header"><h3 class="panel-title">Students</h3><button class="btn btn-primary btn-sm" onclick="window.Pawfect?.Toast?.show('New enrollment form opened','info')">+ Add Student</button></div>
+        <div style="overflow-x:auto;"><table class="admin-table" aria-label="All enrollments">
+          <thead><tr><th>Student / Dog</th><th>Program</th><th>Trainer</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><div class="student-name">Jane Smith</div><div class="student-email">Buddy · Golden Retriever</div></td><td>Basic Obedience</td><td>Sarah M.</td><td><span class="badge badge-primary" style="font-size:10px;">Active</span></td></tr>
+            <tr><td><div class="student-name">Michael Johnson</div><div class="student-email">Luna · German Shepherd</div></td><td>Advanced Obedience</td><td>Marcus C.</td><td><span class="badge badge-secondary" style="font-size:10px;">Graduated</span></td></tr>
+            <tr><td><div class="student-name">Priya Mehta</div><div class="student-email">Mochi · Shiba Inu</div></td><td>Behavior Correction</td><td>James O.</td><td><span class="badge badge-primary" style="font-size:10px;">Active</span></td></tr>
+            <tr><td><div class="student-name">David Kim</div><div class="student-email">Max · Border Collie</div></td><td>Puppy Foundation</td><td>Emma R.</td><td><span class="badge badge-primary" style="font-size:10px;">Active</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- APPLICATIONS VIEW -->
+    <div class="admin-view" data-view="applications">
+      <div class="admin-view-head"><h2>Applications</h2><p>2 pending applications awaiting review</p></div>
+      <div class="admin-panel" style="margin-bottom:var(--space-5);"><div class="panel-body">
+        <div class="activity-item"><div class="activity-dot orange"></div><div style="flex:1;"><div class="activity-text"><strong>Tom Patterson</strong> — Behavior Correction for rescue mix Milo</div><div class="activity-time">Applied 2 days ago · Phone consult requested</div></div><button class="btn btn-primary btn-sm" onclick="window.Pawfect?.Toast?.show('Application approved!','success')">Approve</button></div>
+        <div class="activity-item"><div class="activity-dot orange"></div><div style="flex:1;"><div class="activity-text"><strong>Lisa Wong</strong> — Puppy Foundation for Corgi puppy Biscuit</div><div class="activity-time">Applied 4 days ago · November cohort</div></div><button class="btn btn-primary btn-sm" onclick="window.Pawfect?.Toast?.show('Application approved!','success')">Approve</button></div>
+      </div></div>
+    </div>
+
+    <!-- GRADUATES VIEW -->
+    <div class="admin-view" data-view="graduates">
+      <div class="admin-view-head"><h2>Graduates</h2><p>12 graduations this month — congratulations to every team!</p></div>
+      <div class="admin-panel"><div class="panel-body">
+        <div class="activity-item"><div class="activity-dot green"></div><div><div class="activity-text"><strong>Luna (Mike Johnson)</strong> — Advanced Obedience · 96% average</div><div class="activity-time">Graduated Oct 6, 2026</div></div></div>
+        <div class="activity-item"><div class="activity-dot green"></div><div><div class="activity-text"><strong>Coco (Anna Lee)</strong> — Basic Obedience · 93% average</div><div class="activity-time">Graduated Oct 3, 2026</div></div></div>
+        <div class="activity-item"><div class="activity-dot green"></div><div><div class="activity-text"><strong>Pepper (Sam Rivera)</strong> — Puppy Foundation · 91% average</div><div class="activity-time">Graduated Oct 1, 2026</div></div></div>
+      </div></div>
+    </div>
+
+    <!-- PROGRAMS VIEW -->
+    <div class="admin-view" data-view="programs">
+      <div class="admin-view-head"><h2>Programs</h2><p>6 active programs · 48 enrolled dogs</p></div>
+      <div class="admin-panel"><div style="overflow-x:auto;"><table class="admin-table" aria-label="Programs overview">
+        <thead><tr><th>Program</th><th>Enrolled</th><th>Price</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Puppy Foundation</td><td>8</td><td>$299</td><td><span class="badge badge-primary" style="font-size:10px;">Filling</span></td></tr>
+          <tr><td>Basic Obedience</td><td>16</td><td>$399</td><td><span class="badge badge-primary" style="font-size:10px;">Filling</span></td></tr>
+          <tr><td>Advanced Obedience</td><td>9</td><td>$549</td><td><span class="badge badge-secondary" style="font-size:10px;">Open</span></td></tr>
+          <tr><td>Behavior Correction</td><td>5</td><td>$799</td><td><span class="badge badge-secondary" style="font-size:10px;">Open</span></td></tr>
+          <tr><td>Leash Mastery</td><td>6</td><td>$249</td><td><span class="badge badge-secondary" style="font-size:10px;">Open</span></td></tr>
+          <tr><td>Socialization Lab</td><td>4</td><td>$40</td><td><span class="badge badge-secondary" style="font-size:10px;">Drop-in</span></td></tr>
+        </tbody>
+      </table></div></div>
+    </div>
+
+    <!-- TRAINERS VIEW -->
+    <div class="admin-view" data-view="trainers">
+      <div class="admin-view-head"><h2>Trainers</h2><p>12 certified trainers on the team</p></div>
+      <div class="admin-panel"><div style="overflow-x:auto;"><table class="admin-table" aria-label="Trainers overview">
+        <thead><tr><th>Trainer</th><th>Active Students</th><th>Rating</th></tr></thead>
+        <tbody>
+          <tr><td><div class="student-name">Sarah Mitchell</div><div class="student-email">Head Trainer · CPDT-KA</div></td><td>18</td><td>5.0</td></tr>
+          <tr><td><div class="student-name">Marcus Chen</div><div class="student-email">Advanced Specialist</div></td><td>14</td><td>4.9</td></tr>
+          <tr><td><div class="student-name">Emma Rodriguez</div><div class="student-email">Puppy Coach · Fear Free</div></td><td>10</td><td>5.0</td></tr>
+          <tr><td><div class="student-name">James O'Brien</div><div class="student-email">Behavior Specialist</div></td><td>6</td><td>4.9</td></tr>
+        </tbody>
+      </table></div></div>
+    </div>
+
+    <!-- SCHEDULE VIEW -->
+    <div class="admin-view" data-view="schedule">
+      <div class="admin-view-head"><h2>Schedule</h2><p>This week's sessions across all programs</p></div>
+      <div class="admin-panel"><div class="panel-body">
+        <div class="activity-item"><div class="activity-dot green"></div><div><div class="activity-text"><strong>Tue 6pm</strong> — Basic Obedience W6 · Main Hall (Sarah M.)</div><div class="activity-time">6 enrolled · 0 waitlisted</div></div></div>
+        <div class="activity-item"><div class="activity-dot green"></div><div><div class="activity-text"><strong>Wed 7am</strong> — Leash Mastery W3 · Outdoor Area (Priya S.)</div><div class="activity-time">4 enrolled · 0 waitlisted</div></div></div>
+        <div class="activity-item"><div class="activity-dot orange"></div><div><div class="activity-text"><strong>Thu 6pm</strong> — Advanced Obedience W4 · Main Hall (Marcus C.)</div><div class="activity-time">4 enrolled · 2 waitlisted</div></div></div>
+        <div class="activity-item"><div class="activity-dot green"></div><div><div class="activity-text"><strong>Sat 10am</strong> — Puppy Foundation W2 · Main Hall (Emma R.)</div><div class="activity-time">6 enrolled · 1 waitlisted</div></div></div>
+        <div class="activity-item"><div class="activity-dot blue"></div><div><div class="activity-text"><strong>Sat 9am</strong> — Socialization Lab drop-in · Outdoor Area (Emma R.)</div><div class="activity-time">Drop-in · 4 attending</div></div></div>
+      </div></div>
+    </div>
+
+    <!-- MESSAGES VIEW -->
+    <div class="admin-view" data-view="messages">
+      <div class="admin-view-head"><h2>Messages</h2><p>7 unread owner messages</p></div>
+      <div class="admin-panel"><div class="panel-body">
+        <div class="activity-item"><div class="activity-dot orange"></div><div style="flex:1;"><div class="activity-text"><strong>Jane Smith</strong> — "Can Buddy join the Saturday make-up session?"</div><div class="activity-time">12 min ago · unread</div></div><button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Opening message composer...','info')">Reply</button></div>
+        <div class="activity-item"><div class="activity-dot orange"></div><div style="flex:1;"><div class="activity-text"><strong>Tom Patterson</strong> — "Question about the behavior assessment"</div><div class="activity-time">1 hr ago · unread</div></div><button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Opening message composer...','info')">Reply</button></div>
+        <div class="activity-item"><div class="activity-dot green"></div><div style="flex:1;"><div class="activity-text"><strong>Priya Mehta</strong> — "Mochi loved week 2, thank you!"</div><div class="activity-time">Yesterday · read</div></div></div>
+      </div></div>
+    </div>
+
+    <!-- POSTS VIEW -->
+    <div class="admin-view" data-view="posts">
+      <div class="admin-view-head"><h2>Blog Posts</h2><p>6 published articles this season</p></div>
+      <div class="admin-panel"><div class="panel-body">
+        <div class="activity-item"><div class="activity-dot green"></div><div style="flex:1;"><div class="activity-text"><strong>Why Your Dog Ignores You</strong> — Behavior Science</div><div class="activity-time">Oct 5, 2026 · 4,218 views</div></div><button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Post editor would open here','info')">Edit</button></div>
+        <div class="activity-item"><div class="activity-dot green"></div><div style="flex:1;"><div class="activity-text"><strong>The 5-Minute Recall Fix</strong> — Training Tips</div><div class="activity-time">Oct 1, 2026 · 3,102 views</div></div><button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Post editor would open here','info')">Edit</button></div>
+        <div class="activity-item"><div class="activity-dot green"></div><div style="flex:1;"><div class="activity-text"><strong>How Beau Went from Reactive Rescue to Agility Star</strong> — Success Stories</div><div class="activity-time">Sep 8, 2026 · 6,203 views</div></div><button class="btn btn-outline btn-sm" onclick="window.Pawfect?.Toast?.show('Post editor would open here','info')">Edit</button></div>
+      </div></div>
+    </div>
+
+    <!-- TESTIMONIALS VIEW -->
+    <div class="admin-view" data-view="testimonials">
+      <div class="admin-view-head"><h2>Testimonials</h2><p>4.9 average across 850+ reviews</p></div>
+      <div class="admin-panel"><div class="panel-body">
+        <div class="activity-item"><div class="activity-dot green"></div><div><div class="activity-text"><strong>David K.</strong> — "Marcus helped our reactive border collie develop rock-solid focus." ★★★★★</div><div class="activity-time">Google · 2 days ago · published</div></div></div>
+        <div class="activity-item"><div class="activity-dot green"></div><div><div class="activity-text"><strong>Priya M.</strong> — "Emma is so gentle and knowledgeable. Luna graduated with flying colors!" ★★★★★</div><div class="activity-time">Yelp · 4 days ago · published</div></div></div>
+        <div class="activity-item"><div class="activity-dot orange"></div><div><div class="activity-text"><strong>New review</strong> — awaiting moderation before publishing.</div><div class="activity-time">Nextdoor · 1 hr ago · pending</div></div></div>
+      </div></div>
+    </div>
+
+    <!-- SETTINGS VIEW -->
+    <div class="admin-view" data-view="settings">
+      <div class="admin-view-head"><h2>Settings</h2><p>Academy profile, team and preferences</p></div>
+      <div class="admin-panel"><div class="panel-body">
+        <div class="form-group"><label class="form-label" for="admName">Academy Name</label><input type="text" id="admName" class="form-control" value="Pawfect Academy" /></div>
+        <div class="form-group"><label class="form-label" for="admPhone">Contact Phone</label><input type="tel" id="admPhone" class="form-control" value="(555) 123-4567" /></div>
+        <div class="form-group"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:var(--fs-sm);"><input type="checkbox" checked /> Email digest of new enrollments</label></div>
+        <div class="form-group"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:var(--fs-sm);"><input type="checkbox" checked /> Notify trainers on new applications</label></div>
+        <button class="btn btn-primary" onclick="window.Pawfect?.Toast?.show('Settings saved!','success')">Save Changes</button>
+      </div></div>
+    </div>
+
+  </div><!-- /admin-content -->
+</main>
+
+<script src="./assets/js/global.js"></script>
+<script>
+  // Mobile sidebar toggle
+  const adminSidebar = document.getElementById('adminSidebar');
+  const topbar = document.querySelector('.admin-topbar > div:first-child');
+  if (topbar) {
+    const menuBtn = document.createElement('button');
+    menuBtn.innerHTML = '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+    menuBtn.className = 'sidebar-menu-btn';
+    menuBtn.style.cssText = 'display:none;background:none;border:1.5px solid var(--border-color);border-radius:var(--border-radius-sm);width:40px;height:40px;cursor:pointer;font-size:18px;margin-right:var(--space-4)';
+    menuBtn.setAttribute('aria-label', 'Toggle sidebar');
+    menuBtn.onclick = () => adminSidebar.classList.toggle('mobile-open');
+    topbar.parentElement.insertBefore(menuBtn, topbar);
+    function checkAdminViewport() {
+      menuBtn.style.display = window.innerWidth <= 900 ? 'flex' : 'none';
+    }
+    window.addEventListener('resize', checkAdminViewport);
+    checkAdminViewport();
+  }
+
+  // Sidebar views — each menu opens its matching content
+  document.querySelectorAll('.admin-nav-item[data-view]').forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+      document.querySelectorAll('.admin-view').forEach(v => v.classList.remove('active'));
+      const view = document.querySelector('.admin-view[data-view="' + this.dataset.view + '"]');
+      if (view) view.classList.add('active');
+      const title = document.getElementById('adminTitle');
+      const sub = document.getElementById('adminSub');
+      if (title && this.dataset.title) title.textContent = this.dataset.title;
+      if (sub && this.dataset.sub) sub.textContent = this.dataset.sub;
+      window.scrollTo({ top: 0 });
+      document.getElementById('adminSidebar')?.classList.remove('mobile-open');
+    });
+  });
+</script>
+</body>
+</html>

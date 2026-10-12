@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Obedience Program Details — Pawfect Academy</title>
+  <meta name="description" content="Full details on Pawfect Academy's Basic Obedience program — curriculum, schedule, trainer, outcomes, enrollment and what to expect each week." />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    /* PROGRAM DETAILS */
+    .prog-detail-hero {
+      background: linear-gradient(135deg, var(--midnight-navy) 0%, #2D4060 100%);
+      /* Symmetric 60px content clearance top & bottom (top adds navbar offset) */
+      padding-top: calc(var(--navbar-height) + 60px);
+      padding-bottom: 60px;
+    }
+    .prog-detail-hero-inner {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-8); align-items: stretch;
+    }
+    /* Left text column stretches to the card's height, content vertically centered */
+    .prog-detail-hero-inner > .reveal-left { display: flex; flex-direction: column; justify-content: center; }
+    /* Hero badge — fit content, not full width */
+    .prog-detail-hero-inner .badge {
+      align-self: flex-start; width: auto; max-width: 100%; white-space: nowrap;
+    }
+    .prog-hero-card {
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+    }
+    .prog-hero-card-img { width: 100%; height: 200px; object-fit: cover; }
+    .prog-hero-card-body { padding: var(--space-5); }
+    .prog-hero-price {
+      font-family: var(--font-display); font-size: var(--fs-3xl); font-weight: 900;
+      color: var(--burnt-orange); line-height: 1;
+    }
+    .prog-hero-meta-row {
+      display: flex; gap: var(--space-3); flex-wrap: wrap;
+      padding-block: var(--space-3); border-top: 1px solid var(--border-color);
+      margin-block: var(--space-3);
+    }
+    .prog-hero-meta-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      flex: 1; min-width: 72px; text-align: center;
+      padding: var(--space-2); background: var(--bg-primary);
+      border-radius: var(--border-radius-sm);
+    }
+    .prog-hero-meta-icon { font-size: 24px; }
+    .prog-hero-meta-value { font-weight: 700; font-size: var(--fs-sm); }
+    .prog-hero-meta-label { font-size: var(--fs-xs); color: var(--text-muted); }
+
+    /* Curriculum */
+    .curriculum-week {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      overflow: hidden; margin-bottom: var(--space-3);
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-sm);
+    }
+    .curriculum-week:hover { border-color: var(--burnt-orange); box-shadow: var(--shadow-md); }
+    .curriculum-week-header {
+      display: flex; align-items: center; gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      background: var(--bg-primary);
+    }
+    .week-num {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--burnt-orange); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 900; font-size: var(--fs-sm);
+      flex-shrink: 0;
+    }
+    .week-title { font-weight: 700; font-size: var(--fs-md); flex: 1; }
+    .week-status {
+      font-size: var(--fs-xs); font-weight: 700; padding: 4px 12px;
+      border-radius: var(--border-radius-full);
+    }
+    .week-status.upcoming { background: rgba(217,119,69,0.1); color: var(--burnt-orange); }
+    .week-status.completed { background: rgba(137,151,123,0.1); color: var(--sage-green); }
+    .curriculum-week-body {
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--border-color);
+    }
+    .curriculum-week-body ul {
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);
+    }
+    .curriculum-week-body li {
+      display: flex; align-items: center; gap: 8px;
+      font-size: var(--fs-sm); color: var(--text-secondary);
+    }
+    .curriculum-week-body li::before {
+      content: '→'; color: var(--burnt-orange); font-weight: 700; flex-shrink: 0;
+    }
+
+    /* Trainer Aside */
+    .trainer-aside {
+      background: var(--midnight-navy);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+    }
+    .trainer-aside-img { width: 100%; height: 200px; object-fit: cover; object-position: top; }
+    .trainer-aside-body { padding: var(--space-5); color: white; }
+    .trainer-aside-name { font-family: var(--font-display); font-size: var(--fs-xl); margin-bottom: 4px; }
+    .trainer-aside-role { color: var(--burnt-orange); font-size: var(--fs-sm); font-weight: 600; }
+    .trainer-aside-bio { color: rgba(255,255,255,0.7); font-size: var(--fs-sm); line-height: 1.7; margin-top: var(--space-3); }
+
+    /* Outcomes */
+    .outcomes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    .outcome-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+      text-align: center; transition: all var(--transition-base);
+    }
+    .outcome-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--sage-green); }
+    .outcome-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: rgba(217, 119, 69, 0.1); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-3); flex-shrink: 0;
+    }
+    .outcome-icon svg { width: 26px; height: 26px; }
+
+    /* Enrollment Form */
+    .enrollment-form-wrapper {
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--border-radius-xl);
+      padding: var(--space-7);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Detail layout */
+    .detail-layout {
+      display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--space-8); align-items: start;
+    }
+    /* Whole sidebar sticks as one unit — cards never overlap each other */
+    .detail-side { position: sticky; top: calc(var(--navbar-height) + 20px); align-self: start; }
+    .detail-side > * + * { margin-top: var(--space-5); }
+
+    /* What to Bring */
+    .bring-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+    }
+    .bring-head { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
+    .bring-head h4 { font-size: var(--fs-md); }
+    .bring-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(217, 119, 69, 0.1); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .bring-icon svg { width: 22px; height: 22px; }
+    .bring-list { display: flex; flex-direction: column; gap: var(--space-2); list-style: none; }
+    .bring-list li { display: flex; align-items: center; gap: 10px; font-size: var(--fs-sm); color: var(--text-secondary); }
+    .bring-check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(137, 151, 123, 0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--sage-green); flex-shrink: 0;
+    }
+    .bring-check svg { width: 11px; height: 11px; }
+
+    /* Sidebar mini cards (fill space with relevant actions) */
+    .side-mini {
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+      border: 1px solid var(--border-color); background: var(--bg-card);
+    }
+    .side-mini-dark {
+      background: linear-gradient(135deg, var(--midnight-navy) 0%, #1A283B 100%);
+      border-color: rgba(220, 203, 180, 0.15); color: white;
+    }
+    .side-mini-dark h4 { color: white; }
+    .side-mini-dark p { color: rgba(255,255,255,0.7); }
+
+    /* Progress visual */
+    .progress-section { background: var(--midnight-navy); padding-block: var(--space-9); }
+    .skill-bars { display: flex; flex-direction: column; gap: var(--space-5); }
+    .skill-row { display: flex; flex-direction: column; gap: var(--space-2); }
+    .skill-label { display: flex; justify-content: space-between; font-size: var(--fs-sm); font-weight: 600; color: rgba(255,255,255,0.85); }
+
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .prog-detail-hero-inner { grid-template-columns: 1fr; }
+      .detail-layout { grid-template-columns: 1fr; }
+      .detail-side { position: static; }
+      .outcomes-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 760px) {
+      .outcomes-grid { grid-template-columns: 2fr; }
+      .curriculum-week-body ul { grid-template-columns: 1fr; }
+      .enrollment-form-wrapper { padding: 28px 20px; }
+      .prog-hero-meta-item { min-width: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .curriculum-week-head { padding: 14px 16px; flex-wrap: wrap; gap: 8px; }
+      .curriculum-week-body { padding: 14px 16px; }
+      .enrollment-form-wrapper { padding: 24px 16px; border-radius: var(--border-radius-lg); }
+      .bring-card, .side-mini { padding: 18px 14px; }
+    }
+
+    @media (max-width: 360px) {
+      .enrollment-form-wrapper { padding: 20px 12px; }
+      .outcome-card { padding: 18px 12px; }
+      .trainer-aside-body { padding: 16px 12px; }
+      .bring-card, .side-mini { padding: 16px 12px; }
+    }
+
+    @media (max-width: 320px) {
+      .enrollment-form-wrapper { padding: 16px 10px; }
+      .curriculum-week-head { padding: 12px 10px; }
+      .week-num { font-size: 0.70rem; padding: 3px 8px; }
+      .week-title { font-size: 0.88rem; }
+      .prog-hero-meta-item { font-size: 0.70rem; padding: 4px 8px; }
+      .trainer-aside-name { font-size: var(--fs-lg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-transparent" data-transparent="true" id="mainNavbar" role="navigation" aria-label="Main Navigation">
+  <div class="navbar-inner">
+    <a href="./index.html" class="navbar-logo" aria-label="Pawfect Academy Home">
+      <div class="navbar-logo-icon" aria-hidden="true">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+      </div>
+      <div>
+        <div class="navbar-logo-text">Pawfect <span>Academy</span></div>
+        <div class="navbar-logo-sub">Dog Training School</div>
+      </div>
+    </a>
+
+    <nav class="navbar-nav" role="menubar">
+      <a href="./index.html" class="nav-link" role="menuitem">Home</a>
+      <a href="./home2.html" class="nav-link" role="menuitem">Home 2</a>
+      <a href="./about.html" class="nav-link" role="menuitem">About</a>
+      <a href="./programs.html" class="nav-link" role="menuitem">Programs</a>
+      <a href="./trainers.html" class="nav-link" role="menuitem">Trainers</a>
+      <a href="./pricing.html" class="nav-link" role="menuitem">Pricing</a>
+      <a href="./blog.html" class="nav-link" role="menuitem">Blog</a>
+      <a href="./contact.html" class="nav-link" role="menuitem">Contact</a>
+    </nav>
+
+    <div class="navbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction">RTL</button>
+
+      <div class="profile-dropdown" id="profileDropdown">
+        <button class="profile-btn" id="profileToggle" aria-label="User Account Menu" aria-haspopup="true" aria-expanded="false">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div class="profile-menu" role="menu" aria-label="Account Options">
+          <div class="profile-menu-header">
+            <span class="profile-menu-title">Account Portal</span>
+          </div>
+          <a href="./login.html" class="profile-menu-item" role="menuitem">
+  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+  <span>Login/Signup</span>
+</a>
+          <a href="./dashboard.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Pet Owner Dashboard</span>
+          </a>
+          <a href="./admin.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5z"/><circle cx="12" cy="15" r="1.5"/></svg>
+            <span>Admin Dashboard</span>
+          </a>
+        </div>
+      </div>
+
+      <a href="./signup.html" class="btn btn-primary btn-sm nav-cta-btn">Get Started</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile Navigation">
+  <div class="mobile-nav-links">
+    <a href="./index.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+    <a href="./home2.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home 2</a>
+    <a href="./about.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h1M9 13h1M9 17h1M14 9h1M14 13h1M14 17h1"/></svg> About</a>
+    <a href="./programs.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Programs</a>
+    <a href="./trainers.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Trainers</a>
+    <a href="./pricing.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Pricing</a>
+    <a href="./blog.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg> Blog</a>
+    <a href="./contact.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Contact</a>
+        <div class="mobile-nav-cta">
+      <a href="./signup.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="prog-detail-hero">
+  <div class="container">
+    <div class="prog-detail-hero-inner">
+      <div class="reveal-left">
+        <div class="badge badge-primary" id="heroBadge" style="margin-bottom:var(--space-4);">All Ages Welcome</div>
+        <h1 id="heroTitle" style="color:white;margin-bottom:var(--space-4);">Basic Obedience<br/><em style="color:var(--burnt-orange);">8-Week Program</em></h1>
+        <p id="heroDesc" style="color:rgba(255,255,255,0.72);font-size:var(--fs-md);line-height:1.8;margin-bottom:var(--space-6);max-width:540px;">Build a rock-solid communication foundation with your dog. Using science-backed positive reinforcement, this 8-week group program transforms your dog's responsiveness and your confidence as an owner.</p>
+        <div class="d-flex gap-5 flex-wrap" style="padding-top:var(--space-5);border-top:1px solid rgba(255,255,255,0.12);">
+          <div>
+            <div style="font-size:var(--fs-xs);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Next Start Date</div>
+            <div id="heroStart" style="color:var(--burnt-orange);font-weight:700;font-size:var(--fs-md);">November 11, 2026</div>
+          </div>
+          <div>
+            <div style="font-size:var(--fs-xs);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Spots Remaining</div>
+            <div id="heroSpots" style="color:#5CB85C;font-weight:700;font-size:var(--fs-md);">3 of 6 available</div>
+          </div>
+          <div>
+            <div style="font-size:var(--fs-xs);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Session Day</div>
+            <div id="heroDay" style="color:white;font-weight:700;font-size:var(--fs-md);">Tuesdays 6–7pm</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="prog-hero-card">
+          <img class="prog-hero-card-img" id="heroImg" src="https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=600&q=85&auto=format" alt="Dog basic obedience training session with professional trainer" loading="eager" />
+          <div class="prog-hero-card-body">
+            <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:var(--space-4);">
+              <div class="prog-hero-price" id="heroPrice">$399</div>
+              <div id="heroPeriod" style="color:var(--text-muted);font-size:var(--fs-sm);">/ 8-week program</div>
+            </div>
+            <div class="prog-hero-meta-row">
+              <div class="prog-hero-meta-item">
+                <span class="prog-hero-meta-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                <span class="prog-hero-meta-value" id="metaDur">8 Wks</span>
+                <span class="prog-hero-meta-label">Duration</span>
+              </div>
+              <div class="prog-hero-meta-item">
+                <span class="prog-hero-meta-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                <span class="prog-hero-meta-value" id="metaSize">Max 6</span>
+                <span class="prog-hero-meta-label">Per Class</span>
+              </div>
+              <div class="prog-hero-meta-item">
+                <span class="prog-hero-meta-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                <span class="prog-hero-meta-value" id="metaLen">60 min</span>
+                <span class="prog-hero-meta-label">Per Session</span>
+              </div>
+              <div class="prog-hero-meta-item">
+                <span class="prog-hero-meta-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                <span class="prog-hero-meta-value" id="metaFreq">1x/wk</span>
+                <span class="prog-hero-meta-label">Frequency</span>
+              </div>
+            </div>
+            <a href="#enroll" class="btn btn-primary w-full" style="width:100%;justify-content:center;">Enroll Now</a>
+            <a href="./contact.html" class="btn btn-outline w-full" style="width:100%;justify-content:center;margin-top:var(--space-3);">Book Free Consult First</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<section class="section" id="curriculum">
+  <div class="container">
+    <div class="detail-layout">
+      <div>
+        <!-- CURRICULUM -->
+        <div class="reveal">
+          <div class="eyebrow">Week-by-Week Curriculum</div>
+          <h2 style="margin-block:var(--space-3) var(--space-6);">What You'll Learn<br/><em style="color:var(--burnt-orange);">Every Session</em></h2>
+        </div>
+
+        <div id="curriculumList">
+        <div class="curriculum-week reveal" data-delay="0">
+          <div class="curriculum-week-header">
+            <div class="week-num">1</div>
+            <span class="week-title">Foundation & Focus</span>
+            <span class="week-status upcoming">Week 1</span>
+          </div>
+          <div class="curriculum-week-body">
+            <ul>
+              <li>Name recognition & eye contact</li>
+              <li>Marker training introduction</li>
+              <li>Handling & touch tolerance</li>
+              <li>Calm greeting behavior</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="curriculum-week reveal" data-delay="50">
+          <div class="curriculum-week-header">
+            <div class="week-num">2</div>
+            <span class="week-title">Sit, Down & Stay</span>
+            <span class="week-status upcoming">Week 2</span>
+          </div>
+          <div class="curriculum-week-body">
+            <ul>
+              <li>Solid sit with hand signal</li>
+              <li>Down from sit & stand</li>
+              <li>Duration stay (5–30 seconds)</li>
+              <li>Impulse control basics</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="curriculum-week reveal" data-delay="100">
+          <div class="curriculum-week-header">
+            <div class="week-num">3</div>
+            <span class="week-title">Recall & Leave It</span>
+            <span class="week-status upcoming">Week 3</span>
+          </div>
+          <div class="curriculum-week-body">
+            <ul>
+              <li>Reliable "come" command</li>
+              <li>Emergency recall foundation</li>
+              <li>"Leave it" with objects & food</li>
+              <li>Attention work with distractions</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="curriculum-week reveal" data-delay="150">
+          <div class="curriculum-week-header">
+            <div class="week-num">4</div>
+            <span class="week-title">Leash Manners</span>
+            <span class="week-status upcoming">Week 4</span>
+          </div>
+          <div class="curriculum-week-body">
+            <ul>
+              <li>Loose leash walking introduction</li>
+              <li>Direction changes & pace</li>
+              <li>Passing other dogs calmly</li>
+              <li>Proper equipment guidance</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="curriculum-week reveal" data-delay="200">
+          <div class="curriculum-week-header">
+            <div class="week-num">5–6</div>
+            <span class="week-title">Polishing & Proofing</span>
+            <span class="week-status upcoming">Weeks 5–6</span>
+          </div>
+          <div class="curriculum-week-body">
+            <ul>
+              <li>Adding distance & duration to all commands</li>
+              <li>Proofing with mild distractions</li>
+              <li>"Off" for jumping up</li>
+              <li>Door & threshold manners</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="curriculum-week reveal" data-delay="250">
+          <div class="curriculum-week-header">
+            <div class="week-num">7–8</div>
+            <span class="week-title">Real-World Application & Graduation</span>
+            <span class="week-status upcoming">Weeks 7–8</span>
+          </div>
+          <div class="curriculum-week-body">
+            <ul>
+              <li>Public environment training</li>
+              <li>Stranger greeting manners</li>
+              <li>Owner practice assessments</li>
+              <li>Graduation ceremony & certificate</li>
+            </ul>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="detail-side">
+        <!-- Trainer Card -->
+        <div class="trainer-aside reveal-right">
+          <img class="trainer-aside-img" id="trImg" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80&auto=format" alt="Sarah Mitchell - lead basic obedience trainer at Pawfect Academy" loading="lazy" />
+          <div class="trainer-aside-body">
+            <div style="font-size:var(--fs-xs);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Your Trainer</div>
+            <div class="trainer-aside-name" id="trName">Sarah Mitchell</div>
+            <div class="trainer-aside-role" id="trRole">CPDT-KA · Head Trainer</div>
+            <div class="stars" style="margin-top:var(--space-2);"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <p class="trainer-aside-bio" id="trBio">12 years experience, specializing in basic through advanced obedience. Sarah's patient teaching style has helped over 800 dog-and-owner teams succeed.</p>
+            <a href="./trainers.html" class="btn btn-outline-light btn-sm" style="margin-top:var(--space-4);width:100%;justify-content:center;">Full Profile →</a>
+          </div>
+        </div>
+
+        <!-- What to Bring -->
+        <div class="bring-card reveal" data-delay="100">
+          <div class="bring-head">
+            <div class="bring-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
+            <h4>What to Bring</h4>
+          </div>
+          <ul class="bring-list">
+            <li><span class="bring-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span> Small, high-value treats</li>
+            <li><span class="bring-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span> Front-clip harness or flat collar</li>
+            <li><span class="bring-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span> 4–6ft standard leash</li>
+            <li><span class="bring-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span> Vaccination records (required)</li>
+            <li><span class="bring-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span> Hungry dog = a focused learner!</li>
+          </ul>
+        </div>
+
+        <!-- Next Cohort -->
+        <div class="side-mini side-mini-dark reveal" data-delay="150">
+          <div class="eyebrow" style="color:var(--sand-beige);opacity:.8;">Next Cohort</div>
+          <h4 style="font-size:var(--fs-lg);margin-block:var(--space-2);">November 11 · Tuesdays 6–7pm</h4>
+          <p style="font-size:var(--fs-sm);">Only <strong style="color:var(--burnt-orange);">3 of 6 spots</strong> left in this group.</p>
+          <a href="#enroll" class="btn btn-primary btn-sm" style="margin-top:var(--space-4);width:100%;justify-content:center;">Reserve Your Spot</a>
+        </div>
+
+        <!-- Quick Help -->
+        <div class="side-mini reveal" data-delay="200">
+          <div class="bring-head">
+            <div class="bring-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <h4>Not Sure Yet?</h4>
+          </div>
+          <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;">Get a free 20-minute consult and we will match your dog to the right program.</p>
+          <a href="./contact.html" class="btn btn-outline btn-sm" style="margin-top:var(--space-4);width:100%;justify-content:center;">Book Free Consult</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING OUTCOMES -->
+<section class="section gradient-bg" id="outcomes">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="eyebrow reveal" id="outcomesLabel">After 8 Weeks</div>
+      <h2 class="reveal" data-delay="100">What Your Dog Will<br/><em style="color:var(--burnt-orange);">Master</em></h2>
+    </div>
+    <div class="outcomes-grid" id="outcomesGrid" style="margin-top:var(--space-7);">
+      <div class="outcome-card reveal" data-delay="0">
+        <div class="outcome-icon"><svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <h4>Reliable Sit & Down</h4>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);margin-top:var(--space-2);">Consistent in the home, yard and low-distraction public environments.</p>
+      </div>
+      <div class="outcome-card reveal" data-delay="100">
+        <div class="outcome-icon"><svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1"/></svg></div>
+        <h4>Dependable Recall</h4>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);margin-top:var(--space-2);">Come reliably when called — the most important command your dog will ever learn.</p>
+      </div>
+      <div class="outcome-card reveal" data-delay="200">
+        <div class="outcome-icon"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="3"/><path d="M10 7h7a4 4 0 0 1 4 4v9"/><path d="M4 17l4-4 4 4"/><path d="M17 17l4 4"/></svg></div>
+        <h4>Loose Leash Walking</h4>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);margin-top:var(--space-2);">Enjoyable daily walks — no more pulling, lunging or zig-zagging.</p>
+      </div>
+      <div class="outcome-card reveal" data-delay="0">
+        <div class="outcome-icon"><svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
+        <h4>Leave It Mastered</h4>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);margin-top:var(--space-2);">Instantly redirect your dog from dropped food, other dogs and street hazards.</p>
+      </div>
+      <div class="outcome-card reveal" data-delay="100">
+        <div class="outcome-icon"><svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 0 0 1.4 0l4.6-4.6a1 1 0 0 0 0-1.4l-2-2"/><path d="m18 10 1-1a2 2 0 0 0 0-2.8l-1.2-1.2a2 2 0 0 0-2.8 0l-1 1"/><path d="m7 15-2 2a2 2 0 0 0 0 2.8l1.2 1.2a2 2 0 0 0 2.8 0l2-2"/><path d="M8 12 6.6 10.6a2 2 0 0 1 0-2.8l1.2-1.2a2 2 0 0 1 2.8 0L12 8"/></svg></div>
+        <h4>Polite Greetings</h4>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);margin-top:var(--space-2);">Four paws on the floor when greeting visitors — consistently and happily.</p>
+      </div>
+      <div class="outcome-card reveal" data-delay="200">
+        <div class="outcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
+        <h4>Graduation Certificate</h4>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);margin-top:var(--space-2);">Official Pawfect Academy graduation and AKC Canine Good Citizen test eligibility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILL PROGRESS PREVIEW -->
+<section class="section progress-section" id="skills">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);align-items:center;" class="detail-layout">
+      <div class="reveal-left">
+        <div class="eyebrow" style="color:rgba(248,243,233,0.6);">Typical Progress</div>
+        <h2 style="color:white;margin-block:var(--space-3) var(--space-4);">See What 8 Weeks<br/><em style="color:var(--burnt-orange);">Can Achieve</em></h2>
+        <p style="color:rgba(255,255,255,0.65);font-size:var(--fs-sm);line-height:1.8;">These skill progression benchmarks are based on our average graduate results. Individual results vary by dog, breed and prior training history.</p>
+      </div>
+      <div class="skill-bars reveal-right" id="skillsBars">
+        <div class="skill-row">
+          <div class="skill-label"><span>Sit Reliability</span><span>95%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="95"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Down Command</span><span>90%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="90"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Recall Reliability</span><span>85%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="85"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Loose Leash Walking</span><span>80%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="80"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Leave It Response</span><span>92%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="92"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Owner Satisfaction</span><span>98%</span></div>
+          <div class="progress-bar"><div class="progress-fill" data-width="98"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENROLLMENT FORM -->
+<section class="section" id="enroll" style="background:var(--bg-secondary);">
+  <div class="container" style="max-width:800px;">
+    <div class="section-header centered">
+      <div class="eyebrow reveal">Ready to Begin?</div>
+      <h2 class="reveal" data-delay="100" id="enrollTitle">Enroll in Basic Obedience</h2>
+      <p class="reveal" data-delay="200">Complete the form below to reserve your spot. We'll confirm within 24 hours and send all the details you need before your first session.</p>
+    </div>
+    <div class="enrollment-form-wrapper reveal" data-delay="200">
+      <form data-validate data-success-msg="Enrollment request received! We'll be in touch within 24 hours.">
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="ownerName">Your Name *</label>
+            <input type="text" id="ownerName" name="ownerName" class="form-control" placeholder="Jane Smith" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ownerEmail">Email Address *</label>
+            <input type="email" id="ownerEmail" name="email" class="form-control" placeholder="jane@example.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ownerPhone">Phone Number *</label>
+            <input type="tel" id="ownerPhone" name="phone" class="form-control" placeholder="(555) 123-4567" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dogName">Dog's Name *</label>
+            <input type="text" id="dogName" name="dogName" class="form-control" placeholder="Buddy" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dogBreed">Dog's Breed</label>
+            <input type="text" id="dogBreed" name="breed" class="form-control" placeholder="Golden Retriever" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dogAge">Dog's Age</label>
+            <select id="dogAge" name="dogAge" class="form-control">
+              <option value="">Select age range</option>
+              <option>Under 6 months</option>
+              <option>6–12 months</option>
+              <option>1–3 years</option>
+              <option>3–7 years</option>
+              <option>7+ years</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sessionDate">Preferred Start Date</label>
+          <select id="sessionDate" name="startDate" class="form-control">
+            <option value="">Select a cohort</option>
+            <option>November 11 — Tuesday evenings (3 spots left)</option>
+            <option>December 2 — Tuesday evenings (6 spots)</option>
+            <option>January 13, 2027 — Saturday mornings (6 spots)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="goals">Training Goals / Notes</label>
+          <textarea id="goals" name="goals" class="form-control" placeholder="Tell us about your dog's current behavior, specific challenges and what you'd love to achieve..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Submit Enrollment Request →</button>
+        <p style="text-align:center;color:var(--text-muted);font-size:var(--fs-xs);margin-top:var(--space-3);">We'll confirm availability and send your invoice within 24 hours of submission.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- ===== STANDARD FOOTER ===== -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- COLUMN 1 — COMPANY -->
+      <div class="footer-brand">
+        <a href="./index.html" class="navbar-logo footer-logo" aria-label="Pawfect Academy — Home">
+          <span class="navbar-logo-icon" aria-hidden="true">
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+          </span>
+          <span class="navbar-logo-text" style="color:white;">Pawfect <span>Academy</span></span>
+        </a>
+        <p>Premium canine training and obedience school dedicated to building lasting bonds between dogs and their families through science-based, force-free methods.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#202C3B"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- COLUMN 2 — QUICK LINKS (mirrors main navbar) -->
+      <nav class="footer-col" aria-label="Quick links">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="./index.html" class="footer-link">Home</a></li>
+          <li><a href="./home2.html" class="footer-link">Home 2</a></li>
+          <li><a href="./about.html" class="footer-link">About</a></li>
+          <li><a href="./programs.html" class="footer-link">Programs</a></li>
+          <li><a href="./trainers.html" class="footer-link">Trainers</a></li>
+          <li><a href="./pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="./blog.html" class="footer-link">Blog</a></li>
+          <li><a href="./contact.html" class="footer-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- COLUMN 3 — CONTACT DETAILS -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>123 Training Lane, Suite 200<br />Portland, OR 97201</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+15551234567">(555) 123-4567</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Mon &ndash; Sat: 7:00 AM &ndash; 7:00 PM<br />Sun: Closed</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 4 — NEWSLETTER -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Newsletter</h4>
+        <p class="footer-newsletter-text">Subscribe to receive the latest training tips, news, offers and insights from our certified trainers.</p>
+        <form class="footer-newsletter-form" data-validate data-success-msg="Welcome to the pack! Check your inbox.">
+          <div class="footer-newsletter-field">
+            <label class="sr-only" for="footerNewsletterEmail">Email address</label>
+            <input type="email" id="footerNewsletterEmail" name="email" class="footer-newsletter-input" placeholder="Your email address" required aria-label="Email address" autocomplete="email" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+        <p class="footer-newsletter-note">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <!-- BOTTOM LEGAL BAR -->
+    <div class="footer-bottom">
+      <p>&copy; <span class="js-footer-year">2026</span> Pawfect Academy. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./terms-conditions.html">Terms &amp; Conditions</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./sitemap.html">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<script src="./assets/js/global.js"></script>
+<script>
+  // Per-program details — one file serves every program card via ?program=<slug>
+  (function() {
+    const ICONS = [
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="3"/><path d="M10 7h7a4 4 0 0 1 4 4v9"/><path d="M4 17l4-4 4 4"/><path d="M17 17l4 4"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 0 0 1.4 0l4.6-4.6a1 1 0 0 0 0-1.4l-2-2"/><path d="m18 10 1-1a2 2 0 0 0 0-2.8l-1.2-1.2a2 2 0 0 0-2.8 0l-1 1"/><path d="m7 15-2 2a2 2 0 0 0 0 2.8l1.2 1.2a2 2 0 0 0 2.8 0l2-2"/><path d="M8 12 6.6 10.6a2 2 0 0 1 0-2.8l1.2-1.2a2 2 0 0 1 2.8 0L12 8"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>'
+    ];
+    const PROGRAMS = {
+      'puppy-foundation': {
+        name: 'Puppy Foundation', sub: '6-Week Program', badge: 'Ages 8–16 wks',
+        desc: 'The essential start for every puppy. Gentle socialization, bite inhibition and first manners taught during the critical developmental window — setting up a lifetime of confident behavior.',
+        price: '$299', period: '/ 6-week program',
+        img: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&q=85&auto=format',
+        imgAlt: 'Puppy foundation class with group of puppies on grass',
+        dur: '6 Wks', size: 'Max 6', len: '60 min', freq: '1x/wk',
+        start: 'November 4, 2026', spots: '4 of 6 available', day: 'Saturdays 10–11am',
+        title: 'Puppy Foundation Program Details — Pawfect Academy',
+        meta: 'Puppy Foundation details — socialization, bite inhibition and first manners for puppies 8–16 weeks.',
+        trainer: { img: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=400&q=80&auto=format', alt: 'Emma Rodriguez - puppy foundation trainer', name: 'Emma Rodriguez', role: 'Socialization & Puppy Coach', bio: 'Specialist in the critical 8–16 week window. Emma’s calm, upbeat approach helps even the most anxious puppies blossom into confident companions.' },
+        weeks: [
+          { n: '1', t: 'First Steps & Socialization', s: 'Week 1', points: ['Safe greetings with people & puppies', 'Name recognition games', 'Gentle handling practice', 'Treat pouch & marker intro'] },
+          { n: '2', t: 'Sounds, Surfaces & Confidence', s: 'Week 2', points: ['Novelty & sound exposure', 'Wobble boards & textures', 'Crate games begin', 'Calm-down routines'] },
+          { n: '3', t: 'Bite Inhibition & Manners', s: 'Week 3', points: ['Gentle mouth habits', 'Sit for greetings', 'Off & drop foundations', 'Potty routine coaching'] },
+          { n: '4', t: 'Cues & Leash Basics', s: 'Week 4', points: ['Sit, down & touch cues', 'First loose-leash steps', 'Come-when-called games', 'Polite play manners'] },
+          { n: '5–6', t: 'Confidence & Graduation', s: 'Weeks 5–6', points: ['Mini obstacle confidence course', 'Vet & groomer prep', 'Owner practice assessments', 'Puppy graduation party'] }
+        ],
+        outcomesLabel: 'After 6 Weeks',
+        outcomes: [
+          ['Social Confidence', 'Happy around new people, puppies, sounds and surfaces.'],
+          ['Gentle Mouth Habits', 'Bite inhibition foundations that keep play safe and fun.'],
+          ['Name Recognition', 'Orients to you happily, the foundation of every future recall.'],
+          ['Crate Comfort', 'Settles calmly in the crate for naps and nights.'],
+          ['First Cues', 'Sit, down, touch and come started with joyful reps.'],
+          ['Graduation Certificate', 'Official Pawfect puppy graduation and next-step plan.']
+        ],
+        skills: [['Social Confidence', 92], ['Bite Inhibition', 88], ['Name Recognition', 95], ['Crate Comfort', 90], ['Owner Confidence', 96]]
+      },
+      'basic-obedience': {
+        name: 'Basic Obedience', sub: '8-Week Program', badge: 'All Ages Welcome',
+        desc: 'Build a rock-solid communication foundation with your dog. Using science-backed positive reinforcement, this 8-week group program transforms your dog’s responsiveness and your confidence as an owner.',
+        price: '$399', period: '/ 8-week program',
+        img: 'https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=600&q=85&auto=format',
+        imgAlt: 'Dog basic obedience training session with professional trainer',
+        dur: '8 Wks', size: 'Max 6', len: '60 min', freq: '1x/wk',
+        start: 'November 11, 2026', spots: '3 of 6 available', day: 'Tuesdays 6–7pm',
+        title: 'Basic Obedience Program Details — Pawfect Academy',
+        meta: 'Full details on Basic Obedience — curriculum, trainer, outcomes and enrollment for the 8-week group program.',
+        trainer: { img: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80&auto=format', alt: 'Sarah Mitchell - lead basic obedience trainer', name: 'Sarah Mitchell', role: 'CPDT-KA · Head Trainer', bio: '12 years experience, specializing in basic through advanced obedience. Sarah’s patient teaching style has helped over 800 dog-and-owner teams succeed.' },
+        weeks: [
+          { n: '1', t: 'Foundation & Focus', s: 'Week 1', points: ['Name recognition & eye contact', 'Marker training introduction', 'Handling & touch tolerance', 'Calm greeting behavior'] },
+          { n: '2', t: 'Sit, Down & Stay', s: 'Week 2', points: ['Solid sit with hand signal', 'Down from sit & stand', 'Duration stay (5–30 seconds)', 'Impulse control basics'] },
+          { n: '3', t: 'Recall & Leave It', s: 'Week 3', points: ['Reliable “come” command', 'Emergency recall foundation', '“Leave it” with objects & food', 'Attention work with distractions'] },
+          { n: '4', t: 'Leash Manners', s: 'Week 4', points: ['Loose leash walking introduction', 'Direction changes & pace', 'Passing other dogs calmly', 'Proper equipment guidance'] },
+          { n: '5–6', t: 'Polishing & Proofing', s: 'Weeks 5–6', points: ['Adding distance & duration to all commands', 'Proofing with mild distractions', '“Off” for jumping up', 'Door & threshold manners'] },
+          { n: '7–8', t: 'Real-World Application & Graduation', s: 'Weeks 7–8', points: ['Public environment training', 'Stranger greeting manners', 'Owner practice assessments', 'Graduation ceremony & certificate'] }
+        ],
+        outcomesLabel: 'After 8 Weeks',
+        outcomes: [
+          ['Reliable Sit & Down', 'Consistent in the home, yard and low-distraction public environments.'],
+          ['Dependable Recall', 'Come reliably when called — the most important command your dog will ever learn.'],
+          ['Loose Leash Walking', 'Enjoyable daily walks — no more pulling, lunging or zig-zagging.'],
+          ['Leave It Mastered', 'Instantly redirect your dog from dropped food, other dogs and street hazards.'],
+          ['Polite Greetings', 'Four paws on the floor when greeting visitors — consistently and happily.'],
+          ['Graduation Certificate', 'Official Pawfect Academy graduation and AKC Canine Good Citizen test eligibility.']
+        ],
+        skills: [['Sit Reliability', 95], ['Down Command', 90], ['Recall Reliability', 85], ['Loose Leash Walking', 80], ['Leave It Response', 92], ['Owner Satisfaction', 98]]
+      },
+      'advanced-obedience': {
+        name: 'Advanced Obedience', sub: '8-Week Program', badge: 'Advanced',
+        desc: 'For Basic graduates ready for off-leash reliability. Precision heeling, distant control and distraction-proofing in real-world environments — including AKC Canine Good Citizen prep.',
+        price: '$549', period: '/ 8-week program',
+        img: 'https://images.unsplash.com/photo-1551717743-49959800b1f6?w=600&q=85&auto=format',
+        imgAlt: 'Advanced obedience training session with focused dog and trainer',
+        dur: '8 Wks', size: 'Max 4', len: '75 min', freq: '2x/wk',
+        start: 'November 18, 2026', spots: '2 of 4 available', day: 'Mon & Thu 6pm',
+        title: 'Advanced Obedience Program Details — Pawfect Academy',
+        meta: 'Advanced off-leash obedience details — precision heeling, distant recall and AKC CGC prep.',
+        trainer: { img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80&auto=format', alt: 'Marcus Chen - advanced obedience specialist', name: 'Marcus Chen', role: 'Advanced Obedience Specialist', bio: 'Former AKC competition champion with 10 years teaching advanced and off-leash obedience. Marcus makes precision training accessible and genuinely fun.' },
+        weeks: [
+          { n: '1', t: 'Heel Foundations', s: 'Week 1', points: ['Precision heel position', 'Attention heeling drills', 'About-turns & halts', 'Reward placement mechanics'] },
+          { n: '2', t: 'Distance Cues', s: 'Week 2', points: ['Long-distance sit & down', 'Hand-signal fluency', 'Delayed reinforcement', 'Whistle introduction'] },
+          { n: '3', t: 'Distraction Entry', s: 'Week 3', points: ['Controlled distraction sets', 'Proofing stays with movement', 'Neutral responses to dogs', 'Park-environment sessions'] },
+          { n: '4', t: 'Off-Leash Basics', s: 'Week 4', points: ['Drag-line safety work', 'Short off-leash recalls', 'Emergency stop foundation', 'Boundary awareness'] },
+          { n: '5–6', t: 'Urban Proofing', s: 'Weeks 5–6', points: ['Downtown district sessions', 'Café & storefront manners', 'Traffic & crowd neutrality', 'Off-leash reliability chains'] },
+          { n: '7–8', t: 'CGC Prep & Graduation', s: 'Weeks 7–8', points: ['All 10 CGC test items', 'Mock evaluation runs', 'Handler coaching & polish', 'Graduation & CGC test day'] }
+        ],
+        outcomesLabel: 'After 8 Weeks',
+        outcomes: [
+          ['Off-Leash Heel', 'Precision position held through turns, halts and distractions.'],
+          ['Distant Recall', 'Come from 50+ feet with distractions competing for attention.'],
+          ['Emergency Stop', 'An instant down-in-motion that works when it matters most.'],
+          ['Public Composure', 'Calm, neutral behavior in downtown, parks and patios.'],
+          ['Competition Polish', 'Crisp positions, fronts and finishes worthy of the ring.'],
+          ['Graduation Certificate', 'Official graduation plus AKC Canine Good Citizen test eligibility.']
+        ],
+        skills: [['Off-Leash Reliability', 90], ['Precision Heeling', 88], ['Distant Recall', 92], ['Distraction Proofing', 85], ['Owner Satisfaction', 97]]
+      },
+      'behavior-correction': {
+        name: 'Behavior Correction', sub: '12-Week Program', badge: 'Specialist',
+        desc: 'A private 12-week program for reactivity, anxiety and challenging behaviors. Starts with a full behavioral assessment and a threshold-based plan built around your dog.',
+        price: '$799', period: '/ 12-week program',
+        img: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=85&auto=format',
+        imgAlt: 'Behavior correction training session with reactive dog',
+        dur: '12 Wks', size: '1-on-1', len: '90 min', freq: 'Flexible',
+        start: 'Rolling enrollment', spots: 'Private slots open', day: 'Scheduled with you',
+        title: 'Behavior Correction Program Details — Pawfect Academy',
+        meta: 'Private behavior correction details — reactivity, anxiety and assessment-based 12-week plans.',
+        trainer: { img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&auto=format', alt: 'James O’Brien - behavior correction specialist', name: 'James O’Brien', role: 'Behavior Correction Specialist', bio: 'Extraordinary ability to connect with difficult-case dogs. James has transformed hundreds of reactive and anxious dogs through patient desensitization work.' },
+        weeks: [
+          { n: '1–2', t: 'Assessment & Baseline', s: 'Weeks 1–2', points: ['Full behavioral assessment', 'Trigger mapping & thresholds', 'Management plan for home', 'Foundation engagement games'] },
+          { n: '3–4', t: 'Threshold & Management', s: 'Weeks 3–4', points: ['Distance handling skills', 'U-turns & escape routes', 'Relaxation protocol start', 'Equipment & setup review'] },
+          { n: '5–6', t: 'Desensitization I', s: 'Weeks 5–6', points: ['Controlled trigger exposure', 'Counter-conditioning reps', 'Calm-look-and-dismiss drills', 'Progress diary reviews'] },
+          { n: '7–8', t: 'Desensitization II', s: 'Weeks 7–8', points: ['Closer working distances', 'Longer trigger durations', 'Handler timing coaching', 'Setback recovery plans'] },
+          { n: '9–10', t: 'Real-World Practice', s: 'Weeks 9–10', points: ['Neighborhood field sessions', 'Park & trail graduation walks', 'Greeting & passing rehearsals', 'Owner solo handling reps'] },
+          { n: '11–12', t: 'Maintenance & Graduation', s: 'Weeks 11–12', points: ['Long-term maintenance plan', 'Alumni support onboarding', 'Final assessment & report', 'Graduation & next steps'] }
+        ],
+        outcomesLabel: 'After 12 Weeks',
+        outcomes: [
+          ['Calmer Walks', 'Pass triggers at real-world distances without meltdowns.'],
+          ['Trigger Management', 'A toolkit of moves for every surprise the street throws.'],
+          ['Confidence Built', 'A dog that recovers in seconds instead of spiraling.'],
+          ['Relaxation On Cue', 'Settle on mat through doorbells, guests and bustle.'],
+          ['Skilled Handling', 'You read thresholds early and respond before eruptions.'],
+          ['Graduation Certificate', 'Official graduation with a written maintenance roadmap.']
+        ],
+        skills: [['Threshold Control', 87], ['Handler Timing', 90], ['Recovery Speed', 84], ['Real-World Calm', 82], ['Owner Satisfaction', 96]]
+      },
+      'leash-mastery': {
+        name: 'Leash Mastery', sub: '4-Week Program', badge: 'Specialty',
+        desc: 'A focused 4-week intensive on the walks you take every day. Zero-pull loose-leash skills, polite passing and a recall that holds up outside the front door.',
+        price: '$249', period: '/ 4-week intensive',
+        img: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&q=85&auto=format',
+        imgAlt: 'Leash training session with dog walking calmly beside trainer',
+        dur: '4 Wks', size: 'Max 4', len: '45 min', freq: '2x/wk',
+        start: 'December 2, 2026', spots: '2 of 4 available', day: 'Mon & Wed 7am',
+        title: 'Leash Mastery Program Details — Pawfect Academy',
+        meta: 'Leash Mastery intensive details — loose-leash walking, polite passing and outdoor recall in 4 weeks.',
+        trainer: { img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&auto=format', alt: 'Priya Sharma - leash mastery trainer', name: 'Priya Sharma', role: 'Leash Mastery & Obedience Trainer', bio: 'With a background in veterinary science, Priya is the go-to trainer for leash reactivity and pull prevention.' },
+        weeks: [
+          { n: '1', t: 'Equipment & Foundations', s: 'Week 1', points: ['Harness & leash fitting', 'Reward-zone positioning', 'First loose-leash steps', 'Stop-and-reset mechanics'] },
+          { n: '2', t: 'Turns, Pace & Focus', s: 'Week 2', points: ['Direction changes that work', 'Speed transitions', 'Check-in habit building', 'Sidewalk passing basics'] },
+          { n: '3', t: 'Distractions & Passing', s: 'Week 3', points: ['Dog-to-dog passing drills', 'Squirrel & scent proofing', 'Café patio calmness', 'Recall mid-walk reps'] },
+          { n: '4', t: 'Real Routes & Graduation', s: 'Week 4', points: ['Full neighborhood routes', 'Trail & park graduation walk', 'Owner troubleshooting clinic', 'Graduation certificate'] }
+        ],
+        outcomesLabel: 'After 4 Weeks',
+        outcomes: [
+          ['Zero-Pull Walking', 'A loose leash as the default, not the exception.'],
+          ['Polite Passing', 'Glide past dogs, joggers and squirrels without drama.'],
+          ['Mid-Walk Recall', 'A check-in reflex that interrupts fixation early.'],
+          ['Right Equipment', 'Fitted gear matched to your dog’s build and habits.'],
+          ['Street Safety', 'Crossings, narrow paths and off-leash areas handled calmly.'],
+          ['Graduation Certificate', 'Official Leash Mastery graduation and next-step plan.']
+        ],
+        skills: [['Loose-Leash Consistency', 89], ['Polite Passing', 86], ['Outdoor Recall', 83], ['Owner Handling', 91], ['Owner Satisfaction', 97]]
+      },
+      'socialization-lab': {
+        name: 'Socialization Lab', sub: 'Drop-In Program', badge: 'Puppy/Junior',
+        desc: 'Weekly supervised play sessions for puppies and young dogs. Safe, trainer-moderated socialization that builds confidence, communication skills and off-switch manners.',
+        price: '$40', period: '/ drop-in session',
+        img: 'https://images.unsplash.com/photo-1560743641-3914f2c45636?w=600&q=85&auto=format',
+        imgAlt: 'Puppy socialization class with multiple puppies playing together',
+        dur: 'Drop-in', size: 'Max 8', len: '90 min', freq: 'Saturdays',
+        start: 'Every Saturday', spots: 'Drop-in welcome', day: 'Saturdays 9–10:30am',
+        title: 'Socialization Lab Program Details — Pawfect Academy',
+        meta: 'Socialization Lab details — supervised weekly play sessions for puppies and young dogs.',
+        trainer: { img: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=400&q=80&auto=format', alt: 'Emma Rodriguez - socialization coach', name: 'Emma Rodriguez', role: 'Socialization & Puppy Coach', bio: 'Specialist in the critical 8–16 week window. Emma reads play styles brilliantly and keeps every session safe, balanced and fun.' },
+        weeks: [
+          { n: 'A', t: 'Welcome & Play Styles', s: 'Every session', points: ['Temperament-matched groups', 'Reading body language basics', 'Supervised free play', 'Gentle interruption drills'] },
+          { n: 'B', t: 'Sounds & Novelty', s: 'Rotating weekly', points: ['Sound desensitization tracks', 'Novel objects & surfaces', 'Costume & gear dress-up days', 'Confidence course fun'] },
+          { n: 'C', t: 'Manners & Off-Switch', s: 'Rotating weekly', points: ['Calm-down transition drills', 'Settle-on-mat practice', 'Polite human greetings', 'Crate rest rotations'] },
+          { n: 'D', t: 'Skills & Graduation Path', s: 'Ongoing', points: ['Name & recall games', 'Handling for vet visits', 'Progress notes for owners', 'Puppy Foundation bridge plan'] }
+        ],
+        outcomesLabel: 'After 4 Sessions',
+        outcomes: [
+          ['Dog-Dog Fluency', 'Reads play signals and adjusts intensity appropriately.'],
+          ['Novelty Confidence', 'Greets new sounds, surfaces and sights with curiosity.'],
+          ['Reliable Off-Switch', 'Settles on cue after exciting play — a life skill.'],
+          ['Human Social Skills', 'Polite greetings with adults and children alike.'],
+          ['Handling Comfort', 'Relaxed for vet-style exams, grooming and gear.'],
+          ['Graduation Certificate', 'Socialization passport stamped toward Puppy Foundation.']
+        ],
+        skills: [['Play Confidence', 93], ['Novelty Comfort', 89], ['Calm Transitions', 86], ['Human Greetings', 90], ['Owner Satisfaction', 98]]
+      }
+    };
+    function weekHTML(w) {
+      return '<div class="curriculum-week">'
+        + '<div class="curriculum-week-header"><div class="week-num">' + w.n + '</div>'
+        + '<span class="week-title">' + w.t + '</span>'
+        + '<span class="week-status upcoming">' + w.s + '</span></div>'
+        + '<div class="curriculum-week-body"><ul>'
+        + w.points.map(p => '<li>' + p + '</li>').join('')
+        + '</ul></div></div>';
+    }
+    function outcomeHTML(o, i) {
+      return '<div class="outcome-card">'
+        + '<div class="outcome-icon">' + ICONS[i % ICONS.length] + '</div>'
+        + '<h4>' + o[0] + '</h4>'
+        + '<p style="color:var(--text-secondary);font-size:var(--fs-sm);margin-top:var(--space-2);">' + o[1] + '</p></div>';
+    }
+    function skillHTML(s) {
+      return '<div class="skill-row"><div class="skill-label"><span>' + s[0] + '</span><span>' + s[1] + '%</span></div>'
+        + '<div class="progress-bar"><div class="progress-fill" data-width="' + s[1] + '"></div></div></div>';
+    }
+    try {
+      const slug = new URLSearchParams(window.location.search).get('program');
+      const p = slug && PROGRAMS[slug];
+      if (!p) return; // no slug (or unknown) → default Basic Obedience stays
+      const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      document.title = p.title;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', p.meta);
+      setText('heroBadge', p.badge);
+      const ht = document.getElementById('heroTitle');
+      if (ht) ht.innerHTML = p.name + '<br/><em style="color:var(--burnt-orange);">' + p.sub + '</em>';
+      setText('heroDesc', p.desc);
+      setText('heroStart', p.start);
+      setText('heroSpots', p.spots);
+      setText('heroDay', p.day);
+      const hi = document.getElementById('heroImg');
+      if (hi) { hi.src = p.img; hi.alt = p.imgAlt; }
+      setText('heroPrice', p.price);
+      setText('heroPeriod', p.period);
+      setText('metaDur', p.dur);
+      setText('metaSize', p.size);
+      setText('metaLen', p.len);
+      setText('metaFreq', p.freq);
+      const cl = document.getElementById('curriculumList');
+      if (cl) cl.innerHTML = p.weeks.map(weekHTML).join('');
+      const ti = document.getElementById('trImg');
+      if (ti) { ti.src = p.trainer.img; ti.alt = p.trainer.alt; }
+      setText('trName', p.trainer.name);
+      setText('trRole', p.trainer.role);
+      setText('trBio', p.trainer.bio);
+      setText('outcomesLabel', p.outcomesLabel);
+      const og = document.getElementById('outcomesGrid');
+      if (og) og.innerHTML = p.outcomes.map(outcomeHTML).join('');
+      const sb = document.getElementById('skillsBars');
+      if (sb) sb.innerHTML = p.skills.map(skillHTML).join('');
+      setText('enrollTitle', 'Enroll in ' + p.name);
+      window.scrollTo(0, 0);
+    } catch (e) { /* keep default program */ }
+  })();
+</script>
+</body>
+</html>

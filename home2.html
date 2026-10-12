@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pawfect Academy — Home 2 | Alternative Layout</title>
+  <meta name="description" content="Discover Pawfect Academy's editorial home design featuring age-based learning paths, featured programs, success stories and owner reviews." />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <style>
+    /* ===== HOME 2 SPECIFIC ===== */
+
+    /* Navbar contrast — light mode only (transparent bar sits over page bg, not hero art) */
+    [data-theme="light"] .navbar-transparent:not(.navbar-scrolled) {
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    [data-theme="light"] .navbar-transparent:not(.navbar-scrolled) .navbar-logo-text { color: var(--text-primary); }
+    [data-theme="light"] .navbar-transparent:not(.navbar-scrolled) .navbar-logo-sub { color: var(--text-muted); }
+    [data-theme="light"] .navbar-transparent:not(.navbar-scrolled) .nav-link { color: var(--text-primary); }
+    [data-theme="light"] .navbar-transparent:not(.navbar-scrolled) .theme-toggle,
+    [data-theme="light"] .navbar-transparent:not(.navbar-scrolled) .rtl-toggle,
+    [data-theme="light"] .navbar-transparent:not(.navbar-scrolled) .profile-btn {
+      background: var(--bg-card);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    [data-theme="light"] .navbar-transparent:not(.navbar-scrolled) .menu-toggle {
+      background: var(--bg-card);
+      border-color: var(--border-color);
+    }
+    [data-theme="light"] .navbar-transparent:not(.navbar-scrolled) .menu-toggle span { background: var(--text-primary); }
+
+    /* Split Hero — viewport-fit */
+    .split-hero {
+      height: 100vh;
+      height: 100svh;
+      min-height: 600px;
+      max-height: 860px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      padding-top: var(--navbar-height);
+      overflow: hidden;
+    }
+    .split-hero-left {
+      background: var(--midnight-navy);
+      display: flex; align-items: center;
+      padding-block: clamp(20px, 3vh, 36px);
+      padding-inline: clamp(24px, 3.5vw, 48px);
+      padding-inline-start: clamp(40px, 6vw, 88px);
+      position: relative; overflow: hidden;
+    }
+    .split-hero-left > div {
+      width: 100%;
+      max-width: 540px;
+      margin-inline-start: auto;
+      margin-inline-end: 0;
+    }
+    .split-hero-left::before {
+      content: ''; position: absolute;
+      width: 60%; aspect-ratio: 1;
+      background: radial-gradient(circle, rgba(217,119,69,0.2), transparent 70%);
+      bottom: -30%; right: -20%; border-radius: 50%;
+    }
+    .split-hero-right {
+      position: relative; overflow: hidden;
+      height: 100%; min-height: 0;
+    }
+    .split-hero-right img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .split-hero-right::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(270deg, transparent 50%, rgba(32,44,59,0.3) 100%);
+    }
+    /* Split hero content sizing — fit viewport */
+    .split-hero-left h1.display-hero {
+      font-size: clamp(2.3rem, 4.2vw, 3.3rem);
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+    .split-hero-left .hero-intro {
+      max-width: 420px;
+      margin-block: 14px 18px;
+      font-size: var(--fs-base);
+      line-height: 1.6;
+    }
+    .split-hero-stats {
+      margin-top: 20px;
+      padding-top: 16px;
+      gap: var(--space-4);
+    }
+    .split-stat-num {
+      font-family: var(--font-display);
+      font-size: var(--fs-2xl);
+      font-weight: 900;
+      color: var(--burnt-orange);
+      line-height: 1;
+    }
+    /* Floating card on hero */
+    .hero-floating-card {
+      position: absolute; bottom: 28px; left: 24px; z-index: 10;
+      background: var(--bg-secondary); border-radius: var(--border-radius-md);
+      padding: 16px 20px; box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border-color); min-width: 200px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-float-stat {
+      font-family: var(--font-display); font-size: 2.2rem;
+      font-weight: 900; color: var(--burnt-orange); line-height: 1;
+    }
+    .hero-float-label {
+      font-size: var(--fs-xs); color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;
+    }
+
+    /* Learning Paths by Age */
+    .agepaths-section {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .agepaths-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-5);
+      margin-top: clamp(28px, 4vw, 44px);
+    }
+    .agepath-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-6) var(--space-5);
+      display: flex; flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-base);
+      position: relative; overflow: hidden;
+    }
+    .agepath-card::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
+      background: linear-gradient(90deg, var(--burnt-orange), var(--sand-beige));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform var(--transition-base);
+    }
+    .agepath-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--burnt-orange); }
+    .agepath-card:hover::after { transform: scaleX(1); }
+    .agepath-age {
+      display: inline-flex; align-self: flex-start;
+      padding: 5px 14px; border-radius: var(--border-radius-full);
+      background: rgba(217, 119, 69, 0.12); color: var(--burnt-orange);
+      border: 1px solid rgba(217, 119, 69, 0.25);
+      font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: var(--space-4); white-space: nowrap;
+    }
+    .agepath-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: rgba(217, 119, 69, 0.1); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+    .agepath-icon svg { width: 24px; height: 24px; }
+    .agepath-card h3 { font-size: var(--fs-lg); margin-bottom: var(--space-2); }
+    .agepath-card > p { color: var(--text-secondary); font-size: var(--fs-sm); line-height: 1.65; }
+    .agepath-points { list-style: none; margin-top: var(--space-4); display: grid; gap: 8px; }
+    .agepath-points li {
+      display: flex; align-items: center; gap: 8px;
+      font-size: var(--fs-xs); font-weight: 600; color: var(--text-secondary);
+    }
+    .agepath-points svg { width: 14px; height: 14px; color: var(--sage-green); flex-shrink: 0; }
+    .agepath-link { margin-top: auto; padding-top: var(--space-4); }
+
+    /* Featured Success Story — proper section */
+    .success-story {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: center;
+    }
+    .success-story-media {
+      position: relative; overflow: hidden;
+      border-radius: var(--border-radius-xl);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      aspect-ratio: 4 / 4.2;
+      max-height: 560px;
+      min-height: 320px;
+    }
+    .success-story-media img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    .success-story-media:hover img { transform: scale(1.03); }
+    .success-story-content {
+      padding: 0;
+      background: transparent;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .success-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(137,151,123,0.15); border: 1px solid rgba(137,151,123,0.3);
+      padding: 8px 16px; border-radius: var(--border-radius-full);
+      font-size: var(--fs-xs); font-weight: 700; color: var(--sage-green);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: var(--space-5);
+      align-self: flex-start; width: auto; max-width: 100%; white-space: nowrap;
+    }
+    .milestone-timeline { margin-top: var(--space-5); }
+    .milestone-item {
+      display: flex; gap: var(--space-4); padding-block: var(--space-4);
+      border-left: 2px solid var(--border-color); padding-left: var(--space-5);
+      position: relative;
+    }
+    .milestone-item::before {
+      content: ''; position: absolute; left: -6px; top: 26px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--burnt-orange);
+    }
+    .milestone-item.completed::before { background: var(--sage-green); }
+    .milestone-week {
+      font-size: var(--fs-xs); font-weight: 700; color: var(--burnt-orange);
+      text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap;
+      min-width: 60px;
+    }
+    .milestone-desc { font-size: var(--fs-sm); color: var(--text-secondary); line-height: 1.6; }
+
+    /* Experience — uniform feature grid */
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin-top: clamp(28px, 4vw, 44px);
+      align-items: stretch;
+    }
+    .exp-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column;
+      transition: all var(--transition-base);
+    }
+    .exp-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--burnt-orange); }
+    .exp-card-img { width: 100%; height: 170px; object-fit: cover; }
+    .exp-card-media { position: relative; }
+    .exp-card-media .exp-card-img { display: block; }
+    .exp-stat-chip {
+      position: absolute; left: 16px; bottom: 12px;
+      display: inline-flex; align-items: center;
+      background: rgba(32, 44, 59, 0.92); color: var(--burnt-orange);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 6px 16px; border-radius: var(--border-radius-full);
+      font-family: var(--font-display); font-weight: 900; font-size: 1.35rem; line-height: 1;
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow-md);
+    }
+    .exp-card-body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); flex: 1; }
+    .exp-card-body h3 { font-size: var(--fs-lg); }
+    .exp-card-body > p { color: var(--text-secondary); font-size: var(--fs-sm); line-height: 1.65; flex: 1; }
+    .exp-card .badge { align-self: flex-start; white-space: nowrap; }
+    .exp-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: rgba(217, 119, 69, 0.1); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .exp-icon svg { width: 24px; height: 24px; }
+    .exp-card-cta { margin-top: var(--space-3); display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; }
+
+    /* Loved by Owners — testimonials */
+    .love-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5);
+      margin-top: clamp(28px, 4vw, 44px); align-items: stretch;
+    }
+    .love-grid .testimonial-card { display: flex; flex-direction: column; }
+    .love-grid .testimonial-card > p { flex: 1; }
+
+    /* Process Steps */
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5);
+      position: relative;
+    }
+    .process-steps::before {
+      content: ''; position: absolute; top: 36px; left: 10%; right: 10%; height: 2px;
+      background: linear-gradient(90deg, var(--border-color), var(--burnt-orange), var(--border-color));
+      z-index: 0;
+    }
+    .process-step { text-align: center; position: relative; z-index: 1; }
+    .process-step-num {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--bg-secondary); border: 2px solid var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: var(--fs-2xl); font-weight: 900;
+      color: var(--burnt-orange); margin: 0 auto var(--space-4);
+      position: relative; z-index: 1;
+      box-shadow: var(--shadow-orange);
+    }
+    .process-step h4 { font-size: var(--fs-md); margin-bottom: var(--space-2); }
+    .process-step p { color: var(--text-secondary); font-size: var(--fs-sm); line-height: 1.6; }
+
+    /* CTA Card (curved rectangle, like Home 1) */
+    .cta-card {
+      background: linear-gradient(135deg, var(--midnight-navy) 0%, #1A283B 100%);
+      border-radius: var(--border-radius-xl);
+      padding: clamp(36px, 5vw, 60px) clamp(24px, 4vw, 56px);
+      position: relative; overflow: hidden;
+      border: 1px solid rgba(220, 203, 180, 0.15);
+      box-shadow: var(--shadow-xl);
+      text-align: center;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute; right: -30px; top: 50%; transform: translateY(-50%);
+      width: 240px; height: 240px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Ccircle cx='7' cy='8.5' r='2'/%3E%3Ccircle cx='17' cy='8.5' r='2'/%3E%3Ccircle cx='10' cy='5' r='2'/%3E%3Ccircle cx='14' cy='5' r='2'/%3E%3Cpath d='M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.05; pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; max-width: 620px; margin-inline: auto; }
+    .cta-inner h2 { color: white; margin-block: var(--space-2) var(--space-3); }
+    .cta-inner > p { color: rgba(255,255,255,0.7); }
+    /* Newsletter form inside dark card */
+    .newsletter-form {
+      display: flex; gap: var(--space-3); margin-top: var(--space-5);
+      background: rgba(255,255,255,0.08); padding: 8px; border-radius: var(--border-radius-full);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .newsletter-input {
+      flex: 1; background: transparent; border: none; padding: 12px 16px;
+      color: white; font-size: var(--fs-sm); min-width: 0;
+    }
+    .newsletter-input::placeholder { color: rgba(255,255,255,0.4); }
+
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .split-hero { grid-template-columns: 1fr; height: auto; min-height: 0; max-height: none; }
+      .split-hero-left { padding: 36px 24px; }
+      .split-hero-left > div { max-width: 100%; margin: 0; }
+      .split-hero-right { height: 50vh; min-height: 320px; }
+      .hero-floating-card { left: 20px; bottom: 20px; max-width: calc(100% - 40px); }
+      .agepaths-grid { grid-template-columns: repeat(2, 1fr); }
+      .success-story { grid-template-columns: 1fr; }
+      .success-story-media { aspect-ratio: 16 / 10; max-height: 420px; }
+      .exp-grid { grid-template-columns: repeat(2, 1fr); }
+      .love-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-steps { grid-template-columns: repeat(2, 1fr); }
+      .process-steps::before { display: none; }
+    }
+
+    @media (max-width: 760px) {
+      .split-hero-left { padding: 32px 20px; }
+      .split-hero-right { height: 42vh; min-height: 280px; }
+      .exp-grid { grid-template-columns: 1fr; }
+      .love-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .success-badge { font-size: 0.72rem; padding: 6px 12px; }
+      .milestone-item { padding-left: var(--space-4); }
+    }
+
+    @media (max-width: 480px) {
+      .split-hero-left { padding: 26px 16px; }
+      .split-hero-left h1.display-hero { font-size: clamp(1.9rem, 8vw, 2.4rem); }
+      .split-hero-left .hero-intro { font-size: 0.95rem; }
+      .split-hero-right { height: 36vh; min-height: 250px; }
+      .hero-floating-card { min-width: 0; width: calc(100% - 24px); left: 12px; bottom: 12px; padding: 12px 14px; }
+      .agepaths-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; border-radius: var(--border-radius-md); padding: 8px; }
+      .newsletter-input { padding: 12px 14px; }
+      .cta-card { padding: 28px 18px; border-radius: var(--border-radius-lg); }
+    }
+
+    @media (max-width: 360px) {
+      .split-hero-left { padding: 22px 14px; }
+      .split-hero-left h1.display-hero { font-size: 1.8rem; }
+      .hero-floating-card { padding: 10px 12px; font-size: 0.85rem; }
+      .success-story-media { min-height: 220px; }
+      .cta-card { padding: 24px 14px; }
+      .process-step-num { width: 58px; height: 58px; font-size: var(--fs-xl); }
+    }
+
+    @media (max-width: 320px) {
+      .split-hero-left { padding: 18px 10px; }
+      .split-hero-left h1.display-hero { font-size: 1.6rem; letter-spacing: -0.02em; }
+      .split-hero-left .hero-intro { font-size: 0.88rem; }
+      .split-hero-right { height: 220px; min-height: 200px; }
+      .hero-floating-card { width: calc(100% - 16px); left: 8px; bottom: 8px; padding: 8px 10px; }
+      .hero-floating-card .hero-float-title { font-size: 0.82rem; }
+      .milestone-week { min-width: 50px; font-size: 0.68rem; }
+      .milestone-desc { font-size: 0.82rem; }
+      .cta-card { padding: 20px 12px; }
+      .cta-inner h2 { font-size: var(--fs-2xl); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-transparent" data-transparent="true" id="mainNavbar" role="navigation" aria-label="Main Navigation">
+  <div class="navbar-inner">
+    <a href="./index.html" class="navbar-logo" aria-label="Pawfect Academy Home">
+      <div class="navbar-logo-icon" aria-hidden="true">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+      </div>
+      <div>
+        <div class="navbar-logo-text">Pawfect <span>Academy</span></div>
+        <div class="navbar-logo-sub">Dog Training School</div>
+      </div>
+    </a>
+
+    <nav class="navbar-nav" role="menubar">
+      <a href="./index.html" class="nav-link" role="menuitem">Home</a>
+      <a href="./home2.html" class="nav-link" role="menuitem">Home 2</a>
+      <a href="./about.html" class="nav-link" role="menuitem">About</a>
+      <a href="./programs.html" class="nav-link" role="menuitem">Programs</a>
+      <a href="./trainers.html" class="nav-link" role="menuitem">Trainers</a>
+      <a href="./pricing.html" class="nav-link" role="menuitem">Pricing</a>
+      <a href="./blog.html" class="nav-link" role="menuitem">Blog</a>
+      <a href="./contact.html" class="nav-link" role="menuitem">Contact</a>
+    </nav>
+
+    <div class="navbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction">RTL</button>
+
+      <div class="profile-dropdown" id="profileDropdown">
+        <button class="profile-btn" id="profileToggle" aria-label="User Account Menu" aria-haspopup="true" aria-expanded="false">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div class="profile-menu" role="menu" aria-label="Account Options">
+          <div class="profile-menu-header">
+            <span class="profile-menu-title">Account Portal</span>
+          </div>
+          <a href="./login.html" class="profile-menu-item" role="menuitem">
+  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+  <span>Login/Signup</span>
+</a>
+          <a href="./dashboard.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Pet Owner Dashboard</span>
+          </a>
+          <a href="./admin.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5z"/><circle cx="12" cy="15" r="1.5"/></svg>
+            <span>Admin Dashboard</span>
+          </a>
+        </div>
+      </div>
+
+      <a href="./signup.html" class="btn btn-primary btn-sm nav-cta-btn">Get Started</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile Navigation">
+  <div class="mobile-nav-links">
+    <a href="./index.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+    <a href="./home2.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home 2</a>
+    <a href="./about.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h1M9 13h1M9 17h1M14 9h1M14 13h1M14 17h1"/></svg> About</a>
+    <a href="./programs.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Programs</a>
+    <a href="./trainers.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Trainers</a>
+    <a href="./pricing.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Pricing</a>
+    <a href="./blog.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg> Blog</a>
+    <a href="./contact.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Contact</a>
+        <div class="mobile-nav-cta">
+      <a href="./signup.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<header class="split-hero" role="banner">
+  <div class="split-hero-left">
+    <div style="position:relative;z-index:1;">
+      <div class="eyebrow reveal" style="color:rgba(248,243,233,0.7);">Alternative Home Layout</div>
+      <h1 class="display-hero reveal" data-delay="100" style="color:white;">Every Dog<br/>Deserves a<br/><em style="color:var(--burnt-orange);">Great</em><br/>Teacher</h1>
+      <p class="reveal hero-intro" data-delay="200" style="color:rgba(255,255,255,0.72);">We combine behavioral science, patience and genuine care to build the dog—human relationship your family has always dreamed of.</p>
+      <div class="d-flex gap-4 flex-wrap reveal" data-delay="300">
+        <a href="./programs.html" class="btn btn-primary btn-lg">Start Training</a>
+        <a href="./about.html" class="btn btn-outline-light btn-lg">Our Story</a>
+      </div>
+      <div class="d-flex gap-5 flex-wrap reveal split-hero-stats" data-delay="400" style="border-top:1px solid rgba(255,255,255,0.12);">
+        <div>
+          <div class="split-stat-num">4.9<svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div style="font-size:var(--fs-xs);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;">Average Rating</div>
+        </div>
+        <div>
+          <div class="split-stat-num">850+</div>
+          <div style="font-size:var(--fs-xs);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;">5-Star Reviews</div>
+        </div>
+        <div>
+          <div class="split-stat-num">12</div>
+          <div style="font-size:var(--fs-xs);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;">Expert Trainers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="split-hero-right">
+    <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=900&q=85&auto=format" alt="Expert dog trainer working with golden retriever in lush green field" loading="eager" />
+    <div class="hero-floating-card reveal" data-delay="500">
+      <div class="hero-float-stat" data-counter="2400" data-suffix="+">2400+</div>
+      <div class="hero-float-label">Happy Graduates</div>
+      <div class="stars" style="margin-top:8px;font-size:12px;"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== LEARNING PATHS BY AGE ===== -->
+<section class="section agepaths-section" id="agepaths">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="eyebrow reveal">Start At The Right Stage</div>
+      <h2 class="reveal" data-delay="100">Right Training for <em style="color:var(--burnt-orange);">Every Age</em></h2>
+      <p class="reveal" data-delay="200">Dogs learn differently at every life stage. Pick your dog's age group and get a curriculum built exactly for their developmental window.</p>
+    </div>
+    <div class="agepaths-grid">
+      <div class="agepath-card reveal" data-delay="0">
+        <div class="agepath-age">8 – 16 weeks</div>
+        <div class="agepath-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></div>
+        <h3>Puppy Foundation</h3>
+        <p>The critical socialization window. Gentle first lessons that shape a confident adult dog.</p>
+        <ul class="agepath-points">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Socialization & bite inhibition</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Crate & potty routines</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Name recognition basics</li>
+        </ul>
+        <div class="agepath-link"><a href="./programs.html" class="read-more">Explore puppy classes →</a></div>
+      </div>
+      <div class="agepath-card reveal" data-delay="100">
+        <div class="agepath-age">4 – 12 months</div>
+        <div class="agepath-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
+        <h3>Adolescent Obedience</h3>
+        <p>Channel teenage energy into focus. Core cues, leash manners and impulse control.</p>
+        <ul class="agepath-points">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>6 core cues mastered</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Loose-leash walking</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Polite greeting manners</li>
+        </ul>
+        <div class="agepath-link"><a href="./programs.html" class="read-more">Explore obedience →</a></div>
+      </div>
+      <div class="agepath-card reveal" data-delay="200">
+        <div class="agepath-age">1 – 7 years</div>
+        <div class="agepath-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
+        <h3>Advanced Off-Leash</h3>
+        <p>Precision heeling, distant recall and distraction-proofing for the real world.</p>
+        <ul class="agepath-points">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Reliable off-leash recall</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Urban distraction training</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>AKC CGC certification</li>
+        </ul>
+        <div class="agepath-link"><a href="./program-details.html?program=advanced-obedience" class="read-more">Explore advanced →</a></div>
+      </div>
+      <div class="agepath-card reveal" data-delay="300">
+        <div class="agepath-age">7+ years · Any age</div>
+        <div class="agepath-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+        <h3>Behavior & Senior Care</h3>
+        <p>Gentle rehabilitation for reactivity, anxiety and golden-oldie comfort training.</p>
+        <ul class="agepath-points">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Reactivity rehabilitation</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Separation anxiety plans</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1-on-1 behaviorist coach</li>
+        </ul>
+        <div class="agepath-link"><a href="./program-details.html?program=behavior-correction" class="read-more">Explore behavior help →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SUCCESS STORY ===== -->
+<section class="section" id="success">
+  <div class="container">
+    <div class="success-story">
+      <div class="success-story-media reveal-left">
+        <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=85&auto=format" alt="Two dogs running happily together after successful training program" loading="lazy" />
+      </div>
+      <div class="success-story-content">
+        <div class="success-badge reveal"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Featured Success Story</div>
+        <h2 class="reveal" data-delay="100">From Reactive<br/>to <em style="color:var(--burnt-orange);">Remarkable</em></h2>
+        <p class="lead reveal" data-delay="150">Meet Beau — a 2-year-old rescue border collie who arrived reactive, fearful and unable to walk on leash. After our 12-week Behavior Correction program, Beau is a confident, off-leash companion who runs agility courses on weekends.</p>
+        <div class="milestone-timeline reveal" data-delay="200">
+          <div class="milestone-item completed">
+            <div class="milestone-week">Week 2</div>
+            <div class="milestone-desc">First calm walk on leash. No more pulling or reactivity to other dogs on the opposite side of the street.</div>
+          </div>
+          <div class="milestone-item completed">
+            <div class="milestone-week">Week 6</div>
+            <div class="milestone-desc">Mastered sit, stay, down and come commands with 90%+ reliability in controlled environments.</div>
+          </div>
+          <div class="milestone-item completed">
+            <div class="milestone-week">Week 10</div>
+            <div class="milestone-desc">First successful off-leash recall in the park. Owner cried happy tears on the spot.</div>
+          </div>
+          <div class="milestone-item">
+            <div class="milestone-week">Week 12</div>
+            <div class="milestone-desc">Program graduation — fully off-leash reliable, socialized and confident. Now enrolled in agility!</div>
+          </div>
+        </div>
+        <a href="./blog.html" class="btn btn-primary reveal" data-delay="300" style="margin-top:var(--space-6);width:fit-content;">Read Beau's Full Story →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXPERIENCE ===== -->
+<section class="section gradient-bg" id="features">
+  <div class="container">
+    <div class="section-header centered" style="margin-bottom:0;">
+      <div class="eyebrow reveal">Everything You Need</div>
+      <h2 class="reveal" data-delay="100">The Full Pawfect<br/><em style="color:var(--burnt-orange);">Experience</em></h2>
+      <p class="reveal" data-delay="200">Small classes, smart tools and lifetime support — everything your dog needs to thrive, in one academy.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card reveal" data-delay="0">
+        <img class="exp-card-img" src="https://images.unsplash.com/photo-1560743641-3914f2c45636?w=800&q=80&auto=format" alt="Puppy group class with multiple happy puppies on grass" loading="lazy" />
+        <div class="exp-card-body">
+          <div class="badge badge-primary">Group Classes</div>
+          <h3>Learn & Socialize Together</h3>
+          <p>Real-world socialization at an accessible price. Max 6 dogs per session, so every dog gets attention.</p>
+          <a href="./programs.html" class="read-more">Browse programs →</a>
+        </div>
+      </div>
+
+      <div class="exp-card reveal" data-delay="100">
+        <img class="exp-card-img" src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&q=80&auto=format" alt="Private one-on-one dog training session with experienced trainer" loading="lazy" />
+        <div class="exp-card-body">
+          <div class="badge badge-secondary">Private Sessions</div>
+          <h3>1-on-1 Attention</h3>
+          <p>Personalized coaching built around your dog's exact temperament, triggers and goals.</p>
+          <a href="./programs.html" class="read-more">See private options →</a>
+        </div>
+      </div>
+
+      <div class="exp-card reveal" data-delay="200">
+        <div class="exp-card-media">
+          <img class="exp-card-img" src="https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=800&q=80&auto=format" alt="Dog obedience training session with trainer giving commands" loading="lazy" />
+          <div class="exp-stat-chip">98%</div>
+        </div>
+        <div class="exp-card-body">
+          <div class="badge badge-primary">Proven Results</div>
+          <h3>Success Rate</h3>
+          <p>Across all programs in 2024–2026 — tracked milestone by milestone in your owner portal.</p>
+          <a href="./dashboard.html" class="read-more">View dashboard →</a>
+        </div>
+      </div>
+
+      <div class="exp-card reveal" data-delay="0">
+        <img class="exp-card-img" src="https://images.unsplash.com/photo-1534361960057-19889db9621e?w=800&q=80&auto=format" alt="Owner walking dog calmly on loose leash through neighborhood" loading="lazy" />
+        <div class="exp-card-body">
+          <div class="badge badge-secondary">Owner Portal</div>
+          <h3>Mobile-Ready Portal</h3>
+          <p>Book sessions, review trainer notes and message your coach directly from your phone, anytime.</p>
+          <a href="./dashboard.html" class="read-more">How it works →</a>
+        </div>
+      </div>
+
+      <div class="exp-card reveal" data-delay="100">
+        <div class="exp-card-media">
+          <img class="exp-card-img" src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=800&q=80&auto=format" alt="Playful puppies in a small supervised social play group" loading="lazy" />
+          <div class="exp-stat-chip">6</div>
+        </div>
+        <div class="exp-card-body">
+          <div class="badge badge-primary">Small Groups</div>
+          <h3>Dogs Max Per Class</h3>
+          <p>Small groups mean big results — every pup gets real coaching time in every session.</p>
+          <a href="./pricing.html" class="read-more">See class sizes →</a>
+        </div>
+      </div>
+
+      <div class="exp-card reveal" data-delay="200">
+        <img class="exp-card-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format" alt="Confident German Shepherd graduate after advanced off-leash training" loading="lazy" />
+        <div class="exp-card-body">
+          <div class="badge badge-secondary">Lifetime Support</div>
+          <h3>Graduate Alumni Benefits</h3>
+          <p>Alumni community, monthly Q&As, resource library and a free annual refresher — forever.</p>
+          <div class="exp-card-cta">
+            <a href="./pricing.html" class="btn btn-dark btn-sm">See Pricing</a>
+            <a href="./contact.html" class="read-more">Talk to us →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="section" id="process" style="background:var(--bg-secondary);">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="eyebrow reveal">Simple Process</div>
+      <h2 class="reveal" data-delay="100">Getting Started is<br/><em style="color:var(--burnt-orange);">Easier Than You Think</em></h2>
+    </div>
+    <div class="process-steps" style="margin-top:var(--space-7);">
+      <div class="process-step reveal" data-delay="0">
+        <div class="process-step-num">1</div>
+        <h4>Book a Free Consult</h4>
+        <p>Tell us about your dog — breed, age, current challenges and training goals.</p>
+      </div>
+      <div class="process-step reveal" data-delay="100">
+        <div class="process-step-num">2</div>
+        <h4>Get a Custom Plan</h4>
+        <p>We match your dog to the right program and assign the best-fit trainer.</p>
+      </div>
+      <div class="process-step reveal" data-delay="200">
+        <div class="process-step-num">3</div>
+        <h4>Train & Track</h4>
+        <p>Attend sessions, review progress notes, celebrate milestones in your portal.</p>
+      </div>
+      <div class="process-step reveal" data-delay="300">
+        <div class="process-step-num">4</div>
+        <h4>Graduate with Confidence</h4>
+        <p>Complete your program, receive your certificate and join our alumni community.</p>
+      </div>
+    </div>
+    <div class="text-center reveal" style="margin-top:var(--space-7);" data-delay="200">
+      <a href="./contact.html" class="btn btn-primary btn-lg">Start Your Journey →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LOVED BY OWNERS ===== -->
+<section class="section gradient-bg" id="love">
+  <div class="container">
+    <div class="section-header centered" style="margin-bottom:0;">
+      <div class="eyebrow reveal">Happy Families</div>
+      <h2 class="reveal" data-delay="100">Loved by Local <em style="color:var(--burnt-orange);">Dog Owners</em></h2>
+      <p class="reveal" data-delay="200">Real dogs, real owners, real transformations — straight from our academy graduates.</p>
+    </div>
+    <div class="love-grid">
+      <div class="testimonial-card reveal" data-delay="0">
+        <div class="testimonial-quote">“</div>
+        <div class="stars" style="color:#E59834;margin-bottom:10px;display:flex;gap:3px;" aria-label="5 stars">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;margin-bottom:var(--space-4);">"Rocky used to drag me down the street. After Leash Mastery he walks calmly by my side — our evening walks are my favorite part of the day now."</p>
+        <div class="d-flex align-center gap-3">
+          <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80&auto=format" alt="Daniel R. with his dog Rocky" loading="lazy" />
+          <div>
+            <div style="font-weight:700;font-size:var(--fs-sm);">Daniel R.</div>
+            <div style="color:var(--text-muted);font-size:var(--fs-xs);">Boxer Owner · Leash Mastery Graduate</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" data-delay="150">
+        <div class="testimonial-quote">“</div>
+        <div class="stars" style="color:#E59834;margin-bottom:10px;display:flex;gap:3px;" aria-label="5 stars">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;margin-bottom:var(--space-4);">"Our rescue Luna was terrified of everything. The trainers' patience and weekly progress notes kept us going — she's a different, joyful dog today."</p>
+        <div class="d-flex align-center gap-3">
+          <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80&auto=format" onerror="this.onerror=null;this.src='https://i.pravatar.cc/100?img=47';" alt="Sofia M. with her rescue dog Luna" loading="lazy" />
+          <div>
+            <div style="font-weight:700;font-size:var(--fs-sm);">Sofia M.</div>
+            <div style="color:var(--text-muted);font-size:var(--fs-xs);">Rescue Owner · Behavior Graduate</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" data-delay="300">
+        <div class="testimonial-quote">“</div>
+        <div class="stars" style="color:#E59834;margin-bottom:10px;display:flex;gap:3px;" aria-label="5 stars">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);line-height:1.7;margin-bottom:var(--space-4);">"Worth every penny. Puppy Foundation gave our golden retriever manners and gave us confidence. We've already enrolled in obedience next!"</p>
+        <div class="d-flex align-center gap-3">
+          <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80&auto=format" alt="Amelia T. with her golden retriever puppy" loading="lazy" />
+          <div>
+            <div style="font-weight:700;font-size:var(--fs-sm);">Amelia T.</div>
+            <div style="color:var(--text-muted);font-size:var(--fs-xs);">Golden Retriever Owner · Puppy Graduate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center reveal" style="margin-top:var(--space-6);" data-delay="150">
+      <a href="./blog.html" class="btn btn-outline">Read More Stories →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="section">
+  <div class="container">
+    <div class="cta-card reveal">
+      <div class="cta-inner">
+        <div class="eyebrow" style="color:var(--sand-beige);opacity:.85;">Free Training Tips</div>
+        <h2>Join <em style="color:var(--burnt-orange);font-style:normal;">4,000+</em> Dog Owners</h2>
+        <p>Get weekly training tips, behavior insights and exclusive offers delivered straight to your inbox. No spam, ever.</p>
+        <form class="newsletter-form" data-delay="300" data-validate data-success-msg="Welcome to the pack! Check your inbox.">
+          <input type="email" name="email" class="newsletter-input form-control" placeholder="your@email.com" required aria-label="Email address" style="border:none;" />
+          <button type="submit" class="btn btn-primary">Subscribe Free</button>
+        </form>
+        <p style="color:rgba(255,255,255,0.4);font-size:var(--fs-xs);margin-top:var(--space-3);">No spam. Unsubscribe anytime. Your privacy is respected.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- ===== STANDARD FOOTER ===== -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- COLUMN 1 — COMPANY -->
+      <div class="footer-brand">
+        <a href="./index.html" class="navbar-logo footer-logo" aria-label="Pawfect Academy — Home">
+          <span class="navbar-logo-icon" aria-hidden="true">
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+          </span>
+          <span class="navbar-logo-text" style="color:white;">Pawfect <span>Academy</span></span>
+        </a>
+        <p>Premium canine training and obedience school dedicated to building lasting bonds between dogs and their families through science-based, force-free methods.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#202C3B"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- COLUMN 2 — QUICK LINKS (mirrors main navbar) -->
+      <nav class="footer-col" aria-label="Quick links">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="./index.html" class="footer-link">Home</a></li>
+          <li><a href="./home2.html" class="footer-link">Home 2</a></li>
+          <li><a href="./about.html" class="footer-link">About</a></li>
+          <li><a href="./programs.html" class="footer-link">Programs</a></li>
+          <li><a href="./trainers.html" class="footer-link">Trainers</a></li>
+          <li><a href="./pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="./blog.html" class="footer-link">Blog</a></li>
+          <li><a href="./contact.html" class="footer-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- COLUMN 3 — CONTACT DETAILS -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>123 Training Lane, Suite 200<br />Portland, OR 97201</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+15551234567">(555) 123-4567</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Mon &ndash; Sat: 7:00 AM &ndash; 7:00 PM<br />Sun: Closed</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 4 — NEWSLETTER -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Newsletter</h4>
+        <p class="footer-newsletter-text">Subscribe to receive the latest training tips, news, offers and insights from our certified trainers.</p>
+        <form class="footer-newsletter-form" data-validate data-success-msg="Welcome to the pack! Check your inbox.">
+          <div class="footer-newsletter-field">
+            <label class="sr-only" for="footerNewsletterEmail">Email address</label>
+            <input type="email" id="footerNewsletterEmail" name="email" class="footer-newsletter-input" placeholder="Your email address" required aria-label="Email address" autocomplete="email" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+        <p class="footer-newsletter-note">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <!-- BOTTOM LEGAL BAR -->
+    <div class="footer-bottom">
+      <p>&copy; <span class="js-footer-year">2026</span> Pawfect Academy. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./terms-conditions.html">Terms &amp; Conditions</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./sitemap.html">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<script src="./assets/js/global.js"></script>
+</body>
+</html>

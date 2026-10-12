@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Your Dog Ignores You — Pawfect Academy Blog</title>
+  <meta name="description" content="Distraction is not defiance. Understanding why dogs disengage and the four principles that rebuild engagement — expert insights from Sarah Mitchell, CPDT-KA." />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    /* BLOG DETAILS */
+    .article-layout { display: grid; grid-template-columns: 1fr 320px; gap: var(--space-8); align-items: start; }
+    .article-sidebar { position: sticky; top: calc(var(--navbar-height) + 20px); }
+
+    /* Article Hero (text only — feature image sits below, after the hero) */
+    .article-hero {
+      background: var(--midnight-navy); padding-top: calc(var(--navbar-height) + 60px);
+      padding-bottom: 60px; position: relative; overflow: hidden;
+    }
+    .article-hero-content { padding-bottom: 0; }
+    .article-feature-img {
+      width: 100%; height: 480px; object-fit: cover;
+      border-radius: var(--border-radius-xl);
+      display: block; margin-bottom: 40px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Article content */
+    .article-body {
+      font-size: var(--fs-md); line-height: 1.85; color: var(--text-primary);
+    }
+    .article-body h2 {
+      font-size: var(--fs-3xl); margin-block: var(--space-7) var(--space-4);
+      color: var(--text-primary);
+    }
+    .article-body h3 {
+      font-size: var(--fs-2xl); margin-block: var(--space-6) var(--space-3);
+      color: var(--text-primary);
+    }
+    .article-body p { margin-bottom: var(--space-5); }
+    .article-body ul, .article-body ol {
+      padding-left: var(--space-6); margin-bottom: var(--space-5);
+    }
+    .article-body li { margin-bottom: var(--space-2); }
+    .article-body strong { color: var(--text-primary); }
+
+    /* Blockquote */
+    .article-pullquote {
+      border-left: 4px solid var(--burnt-orange);
+      background: rgba(217,119,69,0.06);
+      padding: var(--space-5) var(--space-6);
+      border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+      margin-block: var(--space-6);
+    }
+    .article-pullquote p {
+      font-family: var(--font-display); font-size: var(--fs-xl); font-style: italic;
+      color: var(--text-primary); line-height: 1.5; margin: 0;
+    }
+    .article-pullquote cite { display: block; font-size: var(--fs-sm); color: var(--burnt-orange); font-weight: 700; margin-top: var(--space-3); font-style: normal; }
+
+    /* Tip Box */
+    .tip-box {
+      background: rgba(137,151,123,0.1); border: 1.5px solid rgba(137,151,123,0.3);
+      border-radius: var(--border-radius-md); padding: var(--space-5);
+      margin-block: var(--space-6);
+    }
+    .tip-box-header { display: flex; align-items: center; gap: var(--space-3); font-weight: 700; color: var(--sage-green); margin-bottom: var(--space-3); }
+
+    /* Article meta bar */
+    .article-meta-bar {
+      display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap;
+      padding-block: var(--space-5);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      margin-block: var(--space-5);
+    }
+    .article-author { display: flex; align-items: center; gap: var(--space-3); }
+    .article-author-img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .article-author-name { font-weight: 700; font-size: var(--fs-sm); }
+    .article-author-role { font-size: var(--fs-xs); color: var(--text-muted); }
+
+    /* Share buttons */
+    .share-bar {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding-block: var(--space-5);
+      border-top: 1px solid var(--border-color);
+      margin-top: var(--space-6);
+      flex-wrap: wrap;
+    }
+    .share-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border-radius: var(--border-radius-full);
+      border: 1.5px solid var(--border-color); font-size: var(--fs-xs); font-weight: 700;
+      color: var(--text-secondary); cursor: pointer; transition: all var(--transition-fast);
+    }
+    .share-btn:hover { border-color: var(--burnt-orange); color: var(--burnt-orange); }
+
+    /* Comments */
+    .comment {
+      display: flex; gap: var(--space-4); padding-block: var(--space-5);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .comment:last-child { border-bottom: none; }
+    .comment-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .comment-header { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+    .comment-name { font-weight: 700; font-size: var(--fs-sm); }
+    .comment-date { font-size: var(--fs-xs); color: var(--text-muted); }
+    .comment-body { color: var(--text-secondary); font-size: var(--fs-sm); line-height: 1.7; margin-top: var(--space-2); }
+
+    /* Progress reading indicator */
+    .reading-progress {
+      position: fixed; top: var(--navbar-height); left: 0; right: 0; height: 3px;
+      background: var(--border-color); z-index: var(--z-sticky);
+    }
+    .reading-progress-fill {
+      height: 100%; background: var(--burnt-orange);
+      width: 0; transition: width 0.1s linear;
+    }
+
+    /* Sidebar */
+    .sidebar-widget {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg); padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+    .widget-title { font-family: var(--font-display); font-size: var(--fs-lg); margin-bottom: var(--space-4); }
+    /* About the Author — fully centered */
+    .author-widget { text-align: center; }
+    .author-widget .widget-title {
+      display: block; text-align: center; border-bottom: none;
+      padding-bottom: 0; margin-bottom: var(--space-4);
+    }
+    .author-widget .widget-title::after {
+      content: ''; display: block; width: 56px; height: 3px;
+      background: var(--burnt-orange); border-radius: 2px; margin: 10px auto 0;
+    }
+    .author-avatar {
+      width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+      border: 3px solid var(--burnt-orange); margin: 0 auto var(--space-3); display: block;
+    }
+    .author-name { font-weight: 700; margin-bottom: 4px; }
+    .author-role { color: var(--burnt-orange); font-size: var(--fs-xs); font-weight: 600; margin-bottom: var(--space-3); }
+    .author-bio { color: var(--text-secondary); font-size: var(--fs-xs); line-height: 1.7; }
+
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .article-layout { grid-template-columns: 1fr; }
+      .article-sidebar { position: static; }
+    }
+
+    @media (max-width: 760px) {
+      .share-bar { gap: 8px; }
+      .article-author { gap: var(--space-2); }
+    }
+
+    @media (max-width: 480px) {
+      .share-bar { flex-direction: column; align-items: stretch; }
+      .share-btn { justify-content: center; width: 100%; }
+      .comment { flex-direction: column; gap: 10px; }
+      .comment-avatar { width: 40px; height: 40px; }
+      .sidebar-widget { padding: 20px 16px; border-radius: var(--border-radius-md); }
+    }
+
+    @media (max-width: 360px) {
+      .sidebar-widget { padding: 18px 12px; }
+      .author-avatar { width: 70px; height: 70px; }
+    }
+
+    @media (max-width: 320px) {
+      .sidebar-widget { padding: 14px 10px; }
+      .author-avatar { width: 60px; height: 60px; }
+      .comment { padding-block: 10px; }
+      .comment-name { font-size: var(--fs-xs); }
+      .comment-body { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Reading Progress -->
+<div class="reading-progress" role="progressbar" aria-label="Reading progress">
+  <div class="reading-progress-fill" id="readingProgress"></div>
+</div>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-transparent" data-transparent="true" id="mainNavbar" role="navigation" aria-label="Main Navigation">
+  <div class="navbar-inner">
+    <a href="./index.html" class="navbar-logo" aria-label="Pawfect Academy Home">
+      <div class="navbar-logo-icon" aria-hidden="true">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+      </div>
+      <div>
+        <div class="navbar-logo-text">Pawfect <span>Academy</span></div>
+        <div class="navbar-logo-sub">Dog Training School</div>
+      </div>
+    </a>
+
+    <nav class="navbar-nav" role="menubar">
+      <a href="./index.html" class="nav-link" role="menuitem">Home</a>
+      <a href="./home2.html" class="nav-link" role="menuitem">Home 2</a>
+      <a href="./about.html" class="nav-link" role="menuitem">About</a>
+      <a href="./programs.html" class="nav-link" role="menuitem">Programs</a>
+      <a href="./trainers.html" class="nav-link" role="menuitem">Trainers</a>
+      <a href="./pricing.html" class="nav-link" role="menuitem">Pricing</a>
+      <a href="./blog.html" class="nav-link" role="menuitem">Blog</a>
+      <a href="./contact.html" class="nav-link" role="menuitem">Contact</a>
+    </nav>
+
+    <div class="navbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction">RTL</button>
+
+      <div class="profile-dropdown" id="profileDropdown">
+        <button class="profile-btn" id="profileToggle" aria-label="User Account Menu" aria-haspopup="true" aria-expanded="false">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div class="profile-menu" role="menu" aria-label="Account Options">
+          <div class="profile-menu-header">
+            <span class="profile-menu-title">Account Portal</span>
+          </div>
+          <a href="./login.html" class="profile-menu-item" role="menuitem">
+  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+  <span>Login/Signup</span>
+</a>
+          <a href="./dashboard.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Pet Owner Dashboard</span>
+          </a>
+          <a href="./admin.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5z"/><circle cx="12" cy="15" r="1.5"/></svg>
+            <span>Admin Dashboard</span>
+          </a>
+        </div>
+      </div>
+
+      <a href="./signup.html" class="btn btn-primary btn-sm nav-cta-btn">Get Started</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile Navigation">
+  <div class="mobile-nav-links">
+    <a href="./index.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+    <a href="./home2.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home 2</a>
+    <a href="./about.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h1M9 13h1M9 17h1M14 9h1M14 13h1M14 17h1"/></svg> About</a>
+    <a href="./programs.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Programs</a>
+    <a href="./trainers.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Trainers</a>
+    <a href="./pricing.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Pricing</a>
+    <a href="./blog.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg> Blog</a>
+    <a href="./contact.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Contact</a>
+        <div class="mobile-nav-cta">
+      <a href="./signup.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<!-- ARTICLE HERO -->
+<header class="article-hero">
+  <div class="container article-hero-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="justify-content:flex-start;margin-bottom:var(--space-5);">
+      <span class="breadcrumb-item"><a href="./index.html">Home</a></span>
+      <span class="breadcrumb-separator">›</span>
+      <span class="breadcrumb-item"><a href="./blog.html">Blog</a></span>
+      <span class="breadcrumb-separator">›</span>
+      <span class="breadcrumb-item current" id="crumbCurrent" style="color:var(--burnt-orange);">Behavior Science</span>
+    </nav>
+    <span class="badge badge-primary reveal" id="heroBadge" style="margin-bottom:var(--space-4);">Behavior Science</span>
+    <h1 class="reveal" data-delay="100" id="heroTitle" style="color:white;max-width:800px;margin-block:var(--space-3) var(--space-5);">Why Your Dog Ignores You — And the Science of Getting Their Attention Back</h1>
+    <div class="d-flex align-center gap-5 flex-wrap reveal" data-delay="200" style="color:rgba(255,255,255,0.65);font-size:var(--fs-sm);">
+      <div class="d-flex align-center gap-3">
+        <img id="heroAuthorImg" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=80&q=80" alt="Sarah Mitchell author" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--burnt-orange);" loading="lazy" />
+        <div>
+          <div id="heroAuthorName" style="font-weight:700;color:white;">Sarah Mitchell, CPDT-KA</div>
+          <div id="heroAuthorRole" style="font-size:var(--fs-xs);">Head Trainer & Founder</div>
+        </div>
+      </div>
+      <span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span id="heroDate">October 5, 2026</span></span>
+      <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <span id="heroRead">8 min read</span></span>
+      <span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> <span id="heroViews">4,218 views</span></span>
+    </div>
+  </div>
+</header>
+
+<!-- ARTICLE CONTENT -->
+<section class="section">
+  <div class="container">
+    <img class="article-feature-img" id="articleImg" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200&q=85&auto=format" alt="Dog trainer demonstrating positive reinforcement engagement techniques with golden retriever" loading="eager" />
+    <div class="article-layout">
+      <!-- ARTICLE -->
+      <article>
+        <div class="article-meta-bar">
+          <div class="article-author">
+            <img class="article-author-img" id="metaAuthorImg" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=80&q=80" alt="Sarah Mitchell" loading="lazy" />
+            <div>
+              <div class="article-author-name" id="metaAuthorName">Sarah Mitchell, CPDT-KA</div>
+              <div class="article-author-role" id="metaAuthorRole">Head Trainer · 12 Years Experience</div>
+            </div>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:var(--space-4);color:var(--text-muted);font-size:var(--fs-xs);font-weight:600;flex-wrap:wrap;">
+            <span><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span id="metaDate">Oct 5, 2026</span></span>
+            <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <span id="metaRead">8 min read</span></span>
+            <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> <span id="metaComments">24 comments</span></span>
+          </div>
+        </div>
+
+        <div class="article-body" id="articleBody">
+          <p>You've practiced the "sit" command in your living room 50 times this week. Your dog sits perfectly — almost telepathically — the moment you ask. Then you step outside, and it's like your dog has suddenly gone deaf. They're not defiant. They're not ignoring you out of spite. There's actual science behind what's happening, and understanding it changes everything.</p>
+
+          <h2>The Arousal Threshold Problem</h2>
+          <p>Every dog has what behavioral scientists call an <strong>arousal threshold</strong> — the point at which their emotional state is too activated for their brain to access learned behaviors. Below that threshold, learning is accessible. Above it, the prefrontal cortex (the thinking, decision-making part of the brain) effectively goes offline and the limbic system takes over.</p>
+          <p>When your dog "knows" a command at home but can't perform it outside, they haven't forgotten the command. They're literally in a different neurological state. The outdoor environment — smells, sounds, other animals, novel stimuli — pushes their arousal above the level where their training lives.</p>
+
+          <div class="article-pullquote">
+            <p>"A dog doesn't refuse a command. They either can or cannot access it given their current emotional state."</p>
+            <cite>— Dr. Karen Overall, Veterinary Behaviorist</cite>
+          </div>
+
+          <h2>The Four Reasons Dogs Disengage</h2>
+
+          <h3>1. The Environment is More Reinforcing Than You</h3>
+          <p>Training is a competition for your dog's attention. Every smell, movement and sound is offering reinforcement that you have to outcompete. If you're offering a piece of kibble in a park full of squirrels, you've lost before you started. The fix isn't better treats — it's better timing, smarter training sessions and a gradual increase in environmental distraction level.</p>
+
+          <h3>2. The Reinforcement History for Compliance is Weak</h3>
+          <p>If your dog has 50 repetitions of "come" in the kitchen and 3 repetitions in the park, the behavior simply isn't trained for the park environment. We call this <strong>contextual generalization</strong> — the process of teaching the same behavior across multiple contexts until it becomes truly reliable anywhere.</p>
+
+          <div class="tip-box">
+            <div class="tip-box-header">
+              <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>
+              <span>Pro Tip: The "3-D Rule"</span>
+            </div>
+            <p>To truly proof any command, train it across three Ds: <strong>Distance</strong> (further from you), <strong>Duration</strong> (hold the position longer) and <strong>Distraction</strong> (in increasingly stimulating environments). Only work on one D at a time — never increase all three simultaneously.</p>
+          </div>
+
+          <h3>3. The Punishment History Has Poisoned the Command</h3>
+          <p>If your dog has ever been punished when they came to you (scolded for what they did before coming, grabbed for nail trims, etc.), "come" may have accumulated negative emotional baggage. Dogs associate emotions with commands, not just behaviors. A recall that has been punished even once requires rehabilitation — not more repetition.</p>
+
+          <h3>4. You're Asking Too Much, Too Fast</h3>
+          <p>This is the most common mistake. Trainers call it "rate of reinforcement." If you're getting compliance less than 80% of the time, the exercise is too hard. You need to make it easier. Always set your dog up to succeed — frequent, small wins build the habit of engagement faster than occasional, difficult challenges.</p>
+
+          <h2>Four Principles That Rebuild Engagement</h2>
+
+          <p><strong>1. Become More Interesting</strong> — Vary your tone, use play, be unpredictable. A trainer who does the same sequence in the same voice every session becomes boring. Dogs are novelty-seeking creatures.</p>
+          <p><strong>2. Raise Your Value as a Reinforcer</strong> — Use high-value treats in hard environments. Save the "good stuff" for public training — it signals to your dog that outside sessions are premium experiences worth engaging with.</p>
+          <p><strong>3. Train Below Threshold</strong> — If your dog can't focus in the park, start at the parking lot edge. Can't do that? Start in the car with the park visible. Find the point of success and build from there.</p>
+          <p><strong>4. Build Engagement as Its Own Skill</strong> — Don't wait for your dog to check in with you. Reward every spontaneous glance your direction. Dogs should learn that looking at you is the most reliably reinforcing thing they can do.</p>
+
+          <h2>What This Means for Your Training</h2>
+          <p>The next time your dog ignores your command, resist the urge to repeat it (repetition weakens commands) or punish the non-response. Instead, ask yourself: am I below their arousal threshold? Is the environment more reinforcing than I am? Have I built enough repetitions in this context?</p>
+          <p>Training is a craft, not a transaction. When you understand the science of engagement, you stop fighting your dog's behavior and start working with their biology. The result isn't just a dog who "obeys" — it's a dog who genuinely chooses you.</p>
+
+          <div class="tip-box" style="background:rgba(217,119,69,0.06);border-color:rgba(217,119,69,0.25);">
+            <div class="tip-box-header" style="color:var(--burnt-orange);">
+              <span><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+              <span>Ready to Apply This?</span>
+            </div>
+            <p>Our <a href="./programs.html" style="color:var(--burnt-orange);font-weight:600;text-decoration:underline;">Basic Obedience</a> and <a href="./programs.html" style="color:var(--burnt-orange);font-weight:600;text-decoration:underline;">Advanced Obedience</a> programs incorporate contextual generalization training from week one. Every session is designed to raise your dog's engagement ceiling systematically — so commands work everywhere, not just at home.</p>
+          </div>
+        </div>
+
+        <!-- SHARE -->
+        <div class="share-bar">
+          <span style="font-weight:700;font-size:var(--fs-sm);">Share this article:</span>
+          <button class="share-btn" onclick="navigator.clipboard.writeText(location.href);window.Pawfect?.Toast?.show('Link copied to clipboard!','success')"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Link</button>
+          <button class="share-btn"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg> Twitter</button>
+          <button class="share-btn"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</button>
+          <button class="share-btn"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</button>
+        </div>
+
+        <!-- COMMENTS -->
+        <div style="margin-top:var(--space-7);">
+          <h3 id="commentsTitle" style="margin-bottom:var(--space-6);">24 Comments</h3>
+
+          <div id="commentsList">
+          <div class="comment">
+            <img class="comment-avatar" src="https://images.unsplash.com/photo-1494790108755-2616b612b5c4?w=80&q=70" alt="Jessica L. commenter" loading="lazy" />
+            <div>
+              <div class="comment-header">
+                <span class="comment-name">Jessica L.</span>
+                <span class="comment-date">Oct 6, 2026</span>
+              </div>
+              <div class="comment-body">This article finally explains why Max ignores every command at the dog park but is perfect at home. The "arousal threshold" concept is a game changer. Sharing this with every dog owner I know!</div>
+            </div>
+          </div>
+
+          <div class="comment">
+            <img class="comment-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=70" alt="David K. commenter" loading="lazy" />
+            <div>
+              <div class="comment-header">
+                <span class="comment-name">David K.</span>
+                <span class="comment-date">Oct 7, 2026</span>
+              </div>
+              <div class="comment-body">The point about poisoned cues hit hard. I used to call my dog then immediately put him in his crate. No wonder recall became his least favorite command. Two weeks of rebuilding it with treats only and he's already back to 90%.</div>
+            </div>
+          </div>
+
+          <div class="comment">
+            <img class="comment-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=70" alt="Priya M. commenter" loading="lazy" />
+            <div>
+              <div class="comment-header">
+                <span class="comment-name">Priya M.</span>
+                <span class="comment-date">Oct 8, 2026</span>
+              </div>
+              <div class="comment-body">Sarah, you have a gift for making behavioral science accessible. The "3-D Rule" is exactly what we needed — we've been trying to proof sit in a busy park before we'd ever done it in the quiet yard. Starting over from scratch today!</div>
+            </div>
+          </div>
+
+          </div>
+          <!-- /#commentsList -->
+
+          <!-- Comment Form -->
+          <div style="margin-top:var(--space-7);background:var(--bg-secondary);padding:var(--space-6);border-radius:var(--border-radius-lg);border:1px solid var(--border-color);">
+            <h4 style="margin-bottom:var(--space-5);">Leave a Comment</h4>
+            <form data-validate data-success-msg="Comment submitted! It'll appear after moderation.">
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="commentName">Name *</label>
+                  <input type="text" id="commentName" class="form-control" placeholder="Your name" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="commentEmail">Email *</label>
+                  <input type="email" id="commentEmail" class="form-control" placeholder="your@email.com" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="commentText">Your Comment *</label>
+                <textarea id="commentText" class="form-control" placeholder="Share your experience or question..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit Comment →</button>
+            </form>
+          </div>
+        </div>
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="article-sidebar">
+        <div class="sidebar-widget author-widget">
+          <h3 class="widget-title">About the Author</h3>
+          <div>
+            <img class="author-avatar" id="authorAvatar" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=150&q=80" alt="Sarah Mitchell author photo" loading="lazy" />
+            <div class="author-name" id="authorName">Sarah Mitchell, CPDT-KA</div>
+            <div class="author-role" id="authorRole">Head Trainer & Founder</div>
+            <p class="author-bio" id="authorBio">Certified Professional Dog Trainer with 12 years experience. Founder of Pawfect Academy and specialist in behavioral science-based training.</p>
+            <a href="./trainers.html" class="btn btn-outline btn-sm" style="margin-top:var(--space-3);width:100%;justify-content:center;">Full Profile</a>
+          </div>
+        </div>
+
+        <div class="sidebar-widget">
+          <h3 class="widget-title">Related Articles</h3>
+          <div id="relatedList">
+            <div style="display:flex;gap:var(--space-3);padding-block:var(--space-3);border-bottom:1px solid var(--border-color);">
+              <img src="https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=80&q=70" alt="Recall article" style="width:64px;height:64px;border-radius:var(--border-radius-sm);object-fit:cover;flex-shrink:0;" loading="lazy" />
+              <div>
+                <a href="./blog-details.html?post=recall-fix" style="font-size:var(--fs-sm);font-weight:600;line-height:1.4;display:block;">The 5-Minute Recall Fix</a>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted);">Oct 1, 2026</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:var(--space-3);padding-block:var(--space-3);border-bottom:1px solid var(--border-color);">
+              <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=80&q=70" alt="Reactivity article" style="width:64px;height:64px;border-radius:var(--border-radius-sm);object-fit:cover;flex-shrink:0;" loading="lazy" />
+              <div>
+                <a href="./blog-details.html?post=leash-reactivity" style="font-size:var(--fs-sm);font-weight:600;line-height:1.4;display:block;">Leash Reactivity: The Root Cause</a>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted);">Sep 22, 2026</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:var(--space-3);padding-top:var(--space-3);">
+              <img src="https://images.unsplash.com/photo-1560743641-3914f2c45636?w=80&q=70" alt="Socialization article" style="width:64px;height:64px;border-radius:var(--border-radius-sm);object-fit:cover;flex-shrink:0;" loading="lazy" />
+              <div>
+                <a href="./blog-details.html?post=socialization-window" style="font-size:var(--fs-sm);font-weight:600;line-height:1.4;display:block;">The Socialization Window Explained</a>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted);">Sep 15, 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-widget" style="background:var(--burnt-orange);">
+          <h4 style="color:white;margin-bottom:var(--space-3);">Ready to Train?</h4>
+          <p style="color:rgba(255,255,255,0.85);font-size:var(--fs-sm);line-height:1.7;margin-bottom:var(--space-4);">Apply what you've learned in our expert-led programs. Book a free consultation to get started.</p>
+          <a href="./contact.html" class="btn btn-outline-light btn-sm" style="width:100%;justify-content:center;">Book Free Consult</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- ===== STANDARD FOOTER ===== -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- COLUMN 1 — COMPANY -->
+      <div class="footer-brand">
+        <a href="./index.html" class="navbar-logo footer-logo" aria-label="Pawfect Academy — Home">
+          <span class="navbar-logo-icon" aria-hidden="true">
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+          </span>
+          <span class="navbar-logo-text" style="color:white;">Pawfect <span>Academy</span></span>
+        </a>
+        <p>Premium canine training and obedience school dedicated to building lasting bonds between dogs and their families through science-based, force-free methods.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#202C3B"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- COLUMN 2 — QUICK LINKS (mirrors main navbar) -->
+      <nav class="footer-col" aria-label="Quick links">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="./index.html" class="footer-link">Home</a></li>
+          <li><a href="./home2.html" class="footer-link">Home 2</a></li>
+          <li><a href="./about.html" class="footer-link">About</a></li>
+          <li><a href="./programs.html" class="footer-link">Programs</a></li>
+          <li><a href="./trainers.html" class="footer-link">Trainers</a></li>
+          <li><a href="./pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="./blog.html" class="footer-link">Blog</a></li>
+          <li><a href="./contact.html" class="footer-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- COLUMN 3 — CONTACT DETAILS -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>123 Training Lane, Suite 200<br />Portland, OR 97201</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+15551234567">(555) 123-4567</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Mon &ndash; Sat: 7:00 AM &ndash; 7:00 PM<br />Sun: Closed</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 4 — NEWSLETTER -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Newsletter</h4>
+        <p class="footer-newsletter-text">Subscribe to receive the latest training tips, news, offers and insights from our certified trainers.</p>
+        <form class="footer-newsletter-form" data-validate data-success-msg="Welcome to the pack! Check your inbox.">
+          <div class="footer-newsletter-field">
+            <label class="sr-only" for="footerNewsletterEmail">Email address</label>
+            <input type="email" id="footerNewsletterEmail" name="email" class="footer-newsletter-input" placeholder="Your email address" required aria-label="Email address" autocomplete="email" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+        <p class="footer-newsletter-note">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <!-- BOTTOM LEGAL BAR -->
+    <div class="footer-bottom">
+      <p>&copy; <span class="js-footer-year">2026</span> Pawfect Academy. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./terms-conditions.html">Terms &amp; Conditions</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./sitemap.html">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<script src="./assets/js/global.js"></script>
+<script>
+  // Reading progress bar
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const progress = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+    document.getElementById('readingProgress').style.width = progress + '%';
+  }, { passive: true });
+
+  // Per-post details — one file serves every blog card via ?post=<slug>
+  (function() {
+    const AV = {
+      sarah: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=80&q=80',
+      marcus: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&q=80',
+      emma: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=80&q=80'
+    };
+    const POSTS = {
+      'recall-fix': {
+        title: 'The 5-Minute Recall Fix That Works for Every Breed',
+        badge: 'Training Tips', crumb: 'Training Tips',
+        img: 'https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=1200&q=85&auto=format',
+        imgAlt: 'Trainer practicing recall with dog in a green park',
+        desc: 'A simple, repeatable recall protocol that rebuilds reliable come-when-called behavior in just two weeks.',
+        author: 'Marcus Chen', authorRole: 'Advanced Obedience Specialist',
+        authorImg: AV.marcus, authorBio: 'Advanced Obedience Specialist with 10 years experience. Former AKC competitor who makes precision training accessible and fun.',
+        date: 'October 1, 2026', shortDate: 'Oct 1, 2026', read: '5 min read', views: '3,102 views',
+        body: '<p>A reliable recall is the single most important skill your dog can learn — and the one most owners struggle with. The good news: failed recall is rarely a motivation problem. It is almost always a training-structure problem, and a tiny daily protocol fixes it.</p>'
+          + '<h2>Why “Come” Fails When It Matters</h2>'
+          + '<p>Most owners only practice recall when they need it — at the park, off-leash, surrounded by distractions. That is like taking an exam before attending a single class. Recall must be rehearsed hundreds of times in easy settings before it can survive hard ones.</p>'
+          + '<p>The second culprit is accidental poisoning of the cue. Every time a dog is called and then experiences something unpleasant — a bath, nail trim, end of play — the word “come” loses value. Rebuilding that value is the entire game.</p>'
+          + '<div class="article-pullquote"><p>“Never call your dog for anything they might dislike. Protect the recall like the valuable asset it is.”</p><cite>— Marcus Chen, Advanced Obedience Specialist</cite></div>'
+          + '<h2>The 5-Minute Daily Protocol</h2>'
+          + '<p>Twice a day, spend five minutes calling your dog between two people six feet apart, rewarding every arrival with a high-value treat and instant release back to play. Over two weeks, add distance first, then mild distraction — never both at once.</p>'
+          + '<div class="tip-box"><div class="tip-box-header"><span>Pro Tip: Pay Like It Matters</span></div><p>Use the best rewards you have — real chicken, cheese, play — exclusively for recall practice. When recall pays better than the environment, dogs choose you.</p></div>'
+          + '<p>Stay consistent for fourteen days and you will see a different dog. For the full step-by-step ladder with video demos, join our <a href="./programs.html" style="color:var(--burnt-orange);font-weight:600;text-decoration:underline;">Basic Obedience</a> program.</p>',
+        comments: [
+          { img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=70', name: 'Daniel R.', date: 'Oct 2, 2026', text: 'Day nine of the protocol and Rocky recalled away from another dog yesterday. I nearly cried. This works.' },
+          { img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=70', name: 'Amelia T.', date: 'Oct 3, 2026', text: 'The part about never calling for baths was our lightbulb moment. Two weeks in and recall is at 90%.' }
+        ]
+      },
+      'leash-reactivity': {
+        title: 'Leash Reactivity: Understanding the Root Cause',
+        badge: 'Behavior', crumb: 'Behavior',
+        img: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1200&q=85&auto=format',
+        imgAlt: 'Dog showing leash reactivity toward another dog at the park',
+        desc: 'Why leash reactivity happens, what your dog is communicating, and a structured plan to address it.',
+        author: 'Sarah Mitchell, CPDT-KA', authorRole: 'Head Trainer · 12 Years Experience',
+        authorImg: AV.sarah, authorBio: 'Certified Professional Dog Trainer with 12 years experience. Founder of Pawfect Academy and specialist in behavioral science-based training.',
+        date: 'September 22, 2026', shortDate: 'Sep 22, 2026', read: '7 min read', views: '2,847 views',
+        body: '<p>Lunging, barking, spinning at the end of the leash — leash reactivity is the most common issue owners bring to us. It looks like aggression, but in the vast majority of cases it is frustration and big feelings colliding with restraint.</p>'
+          + '<h2>Reactivity Is Emotion, Not Disobedience</h2>'
+          + '<p>A leashed dog cannot do what dogs naturally do: approach in an arc, sniff, and move away. Trapped on a six-foot line, excitement or fear has nowhere to go except up and out — through barking and lunging. Punishing that display suppresses the signal without changing the feeling.</p>'
+          + '<p>The leash itself often makes things worse. A tight leash tells the dog something is wrong, raises arousal, and removes their favorite coping strategy: creating distance.</p>'
+          + '<div class="article-pullquote"><p>“Change the emotion and the behavior follows. Change only the behavior and the emotion finds a new outlet.”</p><cite>— Sarah Mitchell, CPDT-KA</cite></div>'
+          + '<h2>The Distance-First Fix</h2>'
+          + '<p>Find the distance where your dog notices triggers but can still respond to you — then train there. Reward calm glances, practice U-turns and scatter-feeding, and shrink distance by a few feet per successful session, never per failed one.</p>'
+          + '<div class="tip-box"><div class="tip-box-header"><span>Pro Tip: Loose Leash, Calmer Dog</span></div><p>Keep the leash loose even when you are nervous. A tight leash telegraphs tension straight down the line to your dog.</p></div>'
+          + '<p>Severe cases deserve coaching — our <a href="./programs.html" style="color:var(--burnt-orange);font-weight:600;text-decoration:underline;">Behavior Correction</a> program starts with a full assessment and a threshold-based plan.</p>',
+        comments: [
+          { img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=70', name: 'Sofia M.', date: 'Sep 23, 2026', text: 'The tight-leash insight changed our walks immediately. Luna is calmer and so am I.' },
+          { img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=70', name: 'David K.', date: 'Sep 25, 2026', text: 'Distance-first training saved us. Three months in and our border collie passes dogs across the street calmly.' }
+        ]
+      },
+      'socialization-window': {
+        title: 'The Socialization Window: What It Is and Why It Closes at 16 Weeks',
+        badge: 'Puppy Life', crumb: 'Puppy Life',
+        img: 'https://images.unsplash.com/photo-1560743641-3914f2c45636?w=1200&q=85&auto=format',
+        imgAlt: 'Happy puppies socializing together in a group class',
+        desc: 'The most important developmental period in your puppy’s life — and how to make the most of every day.',
+        author: 'Emma Rodriguez', authorRole: 'Socialization & Puppy Coach',
+        authorImg: AV.emma, authorBio: 'Socialization & Puppy Coach specializing in the critical 8–16 week developmental window and lifelong confidence building.',
+        date: 'September 15, 2026', shortDate: 'Sep 15, 2026', read: '6 min read', views: '5,410 views',
+        body: '<p>Between roughly 3 and 16 weeks, a puppy’s brain decides what is normal and safe for life. Sounds, surfaces, people, dogs, handling — everything met with positive experiences in this window becomes “just part of life.” Everything missed becomes harder later.</p>'
+          + '<h2>What Actually Closes at 16 Weeks</h2>'
+          + '<p>Not learning itself — dogs learn lifelong. What narrows is effortless acceptance. After the window, unfamiliar things default to suspicion instead of curiosity, and changing that default takes deliberate counter-conditioning instead of simple exposure.</p>'
+          + '<p>This is why waiting until vaccinations finish to start socialization backfires. The answer is safe socialization: carried outings, clean puppy classes, and controlled introductions — not dog parks.</p>'
+          + '<div class="article-pullquote"><p>“You cannot rewind the socialization window. Every calm, positive experience before 16 weeks pays interest for life.”</p><cite>— Emma Rodriguez, Puppy Coach</cite></div>'
+          + '<h2>A Safe Socialization Checklist</h2>'
+          + '<p>Aim for breadth over intensity: ten surfaces, ten sounds, ten kinds of people, ten friendly dogs — all paired with treats and play, all at your puppy’s pace. Watch body language and never flood a worried puppy.</p>'
+          + '<div class="tip-box"><div class="tip-box-header"><span>Pro Tip: Quality Over Quantity</span></div><p>One calm five-minute positive experience beats an hour of overwhelming exposure. End every outing while your puppy is still happy.</p></div>'
+          + '<p>Our <a href="./programs.html" style="color:var(--burnt-orange);font-weight:600;text-decoration:underline;">Puppy Foundation</a> classes are built exactly around this window — come use it well.</p>',
+        comments: [
+          { img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=70', name: 'Priya M.', date: 'Sep 16, 2026', text: 'We started the checklist at 9 weeks and our golden is bombproof at 6 months. Wish every puppy owner read this.' },
+          { img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=70', name: 'Daniel R.', date: 'Sep 18, 2026', text: 'The carried-outings idea was new to me and brilliant. Our vet approved and our pup met the world safely.' }
+        ]
+      },
+      'beau-agility-star': {
+        title: 'How Beau Went from Reactive Rescue to Off-Leash Agility Star',
+        badge: 'Success Stories', crumb: 'Success Stories',
+        img: 'https://images.unsplash.com/photo-1551717743-49959800b1f6?w=1200&q=85&auto=format',
+        imgAlt: 'Beau the border collie training confidently off-leash',
+        desc: 'A 12-week behavior correction journey that transformed a fearful rescue — and the owner who never gave up.',
+        author: 'Sarah Mitchell, CPDT-KA', authorRole: 'Head Trainer · 12 Years Experience',
+        authorImg: AV.sarah, authorBio: 'Certified Professional Dog Trainer with 12 years experience. Founder of Pawfect Academy and specialist in behavioral science-based training.',
+        date: 'September 8, 2026', shortDate: 'Sep 8, 2026', read: '4 min read', views: '6,203 views',
+        body: '<p>When Beau arrived — a 2-year-old rescue border collie — he could not walk on leash, panicked at strangers, and shut down around other dogs. Twelve weeks later he runs agility courses off-leash on weekends. This is how.</p>'
+          + '<h2>Where Beau Started</h2>'
+          + '<p>Beau’s assessment showed classic shelter fallout: chronic over-threshold arousal, zero leash skills, and a deep distrust of unfamiliar handling. His owner’s patience was extraordinary — the single biggest predictor of success we see.</p>'
+          + '<p>We set one rule for the first fortnight: no walks that Beau could fail. Short decompression outings, scatter feeding, and letting Beau choose distance from everything scary.</p>'
+          + '<div class="article-pullquote"><p>“I cried when Beau recalled off-leash in the park for the first time. Twelve weeks ago he would not take a treat outside.”</p><cite>— Beau’s owner</cite></div>'
+          + '<h2>The 12-Week Turnaround</h2>'
+          + '<p>Weeks 2–6 built core cues in quiet contexts. Weeks 6–10 layered distraction systematically. Week 10 brought the first off-leash recall; week 12 brought graduation — and an agility enrollment the same weekend.</p>'
+          + '<div class="tip-box"><div class="tip-box-header"><span>Pro Tip: Celebrate Small Wins</span></div><p>Rehabilitation is measured in thresholds crossed, not finish lines. Log every win — the log becomes motivation on hard weeks.</p></div>'
+          + '<p>Reactive dog at home? Start with a <a href="./programs.html" style="color:var(--burnt-orange);font-weight:600;text-decoration:underline;">behavior assessment</a> — Beau’s story could be yours.</p>',
+        comments: [
+          { img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=70', name: 'Sofia M.', date: 'Sep 9, 2026', text: 'Cried reading this. Our rescue is on week 4 of the same program and I see Beau’s early days in her. Hope restored.' },
+          { img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=70', name: 'David K.', date: 'Sep 11, 2026', text: 'Met Beau at agility class — an absolute star. Proof that reactive does not mean broken.' }
+        ]
+      },
+      'training-treats': {
+        title: 'The Best Training Treats — And Why Your Dog’s Motivation Matters',
+        badge: 'Health & Care', crumb: 'Health & Care',
+        img: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=1200&q=85&auto=format',
+        imgAlt: 'Dog receiving a healthy training treat during an obedience session',
+        desc: 'How to find the right reinforcement currency for your dog’s drive level and learning style.',
+        author: 'Emma Rodriguez', authorRole: 'Socialization & Puppy Coach',
+        authorImg: AV.emma, authorBio: 'Socialization & Puppy Coach specializing in the critical 8–16 week developmental window and lifelong confidence building.',
+        date: 'August 28, 2026', shortDate: 'Aug 28, 2026', read: '5 min read', views: '1,976 views',
+        body: '<p>Ask why training stalled and the answer is often in your treat pouch. Kibble in a squirrel-filled park is like paying minimum wage for hazardous work. Motivation is individual — the right currency changes everything.</p>'
+          + '<h2>Motivation Is Personal</h2>'
+          + '<p>Some dogs work for food, others for a tennis ball, a tug rope, or thirty seconds of sniffing. Rank what your dog loves by what they choose when free — then spend the top rewards on the hardest behaviors.</p>'
+          + '<p>Health matters too: pea-sized, soft, low-calorie treats protect sensitive stomachs during high-repetition sessions. Subtract training calories from meals.</p>'
+          + '<div class="article-pullquote"><p>“The best treat is the one your individual dog would cross the room for — not the one the bag advertises.”</p><cite>— Emma Rodriguez, Puppy Coach</cite></div>'
+          + '<h2>Building Your Treat Ladder</h2>'
+          + '<p>Keep three tiers: everyday kibble for easy known cues at home, mid-value commercial treats for class, and jackpot rewards — chicken, cheese, play — reserved for recalls and breakthroughs in hard places.</p>'
+          + '<div class="tip-box"><div class="tip-box-header"><span>Pro Tip: Rotate the Jackpot</span></div><p>Dogs habituate. Rotate jackpot rewards weekly to keep surprise — and value — high.</p></div>'
+          + '<p>Need help reading your dog’s drive? Our <a href="./programs.html" style="color:var(--burnt-orange);font-weight:600;text-decoration:underline;">Puppy Foundation</a> coaches map motivation in week one.</p>',
+        comments: [
+          { img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=70', name: 'Amelia T.', date: 'Aug 29, 2026', text: 'Switched to the three-tier system and our pup’s focus doubled in a week. The jackpot rotation tip is gold.' },
+          { img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=70', name: 'Daniel R.', date: 'Aug 31, 2026', text: 'Turns out Rocky works for sniffing breaks, not treats. Cross-the-room test nailed it.' }
+        ]
+      },
+      'proofing-commands': {
+        title: 'Proofing Commands: How to Make Obedience Work Everywhere',
+        badge: 'Training Tips', crumb: 'Training Tips',
+        img: 'https://images.unsplash.com/photo-1534361960057-19889db9621e?w=1200&q=85&auto=format',
+        imgAlt: 'Happy dog running recall off-leash in a green park',
+        desc: 'The step-by-step proofing protocol that makes home-perfect obedience work at the park too.',
+        author: 'Marcus Chen', authorRole: 'Advanced Obedience Specialist',
+        authorImg: AV.marcus, authorBio: 'Advanced Obedience Specialist with 10 years experience. Former AKC competitor who makes precision training accessible and fun.',
+        date: 'August 18, 2026', shortDate: 'Aug 18, 2026', read: '6 min read', views: '2,355 views',
+        body: '<p>“He sits perfectly at home but ignores me at the park” is the sentence we hear most. Your dog is not being stubborn — the behavior was never proofed. Proofing is a separate training phase, and it has a ladder.</p>'
+          + '<h2>Dogs Don’t Generalize on Their Own</h2>'
+          + '<p>To a dog, “sit” in the kitchen and “sit” at a busy trailhead are different behaviors in different movies. Each new context needs its own rehearsals. Expecting otherwise is the most common training error there is.</p>'
+          + '<p>The fix is systematic: re-teach every cue from zero in each new environment, starting with massive reward rates, then fading back to normal once reliability returns.</p>'
+          + '<div class="article-pullquote"><p>“A cue is only trained when it works in ten places, not one.”</p><cite>— Marcus Chen, Advanced Obedience Specialist</cite></div>'
+          + '<h2>The 3-D Proofing Ladder</h2>'
+          + '<p>Climb one rung at a time: distance, then duration, then distraction — resetting the other two whenever you raise one. New park? Halve your distance expectations and double your pay rate for the first three sessions.</p>'
+          + '<div class="tip-box"><div class="tip-box-header"><span>Pro Tip: Keep a Proofing Log</span></div><p>Note each cue’s success rate per location. Anything under 80% means you climbed too fast — drop back a rung.</p></div>'
+          + '<p>Our <a href="./programs.html" style="color:var(--burnt-orange);font-weight:600;text-decoration:underline;">Advanced Obedience</a> program proofs every cue across real-world locations from week one.</p>',
+        comments: [
+          { img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=70', name: 'David K.', date: 'Aug 19, 2026', text: 'The ten-places rule reframed everything. We proofed recall across six parks and it finally stuck.' },
+          { img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=70', name: 'Sofia M.', date: 'Aug 21, 2026', text: 'Started the log this week — humbling and incredibly useful. Already seeing patterns.' }
+        ]
+      }
+    };
+    function commentHTML(c) {
+      return '<div class="comment">'
+        + '<img class="comment-avatar" src="' + c.img + '" alt="' + c.name + ' commenter" loading="lazy" />'
+        + '<div><div class="comment-header"><span class="comment-name">' + c.name + '</span>'
+        + '<span class="comment-date">' + c.date + '</span></div>'
+        + '<div class="comment-body">' + c.text + '</div></div></div>';
+    }
+    function relatedHTML(slug, p, last) {
+      return '<div style="display:flex;gap:var(--space-3);' + (last ? 'padding-top:var(--space-3);' : 'padding-block:var(--space-3);border-bottom:1px solid var(--border-color);') + '">'
+        + '<img src="' + p.img.replace('w=1200', 'w=80').replace('q=85', 'q=70') + '" alt="' + p.title + '" style="width:64px;height:64px;border-radius:var(--border-radius-sm);object-fit:cover;flex-shrink:0;" loading="lazy" />'
+        + '<div><a href="./blog-details.html?post=' + slug + '" style="font-size:var(--fs-sm);font-weight:600;line-height:1.4;display:block;">' + p.title + '</a>'
+        + '<span style="font-size:var(--fs-xs);color:var(--text-muted);">' + p.shortDate + '</span></div></div>';
+    }
+    try {
+      const slug = new URLSearchParams(window.location.search).get('post');
+      const post = slug && POSTS[slug];
+      if (!post) return; // no slug (or unknown) → default featured article stays
+      const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      document.title = post.title + ' — Pawfect Academy Blog';
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', post.desc);
+      setText('crumbCurrent', post.crumb);
+      setText('heroBadge', post.badge);
+      setText('heroTitle', post.title);
+      const heroImg = document.getElementById('heroAuthorImg');
+      if (heroImg) { heroImg.src = post.authorImg; heroImg.alt = post.author; }
+      setText('heroAuthorName', post.author);
+      setText('heroAuthorRole', post.authorRole);
+      setText('heroDate', post.date);
+      setText('heroRead', post.read);
+      setText('heroViews', post.views);
+      const artImg = document.getElementById('articleImg');
+      if (artImg) { artImg.src = post.img; artImg.alt = post.imgAlt; }
+      const metaImg = document.getElementById('metaAuthorImg');
+      if (metaImg) { metaImg.src = post.authorImg; metaImg.alt = post.author; }
+      setText('metaAuthorName', post.author);
+      setText('metaAuthorRole', post.authorRole);
+      setText('metaDate', post.shortDate);
+      setText('metaRead', post.read);
+      setText('metaComments', post.comments.length + ' comments');
+      const body = document.getElementById('articleBody');
+      if (body) body.innerHTML = post.body;
+      setText('commentsTitle', post.comments.length + ' Comments');
+      const list = document.getElementById('commentsList');
+      if (list) list.innerHTML = post.comments.map(commentHTML).join('');
+      const av = document.getElementById('authorAvatar');
+      if (av) { av.src = post.authorImg.replace('w=80', 'w=150'); av.alt = post.author + ' author photo'; }
+      setText('authorName', post.author);
+      setText('authorRole', post.authorRole);
+      setText('authorBio', post.authorBio);
+      const rel = document.getElementById('relatedList');
+      if (rel) {
+        const others = Object.keys(POSTS).filter(k => k !== slug).slice(0, 3);
+        rel.innerHTML = others.map((k, i) => relatedHTML(k, POSTS[k], i === others.length - 1)).join('');
+      }
+      window.scrollTo(0, 0);
+    } catch (e) { /* keep default article */ }
+  })();
+</script>
+</body>
+</html>

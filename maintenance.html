@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maintenance — Pawfect Academy | We'll Be Right Back</title>
+  <meta name="description" content="Pawfect Academy is currently undergoing scheduled maintenance. We'll be back online shortly." />
+  <meta name="robots" content="noindex" />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #202C3B 0%, #1A2332 50%, #2D4060 100%);
+      font-family: var(--font-body); overflow-x: hidden; overflow-y: auto;
+    }
+    /* Animated background */
+    .bg-particles {
+      position: fixed; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .particle {
+      position: absolute; font-size: 40px; opacity: 0.06;
+      animation: particleFloat var(--dur, 8s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+    @keyframes particleFloat {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.06; }
+      90% { opacity: 0.06; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
+    .maintenance-content {
+      text-align: center; padding: var(--space-8) var(--space-5);
+      margin-block: var(--space-7); width: 100%;
+      max-width: 700px; position: relative; z-index: 1;
+    }
+    .maint-logo { display: inline-flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-5); }
+    .maint-logo-icon {
+      width: 60px; height: 60px; background: var(--burnt-orange);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      font-size: 30px; box-shadow: 0 0 30px rgba(217,119,69,0.5);
+    }
+    .maint-logo-text { font-family: var(--font-display); font-size: var(--fs-2xl); font-weight: 700; color: white; }
+    .maint-logo-text span { color: var(--burnt-orange); }
+
+    .maint-icon {
+      width: 76px; height: 76px; border-radius: 22px; line-height: 1;
+      background: rgba(217,119,69,0.15); border: 1px solid rgba(217,119,69,0.35);
+      color: var(--burnt-orange); display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-5); flex-shrink: 0;
+      box-shadow: 0 0 30px rgba(217,119,69,0.35);
+      animation: gearSpin 4s linear infinite;
+    }
+    .maint-icon svg { width: 38px; height: 38px; }
+    @keyframes gearSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    /* Meanwhile links */
+    .maint-links { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-6); }
+    .maint-link {
+      padding: 10px 20px; border: 1px solid rgba(255,255,255,0.2); border-radius: var(--border-radius-full);
+      font-size: var(--fs-xs); font-weight: 700; color: rgba(255,255,255,0.75);
+      transition: all var(--transition-fast); background: rgba(255,255,255,0.05);
+    }
+    .maint-link:hover { border-color: var(--burnt-orange); color: var(--burnt-orange); transform: translateY(-2px); }
+
+    .maint-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; color: white; margin-bottom: var(--space-4); line-height: 1.15; }
+    .maint-subtitle { color: rgba(255,255,255,0.65); font-size: var(--fs-md); line-height: 1.8; max-width: 500px; margin: 0 auto var(--space-7); }
+
+    /* Countdown */
+    .countdown { display: flex; gap: var(--space-4); justify-content: center; margin-bottom: var(--space-7); flex-wrap: wrap; }
+    .count-unit {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--border-radius-md); padding: var(--space-5) var(--space-6);
+      min-width: 100px; backdrop-filter: blur(10px);
+    }
+    .count-value {
+      font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900; color: var(--burnt-orange); display: block; line-height: 1;
+    }
+    .count-label { font-size: var(--fs-xs); color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px; display: block; }
+
+    /* Progress bar */
+    .maint-progress { margin-bottom: var(--space-6); }
+    .maint-progress-label { display: flex; justify-content: space-between; color: rgba(255,255,255,0.6); font-size: var(--fs-xs); font-weight: 600; margin-bottom: var(--space-2); }
+    .maint-progress-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+    .maint-progress-fill { height: 100%; background: linear-gradient(90deg, var(--burnt-orange), #E8945A); border-radius: 4px; width: 73%; animation: progressPulse 2s ease-in-out infinite; }
+    @keyframes progressPulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+
+    /* Newsletter signup in maintenance */
+    .maint-notify {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--border-radius-lg); padding: var(--space-6);
+      margin-bottom: var(--space-6); backdrop-filter: blur(10px);
+    }
+    .maint-notify h3 { color: white; margin-bottom: var(--space-2); font-size: var(--fs-xl); }
+    .maint-notify p { color: rgba(255,255,255,0.65); font-size: var(--fs-sm); margin-bottom: var(--space-4); }
+    .maint-form { display: flex; gap: 8px; background: rgba(255,255,255,0.08); padding: 6px; border-radius: var(--border-radius-full); border: 1px solid rgba(255,255,255,0.15); }
+    .maint-input { flex: 1; background: transparent; border: none; padding: 10px 16px; color: white; font-size: var(--fs-sm); font-family: var(--font-body); }
+    .maint-input::placeholder { color: rgba(255,255,255,0.4); }
+
+    /* Status items */
+    .status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-bottom: var(--space-6); }
+    .status-item { background: rgba(255,255,255,0.05); border-radius: var(--border-radius-sm); padding: var(--space-3); text-align: center; }
+    .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+    .status-dot.green { background: #5CB85C; box-shadow: 0 0 6px #5CB85C; animation: pulse 2s infinite; }
+    .status-dot.yellow { background: #F5A623; box-shadow: 0 0 6px #F5A623; animation: pulse 2s infinite; }
+    .status-dot.orange { background: var(--burnt-orange); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .status-label { color: rgba(255,255,255,0.7); font-size: var(--fs-xs); }
+
+    /* Social links */
+    .maint-socials { display: flex; gap: var(--space-3); justify-content: center; }
+    .maint-social { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 18px; transition: all var(--transition-fast); }
+    .maint-social:hover { border-color: var(--burnt-orange); color: var(--burnt-orange); }
+
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .maintenance-content { padding: 48px 24px; }
+    }
+
+    @media (max-width: 760px) {
+      .countdown { gap: 12px; }
+      .count-unit { min-width: 80px; padding: 16px 14px; }
+      .maint-title { font-size: clamp(2rem, 6vw, 2.8rem); }
+    }
+
+    @media (max-width: 480px) {
+      .status-grid { grid-template-columns: 1fr; }
+      .countdown { gap: 8px; }
+      .count-unit { min-width: 0; width: calc(50% - 6px); padding: 14px 10px; }
+      .count-value { font-size: 2rem; }
+      .maint-form { flex-direction: column; border-radius: var(--border-radius-md); padding: 8px; }
+      .maint-form .btn { width: 100%; justify-content: center; }
+      .maint-title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+      .maint-notify { padding: 22px 16px; border-radius: var(--border-radius-md); }
+    }
+
+    @media (max-width: 360px) {
+      .maintenance-content { padding: 32px 14px; }
+      .count-unit { width: calc(50% - 4px); padding: 12px 6px; }
+      .count-value { font-size: 1.75rem; }
+      .count-label { font-size: 0.68rem; }
+      .maint-notify { padding: 18px 12px; }
+      .maint-links { gap: 8px; }
+      .maint-link { padding: 8px 14px; font-size: 0.72rem; }
+    }
+
+    @media (max-width: 320px) {
+      .maintenance-content { padding: 24px 8px; }
+      .maint-logo-icon { width: 42px; height: 42px; font-size: 20px; }
+      .maint-logo-text { font-size: var(--fs-lg); }
+      .maint-title { font-size: 1.6rem; }
+      .maint-subtitle { font-size: 0.85rem; }
+      .count-unit { width: calc(50% - 4px); padding: 10px 4px; }
+      .count-value { font-size: 1.5rem; }
+      .count-label { font-size: 9px; }
+      .maint-notify { padding: 16px 10px; }
+      .maint-notify h3 { font-size: var(--fs-lg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background particles -->
+<div class="bg-particles" aria-hidden="true">
+  <span class="particle" style="left:5%;--dur:10s;--delay:0s"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+  <span class="particle" style="left:20%;--dur:12s;--delay:2s"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+  <span class="particle" style="left:40%;--dur:9s;--delay:1s"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+  <span class="particle" style="left:60%;--dur:11s;--delay:3s"><svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.5 7.5A2.5 2.5 0 0 0 16 5c-.7 0-1.3.3-1.8.8l-4.4 4.4a2.5 2.5 0 1 0-3.6 3.6l4.4-4.4c.5-.5.8-1.1.8-1.8a2.5 2.5 0 0 0-2.5-2.5 2.5 2.5 0 0 0-2.5 2.5c0 .7.3 1.3.8 1.8l4.4 4.4a2.5 2.5 0 0 0 3.6-3.6l-4.4-4.4c-.5-.5-.8-1.1-.8-1.8a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0 2.5 2.5c0 .7-.3 1.3-.8 1.8l-4.4 4.4a2.5 2.5 0 1 0 3.6 3.6l4.4-4.4c.5.5 1.1.8 1.8.8a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5z"/></svg></span>
+  <span class="particle" style="left:75%;--dur:8s;--delay:0.5s"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+  <span class="particle" style="left:90%;--dur:13s;--delay:4s"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+  <span class="particle" style="left:35%;--dur:10s;--delay:5s"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></span>
+  <span class="particle" style="left:55%;--dur:14s;--delay:2.5s"><svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.5 7.5A2.5 2.5 0 0 0 16 5c-.7 0-1.3.3-1.8.8l-4.4 4.4a2.5 2.5 0 1 0-3.6 3.6l4.4-4.4c.5-.5.8-1.1.8-1.8a2.5 2.5 0 0 0-2.5-2.5 2.5 2.5 0 0 0-2.5 2.5c0 .7.3 1.3.8 1.8l4.4 4.4a2.5 2.5 0 0 0 3.6-3.6l-4.4-4.4c-.5-.5-.8-1.1-.8-1.8a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0 2.5 2.5c0 .7-.3 1.3-.8 1.8l-4.4 4.4a2.5 2.5 0 1 0 3.6 3.6l4.4-4.4c.5.5 1.1.8 1.8.8a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5z"/></svg></span>
+</div>
+
+<main class="maintenance-content">
+  <!-- Logo -->
+  <a href="./index.html" class="maint-logo">
+    <div class="maint-logo-icon"><svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></div>
+    <div class="maint-logo-text">Pawfect <span>Academy</span></div>
+  </a>
+
+  <!-- Gear icon -->
+  <span class="maint-icon" role="img" aria-label="Under construction"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+
+  <h1 class="maint-title">We're Polishing<br/>Our <em style="color:var(--burnt-orange);">Training Tools</em></h1>
+  <p class="maint-subtitle">We're making some exciting improvements to give you an even better experience. We'll be back online very soon — fresher, faster and more powerful than ever.</p>
+
+  <!-- Countdown -->
+  <div class="countdown" role="timer" aria-label="Time until site is back online">
+    <div class="count-unit">
+      <span class="count-value" id="hours">02</span>
+      <span class="count-label">Hours</span>
+    </div>
+    <div class="count-unit">
+      <span class="count-value" id="minutes">45</span>
+      <span class="count-label">Minutes</span>
+    </div>
+    <div class="count-unit">
+      <span class="count-value" id="seconds">30</span>
+      <span class="count-label">Seconds</span>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="maint-progress">
+    <div class="maint-progress-label">
+      <span>Maintenance Progress</span>
+      <span>73% complete</span>
+    </div>
+    <div class="maint-progress-bar">
+      <div class="maint-progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="status-grid">
+    <div class="status-item">
+      <span class="status-dot green"></span>
+      <span class="status-label">Training Sessions</span>
+    </div>
+    <div class="status-item">
+      <span class="status-dot yellow"></span>
+      <span class="status-label">Owner Dashboard</span>
+    </div>
+    <div class="status-item">
+      <span class="status-dot orange"></span>
+      <span class="status-label">Website</span>
+    </div>
+  </div>
+
+  <!-- Notify -->
+  <div class="maint-notify">
+    <h3><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Get Notified When We're Back</h3>
+    <p>Leave your email and we'll let you know the moment Pawfect Academy is back online.</p>
+    <form class="maint-form" onsubmit="e=>e.preventDefault()">
+      <input type="email" class="maint-input" placeholder="your@email.com" aria-label="Email for notification" />
+      <button class="btn btn-primary btn-sm" type="button" onclick="window.Pawfect?.Toast?.show('Got it! We\'ll email you when we\'re back.','success')">Notify Me</button>
+    </form>
+  </div>
+
+  <!-- Contact info -->
+  <p style="color:rgba(255,255,255,0.5);font-size:var(--fs-xs);margin-bottom:var(--space-5);">
+    Need urgent help? Call us at <a href="tel:+15551234567" style="color:var(--burnt-orange);font-weight:700;">(555) 123-4567</a> or email <a href="mailto:hello@pawfectacademy.com" style="color:var(--burnt-orange);font-weight:700;">hello@pawfectacademy.com</a>
+  </p>
+
+  <!-- Meanwhile explore -->
+  <p style="color:rgba(255,255,255,0.45);font-size:var(--fs-xs);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:var(--space-3);">Meanwhile, feel free to explore</p>
+  <div class="maint-links">
+    <a href="./programs.html" class="maint-link">Browse Programs</a>
+    <a href="./trainers.html" class="maint-link">Meet Trainers</a>
+    <a href="./blog.html" class="maint-link">Training Blog</a>
+    <a href="./contact.html" class="maint-link">Contact Us</a>
+  </div>
+
+  <!-- Social links -->
+  <div class="maint-socials">
+    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="maint-social" aria-label="Follow on Facebook"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="maint-social" aria-label="Follow on Instagram"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+    <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="maint-social" aria-label="Follow on YouTube"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#202C3B"/></svg></a>
+    <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="maint-social" aria-label="Follow on TikTok"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.89 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.35 0 .69.06 1 .17V9.45a6.35 6.35 0 0 0-1-.08A6.34 6.34 0 0 0 3.15 15.7a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.18 8.18 0 0 0 4.76 1.52V6.78a4.85 4.85 0 0 1-1-.09z"/></svg></a>
+  </div>
+
+</main>
+
+<script src="./assets/js/global.js"></script>
+<script>
+  // Live countdown timer — 3 hours from now
+  const targetTime = new Date(Date.now() + 3 * 60 * 60 * 1000);
+  function updateCountdown() {
+    const now = new Date();
+    const diff = Math.max(0, targetTime - now);
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('hours').textContent = String(h).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+    if (diff > 0) requestAnimationFrame(updateCountdown);
+    else {
+      window.Pawfect?.Toast?.show("We're back online! Reloading...", 'success');
+      setTimeout(() => window.location.href = './index.html', 2500);
+    }
+  }
+  requestAnimationFrame(updateCountdown);
+</script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sitemap — Pawfect Academy | All Pages at a Glance</title>
+  <meta name="description" content="Browse every page on Pawfect Academy: programs, trainers, pricing, blog, accounts, legal pages, and support — all in one accessible sitemap." />
+  <link rel="canonical" href="./sitemap.html" />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    .sitemap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+    .sitemap-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg); padding: var(--space-6);
+      box-shadow: var(--shadow-sm); transition: all var(--transition-base);
+    }
+    .sitemap-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--burnt-orange); }
+    .sitemap-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: rgba(217,119,69,0.12); color: var(--burnt-orange);
+      display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-4);
+    }
+    .sitemap-icon svg { width: 24px; height: 24px; }
+    .sitemap-card h2 { font-size: var(--fs-lg); margin-bottom: 4px; }
+    .sitemap-card > p { color: var(--text-muted); font-size: var(--fs-xs); margin-bottom: var(--space-4); }
+    .sitemap-links { list-style: none; display: grid; gap: 2px; }
+    .sitemap-links a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 12px; border-radius: 8px; font-size: var(--fs-sm); font-weight: 600;
+      color: var(--text-secondary); transition: all var(--transition-fast);
+    }
+    .sitemap-links a:hover { background: rgba(217,119,69,0.08); color: var(--burnt-orange); }
+    .sitemap-links a span.arrow { opacity: 0; transform: translateX(-4px); transition: all var(--transition-fast); }
+    .sitemap-links a:hover span.arrow { opacity: 1; transform: translateX(0); }
+    .sitemap-links small { display: block; font-weight: 400; color: var(--text-muted); font-size: var(--fs-xs); }
+    .sitemap-search {
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg); padding: var(--space-5);
+      display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; justify-content: space-between;
+      margin-bottom: var(--space-6);
+    }
+    .sitemap-search input {
+      flex: 1; min-width: 240px; padding: 12px 16px; border-radius: var(--border-radius-full);
+      border: 1.5px solid var(--border-color); background: var(--bg-card);
+      color: var(--text-primary); font-size: var(--fs-sm); font-family: inherit;
+    }
+    .sitemap-search input:focus { outline: none; border-color: var(--burnt-orange); }
+    .no-results { display: none; text-align: center; padding: var(--space-6); color: var(--text-muted); }
+    .xml-note {
+      margin-top: var(--space-6); background: var(--midnight-navy); color: white;
+      border-radius: var(--border-radius-lg); padding: clamp(24px, 4vw, 44px);
+      display: flex; flex-wrap: wrap; gap: var(--space-5); align-items: center; justify-content: space-between;
+    }
+    .xml-note h2 { color: white; margin-bottom: 8px; }
+    .xml-note p { color: rgba(255,255,255,0.7); font-size: var(--fs-sm); max-width: 560px; }
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .sitemap-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 760px) {
+      .sitemap-grid { grid-template-columns: repeat(2, 1fr); }
+      .xml-note { padding: 32px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .sitemap-grid { grid-template-columns: 1fr; }
+      .sitemap-search input { min-width: 0; width: 100%; }
+      .xml-note { flex-direction: column; align-items: flex-start; padding: 24px 16px; border-radius: var(--border-radius-md); }
+      .xml-note .btn { width: 100%; justify-content: center; }
+      .sitemap-card { padding: 20px 16px; }
+    }
+
+    @media (max-width: 360px) {
+      .sitemap-card { padding: 18px 12px; }
+      .xml-note { padding: 20px 12px; }
+    }
+
+    @media (max-width: 320px) {
+      .sitemap-card { padding: 14px 10px; }
+      .sitemap-card h2 { font-size: var(--fs-md); }
+      .sitemap-links li a { font-size: 0.82rem; }
+      .xml-note { padding: 16px 10px; }
+      .xml-note h2 { font-size: var(--fs-lg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-transparent" data-transparent="true" id="mainNavbar" role="navigation" aria-label="Main Navigation">
+  <div class="navbar-inner">
+    <a href="./index.html" class="navbar-logo" aria-label="Pawfect Academy Home">
+      <div class="navbar-logo-icon" aria-hidden="true">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+      </div>
+      <div>
+        <div class="navbar-logo-text">Pawfect <span>Academy</span></div>
+        <div class="navbar-logo-sub">Dog Training School</div>
+      </div>
+    </a>
+    <nav class="navbar-nav" role="menubar">
+      <a href="./index.html" class="nav-link" role="menuitem">Home</a>
+      <a href="./home2.html" class="nav-link" role="menuitem">Home 2</a>
+      <a href="./about.html" class="nav-link" role="menuitem">About</a>
+      <a href="./programs.html" class="nav-link" role="menuitem">Programs</a>
+      <a href="./trainers.html" class="nav-link" role="menuitem">Trainers</a>
+      <a href="./pricing.html" class="nav-link" role="menuitem">Pricing</a>
+      <a href="./blog.html" class="nav-link" role="menuitem">Blog</a>
+      <a href="./contact.html" class="nav-link" role="menuitem">Contact</a>
+    </nav>
+    <div class="navbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction">RTL</button>
+      <div class="profile-dropdown" id="profileDropdown">
+        <button class="profile-btn" id="profileToggle" aria-label="User Account Menu" aria-haspopup="true" aria-expanded="false">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div class="profile-menu" role="menu" aria-label="Account Options">
+          <div class="profile-menu-header"><span class="profile-menu-title">Account Portal</span></div>
+          <a href="./login.html" class="profile-menu-item" role="menuitem"><span>Login/Signup</span></a>
+          <a href="./dashboard.html" class="profile-menu-item" role="menuitem"><span>Pet Owner Dashboard</span></a>
+          <a href="./admin.html" class="profile-menu-item" role="menuitem"><span>Admin Dashboard</span></a>
+        </div>
+      </div>
+      <a href="./signup.html" class="btn btn-primary btn-sm nav-cta-btn">Get Started</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile Navigation">
+  <div class="mobile-nav-links">
+    <a href="./index.html" class="mobile-nav-link">Home</a>
+    <a href="./home2.html" class="mobile-nav-link">Home 2</a>
+    <a href="./about.html" class="mobile-nav-link">About</a>
+    <a href="./programs.html" class="mobile-nav-link">Programs</a>
+    <a href="./trainers.html" class="mobile-nav-link">Trainers</a>
+    <a href="./pricing.html" class="mobile-nav-link">Pricing</a>
+    <a href="./blog.html" class="mobile-nav-link">Blog</a>
+    <a href="./contact.html" class="mobile-nav-link">Contact</a>
+        <div class="mobile-nav-cta">
+      <a href="./signup.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header" role="banner">
+  <div class="container page-header-content">
+    <div class="eyebrow">Find Anything Fast</div>
+    <h1>Site<em style="color:var(--burnt-orange);font-style:italic;">map</em></h1>
+    <p>Every page, program, account portal, and policy on Pawfect Academy — organized, searchable, and one click away.</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <span class="breadcrumb-item"><a href="./index.html">Home</a></span>
+      <span class="breadcrumb-separator">›</span>
+      <span class="breadcrumb-item current">Sitemap</span>
+    </nav>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<section class="section" aria-label="Sitemap content">
+  <div class="container">
+    <div class="sitemap-search">
+      <div>
+        <h2 style="margin-bottom:4px;">Looking for something specific?</h2>
+        <p style="color:var(--text-secondary);font-size:var(--fs-sm);">Type to filter all 19 pages instantly.</p>
+      </div>
+      <input type="search" id="sitemapFilter" placeholder="Filter pages… e.g. pricing, puppy, login" aria-label="Filter sitemap pages" />
+    </div>
+
+    <div class="sitemap-grid" id="sitemapGrid">
+      <div class="sitemap-card" data keywords="home main landing start">
+        <div class="sitemap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h2>Main Pages</h2>
+        <p>Start here — our story and ways to reach us.</p>
+        <ul class="sitemap-links">
+          <li><a href="./index.html">Home <span class="arrow">→</span></a></li>
+          <li><a href="./home2.html">Home 2 — Alternate Layout <span class="arrow">→</span></a></li>
+          <li><a href="./about.html">About Us <span class="arrow">→</span></a></li>
+          <li><a href="./contact.html">Contact &amp; Free Consult <span class="arrow">→</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sitemap-card" data-keywords="programs training puppy obedience behavior details pricing enroll">
+        <div class="sitemap-icon"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg></div>
+        <h2>Training Programs</h2>
+        <p>Curriculum, schedules, and enrollment details.</p>
+        <ul class="sitemap-links">
+          <li><a href="./programs.html">All Programs <span class="arrow">→</span></a></li>
+          <li><a href="./program-details.html">Program Details <span class="arrow">→</span></a></li>
+          <li><a href="./pricing.html">Pricing &amp; Plans <span class="arrow">→</span></a></li>
+          <li><a href="./trainers.html">Meet the Trainers <span class="arrow">→</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sitemap-card" data-keywords="blog articles tips news details">
+        <div class="sitemap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></div>
+        <h2>Blog &amp; Resources</h2>
+        <p>Training tips and academy news.</p>
+        <ul class="sitemap-links">
+          <li><a href="./blog.html">Blog Overview <span class="arrow">→</span></a></li>
+          <li><a href="./blog-details.html">Featured Article <span class="arrow">→</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sitemap-card" data-keywords="account login signup dashboard admin pet owner portal">
+        <div class="sitemap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h2>Accounts &amp; Portals</h2>
+        <p>Enroll, track progress, and manage classes.</p>
+        <ul class="sitemap-links">
+          <li><a href="./signup.html">Create Account <span class="arrow">→</span></a></li>
+          <li><a href="./login.html">Login <span class="arrow">→</span></a></li>
+          <li><a href="./dashboard.html">Pet Owner Dashboard <span class="arrow">→</span></a></li>
+          <li><a href="./admin.html">Admin Dashboard <span class="arrow">→</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sitemap-card" data-keywords="legal privacy terms policy conditions">
+        <div class="sitemap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h2>Legal &amp; Trust</h2>
+        <p>Your rights, our promises, and policies.</p>
+        <ul class="sitemap-links">
+          <li><a href="./privacy-policy.html">Privacy Policy <span class="arrow">→</span></a></li>
+          <li><a href="./terms-conditions.html">Terms &amp; Conditions <span class="arrow">→</span></a></li>
+          <li><a href="./sitemap.html" aria-current="page">Sitemap (you are here) <span class="arrow">→</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sitemap-card" data-keywords="help error 404 maintenance support status">
+        <div class="sitemap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <h2>Support &amp; Utility</h2>
+        <p>Helpful pages when things go off-track.</p>
+        <ul class="sitemap-links">
+          <li><a href="./404.html">404 — Page Not Found <span class="arrow">→</span></a></li>
+          <li><a href="./maintenance.html">Maintenance Mode <span class="arrow">→</span></a></li>
+          <li><a href="./contact.html">Report an Issue <span class="arrow">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="no-results" id="noResults">No pages match your search. Try "training", "blog", or "contact".</p>
+  </div>
+</section>
+
+<!-- ===== STANDARD FOOTER ===== -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="./index.html" class="navbar-logo footer-logo" aria-label="Pawfect Academy — Home">
+          <span class="navbar-logo-icon" aria-hidden="true">
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+          </span>
+          <span class="navbar-logo-text" style="color:white;">Pawfect <span>Academy</span></span>
+        </a>
+        <p>Premium canine training and obedience school dedicated to building lasting bonds between dogs and their families through science-based, force-free methods.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#202C3B"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="./index.html" class="footer-link">Home</a></li>
+          <li><a href="./home2.html" class="footer-link">Home 2</a></li>
+          <li><a href="./about.html" class="footer-link">About</a></li>
+          <li><a href="./programs.html" class="footer-link">Programs</a></li>
+          <li><a href="./trainers.html" class="footer-link">Trainers</a></li>
+          <li><a href="./pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="./blog.html" class="footer-link">Blog</a></li>
+          <li><a href="./contact.html" class="footer-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-contact">
+          <li><span>123 Training Lane, Suite 200<br />Portland, OR 97201</span></li>
+          <li><a href="tel:+15551234567">(555) 123-4567</a></li>
+          <li><a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a></li>
+          <li><span>Mon &ndash; Sat: 7:00 AM &ndash; 7:00 PM<br />Sun: Closed</span></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Newsletter</h4>
+        <p class="footer-newsletter-text">Subscribe to receive the latest training tips, news, offers and insights from our certified trainers.</p>
+        <form class="footer-newsletter-form" data-validate data-success-msg="Welcome to the pack! Check your inbox.">
+          <div class="footer-newsletter-field">
+            <label class="sr-only" for="footerNewsletterEmail">Email address</label>
+            <input type="email" id="footerNewsletterEmail" name="email" class="footer-newsletter-input" placeholder="Your email address" required aria-label="Email address" autocomplete="email" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+        <p class="footer-newsletter-note">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span class="js-footer-year">2026</span> Pawfect Academy. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./terms-conditions.html">Terms &amp; Conditions</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./sitemap.html" aria-current="page">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<script src="./assets/js/global.js"></script>
+<script>
+  const filter = document.getElementById('sitemapFilter');
+  const cards = [...document.querySelectorAll('#sitemapGrid .sitemap-card')];
+  const noResults = document.getElementById('noResults');
+  filter?.addEventListener('input', () => {
+    const q = filter.value.trim().toLowerCase();
+    let visible = 0;
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase() + ' ' + (card.getAttribute('data-keywords') || '');
+      const show = !q || text.includes(q);
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    noResults.style.display = visible ? 'none' : 'block';
+  });
+</script>
+</body>
+</html>

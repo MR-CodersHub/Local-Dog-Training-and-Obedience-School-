@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training Programs — Pawfect Academy | Find Your Perfect Program</title>
+  <meta name="description" content="Browse all Pawfect Academy dog training programs — puppy foundation, basic obedience, advanced training, behavior correction, leash mastery and socialization classes." />
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#D97745" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <style>
+    /* PROGRAMS PAGE */
+
+    /* Programs toolbar — sits above cards inside the section */
+    .programs-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    .filter-count {
+      font-size: var(--fs-sm); color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Programs Detailed Grid */
+    .programs-main-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    /* Program Detail Card */
+    .prog-detail-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-card);
+      display: flex; flex-direction: column;
+    }
+    .prog-detail-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--burnt-orange);
+    }
+    .prog-img-wrapper { position: relative; overflow: hidden; }
+    .prog-img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.5s ease; }
+    .prog-detail-card:hover .prog-img { transform: scale(1.06); }
+    .prog-level-badge {
+      position: absolute; top: 14px; left: 14px; z-index: 1;
+    }
+    /* Level badges — solid dark pill so they stay visible over photos */
+    .prog-level-badge .badge {
+      background: rgba(32,44,59,0.92);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(6px);
+    }
+    .prog-duration-badge {
+      position: absolute; top: 14px; right: 14px; z-index: 1;
+      background: rgba(32,44,59,0.85); color: white; padding: 6px 12px;
+      border-radius: var(--border-radius-full); font-size: var(--fs-xs); font-weight: 700;
+      backdrop-filter: blur(6px);
+    }
+    .prog-body { padding: var(--space-5); flex: 1; display: flex; flex-direction: column; }
+    .prog-title { font-family: var(--font-display); font-size: var(--fs-xl); margin-block: var(--space-3) var(--space-2); }
+    .prog-desc { color: var(--text-secondary); font-size: var(--fs-sm); line-height: 1.7; flex: 1; }
+    .prog-meta {
+      display: flex; flex-wrap: wrap; gap: var(--space-3);
+      padding-block: var(--space-4);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      margin-block: var(--space-4);
+    }
+    .prog-meta-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: var(--fs-xs); color: var(--text-muted); font-weight: 600;
+    }
+    .prog-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto;
+    }
+    .prog-price {
+      font-family: var(--font-display); font-size: var(--fs-2xl); font-weight: 900;
+      color: var(--burnt-orange);
+    }
+    .prog-price-period { font-size: var(--fs-xs); color: var(--text-muted); }
+
+    /* Comparison Table */
+    .compare-table {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      border-radius: var(--border-radius-lg); overflow: hidden;
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-card);
+      background: var(--bg-card);
+    }
+    .compare-table thead th { border-bottom: 2px solid var(--burnt-orange); }
+    .compare-table th:not(:first-child),
+    .compare-table td:not(:first-child) { border-left: 1px solid var(--border-color); }
+    .compare-table thead {
+      background: var(--midnight-navy); color: white;
+    }
+    .compare-table th {
+      padding: var(--space-4) var(--space-5); text-align: left;
+      font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .compare-table th:first-child { border-radius: var(--border-radius-sm) 0 0 0; }
+    .compare-table tbody tr {
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-card);
+      transition: background var(--transition-fast);
+    }
+    .compare-table tbody tr:hover { background: rgba(217,119,69,0.04); }
+    .compare-table tbody tr:last-child { border-bottom: none; }
+    .compare-table td { padding: var(--space-4) var(--space-5); font-size: var(--fs-sm); }
+    .compare-table td:first-child { font-weight: 600; color: var(--text-primary); }
+    .check-yes { color: var(--sage-green); font-weight: 800; font-size: 16px; }
+    .check-no { color: var(--text-muted); font-size: 18px; font-weight: 700; }
+
+    /* Schedule CTA Banner */
+    .schedule-banner {
+      background: linear-gradient(135deg, var(--burnt-orange), #C4673A);
+      border-radius: var(--border-radius-xl);
+      padding: clamp(40px, 6vw, 70px);
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-6);
+      flex-wrap: wrap; position: relative; overflow: hidden;
+    }
+    .schedule-banner::before {
+      content: ''; position: absolute; width: 220px; height: 220px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Ccircle cx='7' cy='8.5' r='2'/%3E%3Ccircle cx='17' cy='8.5' r='2'/%3E%3Ccircle cx='10' cy='5' r='2'/%3E%3Ccircle cx='14' cy='5' r='2'/%3E%3Cpath d='M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; opacity: 0.05; right: 5%; top: 50%;
+      transform: translateY(-50%); font-size: 180px; opacity: 0.1; pointer-events: none;
+    }
+    .schedule-banner h2, .schedule-banner p { color: white; }
+    .schedule-banner p { opacity: 0.85; margin-top: var(--space-2); }
+
+    /* Responsive Breakpoints (1024px, 760px, 480px, 360px, 320px) */
+    @media (max-width: 1024px) {
+      .programs-main-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 760px) {
+      .programs-main-grid { grid-template-columns: 1fr; }
+      .schedule-banner { flex-direction: column; text-align: center; padding: 36px 24px; }
+      .schedule-banner .btn { width: 100%; justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .programs-toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
+      .compare-table { min-width: 520px; font-size: var(--fs-xs); }
+      .compare-table th, .compare-table td { padding: 10px 12px; }
+      .schedule-banner { padding: 28px 18px; border-radius: var(--border-radius-lg); }
+      .prog-body { padding: 18px 14px; }
+    }
+
+    @media (max-width: 360px) {
+      .prog-body { padding: 16px 12px; }
+      .prog-title { font-size: var(--fs-lg); }
+      .prog-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .prog-footer .btn { width: 100%; }
+      .schedule-banner { padding: 24px 14px; }
+      .compare-table { min-width: 480px; }
+    }
+
+    @media (max-width: 320px) {
+      .prog-body { padding: 14px 10px; }
+      .prog-meta { gap: 6px; }
+      .prog-meta-item { font-size: 0.70rem; }
+      .schedule-banner { padding: 20px 10px; }
+      .schedule-banner h2 { font-size: var(--fs-xl); }
+      .compare-table { min-width: 440px; font-size: 0.75rem; }
+      .compare-table th, .compare-table td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-transparent" data-transparent="true" id="mainNavbar" role="navigation" aria-label="Main Navigation">
+  <div class="navbar-inner">
+    <a href="./index.html" class="navbar-logo" aria-label="Pawfect Academy Home">
+      <div class="navbar-logo-icon" aria-hidden="true">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+      </div>
+      <div>
+        <div class="navbar-logo-text">Pawfect <span>Academy</span></div>
+        <div class="navbar-logo-sub">Dog Training School</div>
+      </div>
+    </a>
+
+    <nav class="navbar-nav" role="menubar">
+      <a href="./index.html" class="nav-link" role="menuitem">Home</a>
+      <a href="./home2.html" class="nav-link" role="menuitem">Home 2</a>
+      <a href="./about.html" class="nav-link" role="menuitem">About</a>
+      <a href="./programs.html" class="nav-link" role="menuitem">Programs</a>
+      <a href="./trainers.html" class="nav-link" role="menuitem">Trainers</a>
+      <a href="./pricing.html" class="nav-link" role="menuitem">Pricing</a>
+      <a href="./blog.html" class="nav-link" role="menuitem">Blog</a>
+      <a href="./contact.html" class="nav-link" role="menuitem">Contact</a>
+    </nav>
+
+    <div class="navbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="rtl-toggle" id="rtlToggle" aria-label="Toggle RTL/LTR direction">RTL</button>
+
+      <div class="profile-dropdown" id="profileDropdown">
+        <button class="profile-btn" id="profileToggle" aria-label="User Account Menu" aria-haspopup="true" aria-expanded="false">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div class="profile-menu" role="menu" aria-label="Account Options">
+          <div class="profile-menu-header">
+            <span class="profile-menu-title">Account Portal</span>
+          </div>
+          <a href="./login.html" class="profile-menu-item" role="menuitem">
+  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+  <span>Login/Signup</span>
+</a>
+          <a href="./dashboard.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Pet Owner Dashboard</span>
+          </a>
+          <a href="./admin.html" class="profile-menu-item" role="menuitem">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5z"/><circle cx="12" cy="15" r="1.5"/></svg>
+            <span>Admin Dashboard</span>
+          </a>
+        </div>
+      </div>
+
+      <a href="./signup.html" class="btn btn-primary btn-sm nav-cta-btn">Get Started</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile Navigation">
+  <div class="mobile-nav-links">
+    <a href="./index.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+    <a href="./home2.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home 2</a>
+    <a href="./about.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h1M9 13h1M9 17h1M14 9h1M14 13h1M14 17h1"/></svg> About</a>
+    <a href="./programs.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Programs</a>
+    <a href="./trainers.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Trainers</a>
+    <a href="./pricing.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Pricing</a>
+    <a href="./blog.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg> Blog</a>
+    <a href="./contact.html" class="mobile-nav-link"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Contact</a>
+        <div class="mobile-nav-cta">
+      <a href="./signup.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="page-header" role="banner">
+  <div class="container page-header-content">
+    <div class="eyebrow">Training Programs</div>
+    <h1>Find the Right<br/><em style="color:var(--burnt-orange);font-style:italic;">Program</em> for Your Dog</h1>
+    <p>Whether you have a brand new puppy or an adult dog who needs some guidance, we have a carefully structured program designed to meet your exact goals.</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <span class="breadcrumb-item"><a href="./index.html">Home</a></span>
+      <span class="breadcrumb-separator">›</span>
+      <span class="breadcrumb-item current">Programs</span>
+    </nav>
+  </div>
+</header>
+
+<!-- ALL PROGRAMS -->
+<section class="section gradient-bg" id="allPrograms">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="eyebrow reveal">Our Programs</div>
+      <h2 class="reveal" data-delay="100">Training for Every Dog & <em style="color:var(--burnt-orange);">Every Goal</em></h2>
+      <p class="reveal" data-delay="200">Filter by training focus to find the perfect fit — from playful puppies to advanced off-leash companions.</p>
+    </div>
+    <div class="programs-toolbar reveal" data-delay="100">
+      <div class="filter-group d-flex gap-3 flex-wrap" data-target="#allPrograms">
+        <button class="chip active" data-filter="all">All Programs</button>
+        <button class="chip" data-filter="puppy"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Puppy</button>
+        <button class="chip" data-filter="obedience"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Obedience</button>
+        <button class="chip" data-filter="advanced"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg> Advanced</button>
+        <button class="chip" data-filter="behavior"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-5.04z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-5.04z"/></svg> Behavior</button>
+        <button class="chip" data-filter="leash"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="3"/><path d="M10 7h7a4 4 0 0 1 4 4v9"/><path d="M4 17l4-4 4 4"/><path d="M17 17l4 4"/></svg> Leash</button>
+      </div>
+      <div class="filter-count" id="programCount">Showing 6 programs</div>
+    </div>
+    <div class="programs-main-grid">
+
+      <!-- Puppy Foundation -->
+      <article class="prog-detail-card reveal" data-delay="0" data-category="puppy">
+        <div class="prog-img-wrapper">
+          <img class="prog-img" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&q=85&auto=format" alt="Puppy foundation class with group of puppies on grass" loading="lazy" />
+          <span class="prog-level-badge"><span class="badge badge-primary">Beginner</span></span>
+          <span class="prog-duration-badge"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 6 Weeks</span>
+        </div>
+        <div class="prog-body">
+          <h2 class="prog-title">Puppy Foundation</h2>
+          <p class="prog-desc">The essential start for every puppy. Build socialization skills, bite inhibition and basic manners during the critical developmental window before 16 weeks of age.</p>
+          <div class="prog-meta">
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Ages 8–16 wks</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Group class (max 6)</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 1x/week</span>
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 60 min sessions</span>
+          </div>
+          <div class="prog-footer">
+            <div>
+              <div class="prog-price">$299</div>
+              <div class="prog-price-period">per 6-week session</div>
+            </div>
+            <a href="./program-details.html?program=puppy-foundation" class="btn btn-primary btn-sm">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Basic Obedience -->
+      <article class="prog-detail-card reveal" data-delay="100" data-category="obedience">
+        <div class="prog-img-wrapper">
+          <img class="prog-img" src="https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=600&q=85&auto=format" alt="Dog basic obedience training session with trainer" loading="lazy" />
+          <span class="prog-level-badge"><span class="badge badge-secondary">All Ages</span></span>
+          <span class="prog-duration-badge"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 8 Weeks</span>
+        </div>
+        <div class="prog-body">
+          <h2 class="prog-title">Basic Obedience</h2>
+          <p class="prog-desc">Build a rock-solid communication foundation. Perfect for dogs of any age who need structure, basic commands, leash manners and polite greetings established.</p>
+          <div class="prog-meta">
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> All ages welcome</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Group (max 6)</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 1x/week</span>
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 60 min sessions</span>
+          </div>
+          <div class="prog-footer">
+            <div>
+              <div class="prog-price">$399</div>
+              <div class="prog-price-period">per 8-week session</div>
+            </div>
+            <a href="./program-details.html?program=basic-obedience" class="btn btn-primary btn-sm">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Advanced Obedience -->
+      <article class="prog-detail-card reveal" data-delay="200" data-category="advanced">
+        <div class="prog-img-wrapper">
+          <img class="prog-img" src="https://images.unsplash.com/photo-1551717743-49959800b1f6?w=600&q=85&auto=format" alt="Advanced obedience training session with focused dog and trainer" loading="lazy" />
+          <span class="prog-level-badge"><span class="badge badge-dark">Advanced</span></span>
+          <span class="prog-duration-badge"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 8 Weeks</span>
+        </div>
+        <div class="prog-body">
+          <h2 class="prog-title">Advanced Obedience</h2>
+          <p class="prog-desc">Take your trained dog to the next level. Achieve reliable off-leash performance, long-distance commands, precision heeling and distraction-proofing in real-world environments.</p>
+          <div class="prog-meta">
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Prerequisite: Basic grad</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Semi-private</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 2x/week</span>
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 75 min sessions</span>
+          </div>
+          <div class="prog-footer">
+            <div>
+              <div class="prog-price">$549</div>
+              <div class="prog-price-period">per 8-week session</div>
+            </div>
+            <a href="./program-details.html?program=advanced-obedience" class="btn btn-primary btn-sm">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Behavior Correction -->
+      <article class="prog-detail-card reveal" data-delay="0" data-category="behavior">
+        <div class="prog-img-wrapper">
+          <img class="prog-img" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=85&auto=format" alt="Behavior correction training session with reactive dog" loading="lazy" />
+          <span class="prog-level-badge"><span class="badge badge-primary">Specialist</span></span>
+          <span class="prog-duration-badge"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 12 Weeks</span>
+        </div>
+        <div class="prog-body">
+          <h2 class="prog-title">Behavior Correction</h2>
+          <p class="prog-desc">For dogs with reactivity, aggression, anxiety, excessive barking or other challenging behaviors. Private sessions create a safe, judgment-free environment for real progress.</p>
+          <div class="prog-meta">
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Individual assessment</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Private sessions only</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Flexible scheduling</span>
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 90 min sessions</span>
+          </div>
+          <div class="prog-footer">
+            <div>
+              <div class="prog-price">$799</div>
+              <div class="prog-price-period">per 12-week program</div>
+            </div>
+            <a href="./program-details.html?program=behavior-correction" class="btn btn-primary btn-sm">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Leash Mastery -->
+      <article class="prog-detail-card reveal" data-delay="100" data-category="leash">
+        <div class="prog-img-wrapper">
+          <img class="prog-img" src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&q=85&auto=format" alt="Leash training session with dog walking calmly beside trainer" loading="lazy" />
+          <span class="prog-level-badge"><span class="badge badge-secondary">Focused</span></span>
+          <span class="prog-duration-badge"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 4 Weeks</span>
+        </div>
+        <div class="prog-body">
+          <h2 class="prog-title">Leash Mastery</h2>
+          <p class="prog-desc">Dedicated 4-week intensive focused entirely on loose-leash walking, recall and on-leash socialization. Achieve enjoyable daily walks in just one month.</p>
+          <div class="prog-meta">
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> All ages</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Small group (max 4)</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 2x/week</span>
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 45 min sessions</span>
+          </div>
+          <div class="prog-footer">
+            <div>
+              <div class="prog-price">$249</div>
+              <div class="prog-price-period">per 4-week intensive</div>
+            </div>
+            <a href="./program-details.html?program=leash-mastery" class="btn btn-primary btn-sm">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Socialization Classes -->
+      <article class="prog-detail-card reveal" data-delay="200" data-category="puppy">
+        <div class="prog-img-wrapper">
+          <img class="prog-img" src="https://images.unsplash.com/photo-1560743641-3914f2c45636?w=600&q=85&auto=format" alt="Puppy socialization class with multiple puppies playing together" loading="lazy" />
+          <span class="prog-level-badge"><span class="badge badge-primary">Puppy/Junior</span></span>
+          <span class="prog-duration-badge"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Drop-in</span>
+        </div>
+        <div class="prog-body">
+          <h2 class="prog-title">Socialization Lab</h2>
+          <p class="prog-desc">Weekly supervised play sessions designed to build confidence, dog-to-dog skills and human socialization for puppies and young dogs in a safe, structured environment.</p>
+          <div class="prog-meta">
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg> Up to 2 years</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Max 8 dogs</span>
+            <span class="prog-meta-item"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Weekly Saturdays</span>
+            <span class="prog-meta-item"><svg class="icon icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 90 min sessions</span>
+          </div>
+          <div class="prog-footer">
+            <div>
+              <div class="prog-price">$40</div>
+              <div class="prog-price-period">per drop-in session</div>
+            </div>
+            <a href="./contact.html" class="btn btn-primary btn-sm">Book Session</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="section" style="background:var(--bg-secondary);" id="compare">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="eyebrow reveal">Program Comparison</div>
+      <h2 class="reveal" data-delay="100">Find Your Perfect Fit</h2>
+    </div>
+    <div style="overflow-x:auto;margin-top:var(--space-7);" class="reveal" data-delay="100">
+      <table class="compare-table" aria-label="Program comparison table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Puppy Foundation</th>
+            <th>Basic Obedience</th>
+            <th>Advanced</th>
+            <th>Behavior Correction</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Duration</td>
+            <td>6 Weeks</td>
+            <td>8 Weeks</td>
+            <td>8 Weeks</td>
+            <td>12 Weeks</td>
+          </tr>
+          <tr>
+            <td>Sessions per Week</td>
+            <td>1x Group</td>
+            <td>1x Group</td>
+            <td>2x Semi-Private</td>
+            <td>2x Private</td>
+          </tr>
+          <tr>
+            <td>Progress Dashboard</td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+          </tr>
+          <tr>
+            <td>Trainer Notes</td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+          </tr>
+          <tr>
+            <td>Video Resources</td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+          </tr>
+          <tr>
+            <td>Private Sessions</td>
+            <td class="check-no">–</td>
+            <td class="check-no">–</td>
+            <td>Optional add-on</td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Included</td>
+          </tr>
+          <tr>
+            <td>Behavior Assessment</td>
+            <td class="check-no">–</td>
+            <td class="check-no">–</td>
+            <td class="check-no">–</td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Full Assessment</td>
+          </tr>
+          <tr>
+            <td>Alumni Community Access</td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+          </tr>
+          <tr>
+            <td>Graduation Certificate</td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+            <td class="check-yes"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td><strong style="color:var(--burnt-orange);">$299</strong></td>
+            <td><strong style="color:var(--burnt-orange);">$399</strong></td>
+            <td><strong style="color:var(--burnt-orange);">$549</strong></td>
+            <td><strong style="color:var(--burnt-orange);">$799</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="eyebrow reveal">Common Questions</div>
+      <h2 class="reveal" data-delay="100">Program FAQ</h2>
+    </div>
+    <div style="max-width:720px;margin:var(--space-7) auto 0;" class="accordion-list">
+      <div class="accordion-item reveal" data-delay="0">
+        <div class="accordion-header">
+          <span class="accordion-title">How do I know which program is right for my dog?</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body"><p>Book a free 20-minute consultation call. We'll ask about your dog's age, history, current challenges and your goals — then recommend the best program fit. If you're unsure after that, we offer a complimentary 15-minute in-person assessment.</p></div>
+      </div>
+      <div class="accordion-item reveal" data-delay="100">
+        <div class="accordion-header">
+          <span class="accordion-title">What if my dog misses a class?</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body"><p>Life happens. Each enrolled student gets one make-up session per program at no extra charge. All session notes and video resources are uploaded to your dashboard the same day, so you never fall behind.</p></div>
+      </div>
+      <div class="accordion-item reveal" data-delay="200">
+        <div class="accordion-header">
+          <span class="accordion-title">Are your training methods safe for all dogs?</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body"><p>Absolutely. We use 100% force-free, positive reinforcement methods — no shock collars, prong collars or aversive tools of any kind. Our methods are endorsed by the IAABC, APDT and Fear Free organization.</p></div>
+      </div>
+      <div class="accordion-item reveal" data-delay="300">
+        <div class="accordion-header">
+          <span class="accordion-title">Can I join mid-program if I missed the start?</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body"><p>New program cohorts start every 4–6 weeks, so there's always an upcoming session. We don't recommend joining mid-program as the curriculum is progressive, but you can join our waiting list and we'll notify you as soon as a new cohort opens.</p></div>
+      </div>
+      <div class="accordion-item reveal" data-delay="400">
+        <div class="accordion-header">
+          <span class="accordion-title">Do you offer payment plans?</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body"><p>Yes! We offer interest-free payment plans for all programs over $299. You can split any program into 2–3 monthly payments at checkout. We also have a scholarship program for qualifying families — contact us to learn more.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE BANNER -->
+<section class="section gradient-bg" id="schedule">
+  <div class="container">
+    <div class="schedule-banner reveal">
+      <div>
+        <div class="eyebrow" style="color:rgba(255,255,255,0.75);">Next Classes Starting Soon</div>
+        <h2>Limited Spots Available<br/>— Book Today</h2>
+        <p>Puppy Foundation: Nov 4 · Basic Obedience: Nov 11 · Advanced: Nov 18</p>
+      </div>
+      <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;align-items:center;flex-shrink:0;">
+        <a href="./contact.html" class="btn btn-outline-light btn-lg">Reserve Your Spot</a>
+        <a href="./pricing.html" class="btn" style="background:white;color:var(--burnt-orange);padding:18px 44px;border-radius:var(--border-radius-full);font-weight:800;font-size:var(--fs-sm);letter-spacing:0.03em;text-transform:uppercase;">View Pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- ===== STANDARD FOOTER ===== -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- COLUMN 1 — COMPANY -->
+      <div class="footer-brand">
+        <a href="./index.html" class="navbar-logo footer-logo" aria-label="Pawfect Academy — Home">
+          <span class="navbar-logo-icon" aria-hidden="true">
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="8.5" r="2"/><circle cx="17" cy="8.5" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.5 0 2 1.6 3.5 3.5 3.5.8 0 1.2-.4 1.5-.7.3.3.7.7 1.5.7 1.9 0 3.5-1.5 3.5-3.5 0-2.5-2.2-4.5-5-4.5z"/></svg>
+          </span>
+          <span class="navbar-logo-text" style="color:white;">Pawfect <span>Academy</span></span>
+        </a>
+        <p>Premium canine training and obedience school dedicated to building lasting bonds between dogs and their families through science-based, force-free methods.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pawfect Academy on YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#202C3B"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- COLUMN 2 — QUICK LINKS (mirrors main navbar) -->
+      <nav class="footer-col" aria-label="Quick links">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="./index.html" class="footer-link">Home</a></li>
+          <li><a href="./home2.html" class="footer-link">Home 2</a></li>
+          <li><a href="./about.html" class="footer-link">About</a></li>
+          <li><a href="./programs.html" class="footer-link">Programs</a></li>
+          <li><a href="./trainers.html" class="footer-link">Trainers</a></li>
+          <li><a href="./pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="./blog.html" class="footer-link">Blog</a></li>
+          <li><a href="./contact.html" class="footer-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- COLUMN 3 — CONTACT DETAILS -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>123 Training Lane, Suite 200<br />Portland, OR 97201</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+15551234567">(555) 123-4567</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:hello@pawfectacademy.com">hello@pawfectacademy.com</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Mon &ndash; Sat: 7:00 AM &ndash; 7:00 PM<br />Sun: Closed</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 4 — NEWSLETTER -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Newsletter</h4>
+        <p class="footer-newsletter-text">Subscribe to receive the latest training tips, news, offers and insights from our certified trainers.</p>
+        <form class="footer-newsletter-form" data-validate data-success-msg="Welcome to the pack! Check your inbox.">
+          <div class="footer-newsletter-field">
+            <label class="sr-only" for="footerNewsletterEmail">Email address</label>
+            <input type="email" id="footerNewsletterEmail" name="email" class="footer-newsletter-input" placeholder="Your email address" required aria-label="Email address" autocomplete="email" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+        <p class="footer-newsletter-note">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <!-- BOTTOM LEGAL BAR -->
+    <div class="footer-bottom">
+      <p>&copy; <span class="js-footer-year">2026</span> Pawfect Academy. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./terms-conditions.html">Terms &amp; Conditions</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="./sitemap.html">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<script src="./assets/js/global.js"></script>
+<script>
+  // Update program count on filter
+  const filterGroup = document.querySelector('.filter-group');
+  if (filterGroup) {
+    filterGroup.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        setTimeout(() => {
+          const visible = document.querySelectorAll('#allPrograms .prog-detail-card[style*="display: none"]');
+          const all = document.querySelectorAll('#allPrograms .prog-detail-card');
+          const count = all.length - visible.length;
+          document.getElementById('programCount').textContent = `Showing ${count} program${count !== 1 ? 's' : ''}`;
+        }, 50);
+      });
+    });
+  }
+</script>
+</body>
+</html>
